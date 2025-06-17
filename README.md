@@ -1,2 +1,2 @@
 # EPGC10
-An open source programmable graphing calculator
+*E*xpandable *P*rogrammable *G*raphing *C*alculator 10
