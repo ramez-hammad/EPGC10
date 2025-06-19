@@ -1,15 +1,10 @@
 #include <string.h>
 #include <stdio.h>
 
-#define MUL(x, y) x * y 
-#define DIV(x, y) x / y
-#define ADD(x, y) x + y
-#define SUB(x, y) x - y
-
 // Returns 1 if token is an operator
 int is_operator(char token)
 {
-    if (token == '+' || token == '-' || token == '*' || token == '/')
+    if (token == '+' || token == '-' || token == '*' || token == '/' || token == '^')
     {
         return 1;
     } else {
@@ -90,8 +85,20 @@ char* parse(char expr[])
                     strcat(output_str, ", ");
                     num_operations++;
                     break;
+                case '^':
+                    strcat(output_str, "POW(");
+                    strcat(output_str, x);
+                    strcat(output_str, ", ");
+                    num_operations++;
+                    break;
             }
         }
     }
     return output_str;
+}
+
+int main(void)
+{
+    printf(parse("3+3^4"));
+    return 0;
 }
