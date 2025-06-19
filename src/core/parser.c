@@ -96,9 +96,3 @@ char* parse(char expr[])
     }
     return output_str;
 }
-
-int main(void)
-{
-    printf(parse("3+3^4"));
-    return 0;
-}
