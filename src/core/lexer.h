@@ -14,3 +14,5 @@ typedef struct TOKEN {
     TOKEN_TYPE type;
     double val; // Only used for numbers
 } TOKEN;
+
+TOKEN** tokenize(char* expr);
