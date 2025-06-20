@@ -11,8 +11,8 @@ TOKEN* create_token_num(double val)
     return token;
 }
 
-// Create a token of the specified type, only used for non-numerical tokens
-TOKEN* create_token(TOKEN_TYPE type)
+// Create a token of an operator
+TOKEN* create_token_op(TOKEN_TYPE type)
 {
     TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
     token->type = type;
@@ -21,7 +21,7 @@ TOKEN* create_token(TOKEN_TYPE type)
 
 char is_num(char c)
 {
-    if (c >= 48 && c <= 57)
+    if (c >= 48 && c <= 57) // ASCII for 0 and 9
     {
         return 1;
     } else {
@@ -65,35 +65,35 @@ TOKEN** tokenize(char* expr)
             switch (expr[x])
             {
                 case '+':
-                    arr_tok[x] = create_token(TOKEN_PLUS);
+                    arr_tok[x] = create_token_op(TOKEN_PLUS);
                     num_tokens++;
                     break;
                 case '-':
-                    arr_tok[x] = create_token(TOKEN_MINUS);
+                    arr_tok[x] = create_token_op(TOKEN_MINUS);
                     num_tokens++;
                     break;
                 case '/':
-                    arr_tok[x] = create_token(TOKEN_DIV);
+                    arr_tok[x] = create_token_op(TOKEN_DIV);
                     num_tokens++;
                     break;
                 case '*':
-                    arr_tok[x] = create_token(TOKEN_MUL);
+                    arr_tok[x] = create_token_op(TOKEN_MUL);
                     num_tokens++;
                     break;
                 case '(':
-                    arr_tok[x] = create_token(TOKEN_LEFT_PAREN);
+                    arr_tok[x] = create_token_op(TOKEN_LEFT_PAREN);
                     num_tokens++;
                     break;
                 case ')':
-                    arr_tok[x] = create_token(TOKEN_RIGHT_PAREN);
+                    arr_tok[x] = create_token_op(TOKEN_RIGHT_PAREN);
                     num_tokens++;
                     break;
                 case '^':
-                    arr_tok[x] = create_token(TOKEN_POW);
+                    arr_tok[x] = create_token_op(TOKEN_POW);
                     num_tokens++;
                     break;
                 case '=':
-                    arr_tok[x] = create_token(TOKEN_EQ);
+                    arr_tok[x] = create_token_op(TOKEN_EQ);
                     num_tokens++;
                     break;
             }
