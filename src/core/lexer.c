@@ -64,6 +64,10 @@ TOKEN** tokenize(char* expr)
             }
             num_tokens++;
             arr_tok[num_tokens-1] = create_token_num(atof(num));
+            for (size_t z = 0; z < strlen(expr); z++)
+            {
+                num[z] = ' ';
+            }
         } else {
             switch (expr[x])
             {
