@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Create a numerical token with value val
 TOKEN* create_token_num(double val)
@@ -42,13 +43,14 @@ TOKEN** tokenize(char* expr)
     int num_width = 0;
 
     int num_tokens = 0;
-
-    for (size_t x = 0; x < strlen(expr); x++)
+    
+    size_t x = 0;
+    while (x < strlen(expr))
     {
         if (is_num(expr[x]) == 1)
         {
             num[0] = expr[x];
-            for (size_t y = x+1; y < strlen(expr); y++)
+            for (size_t y = x + 1; y < strlen(expr); y++)
             {
                 if (is_num(expr[y]) == 1)
                 {
@@ -56,48 +58,50 @@ TOKEN** tokenize(char* expr)
                     num[num_width] = expr[y];
                 } else {
                     num_width = 0;
+                    x = y - 1;
                     break;
                 }
             }
-            arr_tok[x] = create_token_num(atoi(num));
             num_tokens++;
+            arr_tok[num_tokens-1] = create_token_num(atof(num));
         } else {
             switch (expr[x])
             {
                 case '+':
-                    arr_tok[x] = create_token_op(TOKEN_PLUS);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_PLUS);
                     break;
                 case '-':
-                    arr_tok[x] = create_token_op(TOKEN_MINUS);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_MINUS);
                     break;
                 case '/':
-                    arr_tok[x] = create_token_op(TOKEN_DIV);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_DIV);
                     break;
                 case '*':
-                    arr_tok[x] = create_token_op(TOKEN_MUL);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_MUL);
                     break;
                 case '(':
-                    arr_tok[x] = create_token_op(TOKEN_LEFT_PAREN);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_LEFT_PAREN);
                     break;
                 case ')':
-                    arr_tok[x] = create_token_op(TOKEN_RIGHT_PAREN);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_RIGHT_PAREN);
                     break;
                 case '^':
-                    arr_tok[x] = create_token_op(TOKEN_POW);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_POW);
                     break;
                 case '=':
-                    arr_tok[x] = create_token_op(TOKEN_EQ);
                     num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_op(TOKEN_EQ);
                     break;
             }
         }
+        x++;
     }
     arr_tok = (TOKEN**)realloc(arr_tok, num_tokens * sizeof(TOKEN));
     return arr_tok;
