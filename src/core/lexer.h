@@ -19,13 +19,15 @@ typedef enum TOKEN_TYPE {
     TOKEN_ATAN,
     TOKEN_ASINH,
     TOKEN_ACOSH,
-    TOKEN_ATANH
+    TOKEN_ATANH,
+    TOKEN_LN,
+    TOKEN_LOG,
 } TOKEN_TYPE;
 
 typedef struct TOKEN {
     TOKEN_TYPE type;
     double val; // Only used for numbers
-    double angle;  // Only used for trigonometric functions
+    double arg;  // Only used for trigonometric functions
 } TOKEN;
 
 TOKEN** tokenize(char* expr);
