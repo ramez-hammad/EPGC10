@@ -20,6 +20,15 @@ TOKEN* create_token_op(TOKEN_TYPE type)
     return token;
 }
 
+// Create a token for a trigonometric function
+TOKEN* create_token_trig(TOKEN_TYPE type, double angle)
+{
+    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
+    token->type = type;
+    token->angle = angle;
+    return token;
+}
+
 char is_num(char c)
 {
     if (c >= 48 && c <= 57) // ASCII for 0 and 9
@@ -71,6 +80,7 @@ TOKEN** tokenize(char* expr)
         } else {
             switch (expr[x])
             {
+                // Operators
                 case '+':
                     num_tokens++;
                     arr_tok[num_tokens-1] = create_token_op(TOKEN_PLUS);
@@ -103,6 +113,138 @@ TOKEN** tokenize(char* expr)
                     num_tokens++;
                     arr_tok[num_tokens-1] = create_token_op(TOKEN_EQ);
                     break;
+
+                // Trigonometric functions
+                case 'a':
+                case 's':
+                    if (expr[x+3] == '(') // Sine
+                    {
+                        for (size_t t = x + 4; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 3 + num_width + 1;
+                                num_width = 0; 
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_SIN, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    } else { // Hyperbolic sine
+                        for (size_t t = x + 5; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 4 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_SINH, atof(num)); 
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    }
+                case 'c':
+                    if (expr[x+3] == '(') // Cosine
+                    {
+                        for (size_t t = x + 4; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 3 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_COS, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    } else { // Hyperbolic cosine
+                        for (size_t t = x + 5; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 4 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_COSH, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    }
+                case 't':
+                    if (expr[x+3] == '(') // Tangent
+                    {
+                        for (size_t t = x + 4; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 3 + num_width + 1;
+                                num_width = 0;
+                                break; 
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_TAN, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    } else { // Hyperbolic tangent
+                        for (size_t t = x + 5; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 4 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_TANH, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    }
             }
         }
         x++;
