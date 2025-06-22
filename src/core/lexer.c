@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Create a numerical token with value val
 TOKEN* create_token_num(double val)
@@ -19,12 +20,12 @@ TOKEN* create_token_op(TOKEN_TYPE type)
     return token;
 }
 
-// Create a token for a trigonometric function
-TOKEN* create_token_trig(TOKEN_TYPE type, double angle)
+// Create a token for a function
+TOKEN* create_token_func(TOKEN_TYPE type, double arg)
 {
     TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
     token->type = type;
-    token->angle = angle;
+    token->arg = arg;
     return token;
 }
 
@@ -113,7 +114,7 @@ TOKEN** tokenize(char* expr)
                     arr_tok[num_tokens-1] = create_token_op(TOKEN_EQ);
                     break;
 
-                    // Inverse trigonometric functions
+                // Inverse trigonometric functions
                 case 'a':
                     switch (expr[x+3])
                     {
@@ -133,7 +134,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ACOS, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOS, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -153,7 +154,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ACOSH, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOSH, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -176,7 +177,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ASIN, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASIN, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -196,7 +197,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ASINH, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASINH, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -219,7 +220,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ATAN, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATAN, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -239,7 +240,7 @@ TOKEN** tokenize(char* expr)
                                     }
                                 }
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ATANH, atof(num));
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATANH, atof(num));
                                 for (size_t z = 0; z < strlen(expr); z++)
                                 {
                                     num[z] = ' ';
@@ -266,7 +267,7 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_SIN, atof(num));
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SIN, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -286,7 +287,7 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_SINH, atof(num)); 
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SINH, atof(num)); 
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -309,7 +310,7 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_COS, atof(num));
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COS, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -329,7 +330,7 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_COSH, atof(num));
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COSH, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -352,7 +353,7 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_TAN, atof(num));
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TAN, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -372,7 +373,50 @@ TOKEN** tokenize(char* expr)
                             }
                         }
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_trig(TOKEN_TANH, atof(num));
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TANH, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    }
+                case 'l':
+                    if (expr[x+1] == 'n') // Natural logarithm
+                    {
+                        for (size_t t = x + 3; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 2 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LN, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    } else { // Logarithm with base 10
+                        for (size_t t = x + 4; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 3 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LOG, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
@@ -385,4 +429,15 @@ TOKEN** tokenize(char* expr)
     }
     arr_tok = (TOKEN**)realloc(arr_tok, num_tokens * sizeof(TOKEN));
     return arr_tok;
+}
+
+int main(void)
+{
+    TOKEN** array = tokenize("log(334)+ln(32)");
+    for (int i = 0; i < 3; i++)
+    {
+        printf("ARG:%f\n", array[i]->arg);
+    }
+    free(array);
+    return 0;
 }
