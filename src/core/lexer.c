@@ -249,7 +249,7 @@ TOKEN** tokenize(char* expr)
                     }
                     break;
 
-                    // Trigonometric functions
+                // Trigonometric functions
                 case 's':
                     if (expr[x+3] == '(') // Sine
                     {
