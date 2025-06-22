@@ -430,14 +430,3 @@ TOKEN** tokenize(char* expr)
     arr_tok = (TOKEN**)realloc(arr_tok, num_tokens * sizeof(TOKEN));
     return arr_tok;
 }
-
-int main(void)
-{
-    TOKEN** array = tokenize("log(334)+ln(32)");
-    for (int i = 0; i < 3; i++)
-    {
-        printf("ARG:%f\n", array[i]->arg);
-    }
-    free(array);
-    return 0;
-}
