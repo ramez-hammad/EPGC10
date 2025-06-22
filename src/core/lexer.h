@@ -27,7 +27,7 @@ typedef enum TOKEN_TYPE {
 
 typedef struct TOKEN {
     TOKEN_TYPE type;
-    char* name; // Only used for variables
+    char name; // Only used for variables
     double val; // Only used for numbers
     double arg;  // Only used for trigonometric functions
 } TOKEN;
