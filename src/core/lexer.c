@@ -1,7 +1,6 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 // Create a numerical token with value val
 TOKEN* create_token_num(double val)
@@ -44,15 +43,15 @@ TOKEN** tokenize(char* expr)
 {
     // Create the initial array of tokens 
     TOKEN** arr_tok = (TOKEN**)malloc(strlen(expr) * sizeof(TOKEN));
-    
+
     // Placeholder number string
     char num[strlen(expr)];
-    
+
     // Number width
     int num_width = 0;
 
     int num_tokens = 0;
-    
+
     size_t x = 0;
     while (x < strlen(expr))
     {
@@ -114,8 +113,143 @@ TOKEN** tokenize(char* expr)
                     arr_tok[num_tokens-1] = create_token_op(TOKEN_EQ);
                     break;
 
-                // Trigonometric functions
+                    // Inverse trigonometric functions
                 case 'a':
+                    switch (expr[x+3])
+                    {
+                        case 'c':
+                            if (expr[x+6] == '(') // Inverse cosine
+                            {
+                                for (size_t t = x + 7; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 6 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ACOS, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            } else { // Inverse hyperbolic cosine
+                                for (size_t t = x + 8; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 7 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ACOSH, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            }
+                        case 's': 
+                            if (expr[x+6] == '(') // Inverse sine
+                            {
+                                for (size_t t = x + 7; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 6 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ASIN, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            } else { // Inverse hyperbolic sine
+                                for (size_t t = x + 8; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 7 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ASINH, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            }
+                        case 't': 
+                            if (expr[x+6] == '(') // Inverse tangent
+                            {
+                                for (size_t t = x + 7; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 6 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ATAN, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            } else { // Inverse hyperbolic tangent
+                                for (size_t t = x + 8; t < strlen(expr); t++)
+                                {
+                                    if (expr[t] == ')')
+                                    {
+                                        x = x + 7 + num_width + 1;
+                                        num_width = 0;
+                                        break;
+                                    } else {
+                                        num[num_width] = expr[t];
+                                        num_width++;
+                                    }
+                                }
+                                num_tokens++;
+                                arr_tok[num_tokens-1] = create_token_trig(TOKEN_ATANH, atof(num));
+                                for (size_t z = 0; z < strlen(expr); z++)
+                                {
+                                    num[z] = ' ';
+                                }
+                                break;
+                            }
+                    }
+                    break;
+
+                    // Trigonometric functions
                 case 's':
                     if (expr[x+3] == '(') // Sine
                     {
