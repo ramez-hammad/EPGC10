@@ -23,6 +23,8 @@ typedef enum TOKEN_TYPE {
     TOKEN_LN,
     TOKEN_LOG,
     TOKEN_VAR,
+    TOKEN_SQRT,
+    TOKEN_ABS
 } TOKEN_TYPE;
 
 typedef struct TOKEN {

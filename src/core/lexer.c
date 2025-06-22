@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Create a token for a number
 TOKEN* create_token_num(double val)
@@ -123,8 +124,29 @@ TOKEN** tokenize(char* expr)
                     arr_tok[num_tokens-1] = create_token_op(TOKEN_EQ);
                     break;
 
-                // Inverse trigonometric functions
                 case 'a':
+                    if (expr[x+2] == 's') // Absolute value function
+                    {
+                        for (size_t t = x + 4; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 3 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_ABS, atof(num));
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    }
                     switch (expr[x+3])
                     {
                         case 'c':
@@ -259,7 +281,6 @@ TOKEN** tokenize(char* expr)
                     }
                     break;
 
-                // Trigonometric functions
                 case 's':
                     if (expr[x+3] == '(') // Sine
                     {
@@ -282,7 +303,7 @@ TOKEN** tokenize(char* expr)
                             num[z] = ' ';
                         }
                         break;
-                    } else { // Hyperbolic sine
+                    } else if (expr[x+3] == 'h') { // Hyperbolic sine
                         for (size_t t = x + 5; t < strlen(expr); t++)
                         {
                             if (expr[t] == ')')
@@ -297,6 +318,26 @@ TOKEN** tokenize(char* expr)
                         }
                         num_tokens++;
                         arr_tok[num_tokens-1] = create_token_func(TOKEN_SINH, atof(num)); 
+                        for (size_t z = 0; z < strlen(expr); z++)
+                        {
+                            num[z] = ' ';
+                        }
+                        break;
+                    } else { // Square root
+                        for (size_t t = x + 5; t < strlen(expr); t++)
+                        {
+                            if (expr[t] == ')')
+                            {
+                                x = x + 4 + num_width + 1;
+                                num_width = 0;
+                                break;
+                            } else {
+                                num[num_width] = expr[t];
+                                num_width++;
+                            }
+                        }
+                        num_tokens++;
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SQRT, atof(num));
                         for (size_t z = 0; z < strlen(expr); z++)
                         {
                             num[z] = ' ';
