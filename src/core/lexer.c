@@ -1,9 +1,8 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
-// Create a numerical token with value val
+// Create a token for a number
 TOKEN* create_token_num(double val)
 {
     TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
@@ -12,7 +11,7 @@ TOKEN* create_token_num(double val)
     return token;
 }
 
-// Create a token of an operator
+// Create a token for an operator
 TOKEN* create_token_op(TOKEN_TYPE type)
 {
     TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
@@ -29,6 +28,16 @@ TOKEN* create_token_func(TOKEN_TYPE type, double arg)
     return token;
 }
 
+// Create a token for a variable
+TOKEN* create_token_var(char name)
+{
+    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
+    token->type = TOKEN_VAR;
+    token->name = name;
+    return token;
+}
+
+// Checks if character is a number
 char is_num(char c)
 {
     if (c >= 48 && c <= 57) // ASCII for 0 and 9
@@ -424,7 +433,13 @@ TOKEN** tokenize(char* expr)
                         break;
                     }
             }
-        }
+
+            if (expr[x] <= 90 && expr[x] >= 65) // ASCII for A to Z
+            {
+                num_tokens++;
+                arr_tok[num_tokens-1] = create_token_var(expr[x]);
+            }
+        } 
         x++;
     }
     arr_tok = (TOKEN**)realloc(arr_tok, num_tokens * sizeof(TOKEN));
