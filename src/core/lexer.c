@@ -70,7 +70,7 @@ TOKEN* tokenize(char* expr, int* array_size)
             num[0] = expr[x];
             for (size_t y = x + 1; y < strlen(expr); y++)
             {
-                if (is_num(expr[y]) == 1)
+                if (is_num(expr[y]) == 1 || expr[y] == '.')
                 {
                     num_width++;
                     num[num_width] = expr[y];
