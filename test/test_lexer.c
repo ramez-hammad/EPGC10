@@ -2,6 +2,7 @@
 #include "../src/core/lexer.h"
 #include <stdlib.h>
 
+
 void setUp()
 {
 }
@@ -33,11 +34,35 @@ void test_num_tokens()
     TEST_ASSERT_EQUAL(1, *num_tokens);
 }
 
+void test_func_arg(void)
+{
+    int* num_tokens = (int*)malloc(sizeof(int));
+
+    TOKEN* array = tokenize("sin(23)", num_tokens);
+    TEST_ASSERT_EQUAL(23, array[0].arg);
+
+    array = tokenize("sinh(23)", num_tokens);
+    TEST_ASSERT_EQUAL(23, array[0].arg);
+
+    array = tokenize("cos(23)", num_tokens);
+    TEST_ASSERT_EQUAL(23, array[0].arg);
+
+    array = tokenize("cosh(23)", num_tokens);
+    TEST_ASSERT_EQUAL(23, array[0].arg);
+
+    array = tokenize("asin(23)", num_tokens);
+    TEST_ASSERT_EQUAL(23, array[0].arg);
+
+    array = tokenize("tan(233434.9)", num_tokens);
+    TEST_ASSERT_EQUAL(233434.9, array[0].arg);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
 
     RUN_TEST(test_num_tokens);
+    RUN_TEST(test_func_arg);
 
     return(UNITY_END());
 }
