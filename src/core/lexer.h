@@ -34,4 +34,4 @@ typedef struct TOKEN {
     double arg;  // Only used for functions
 } TOKEN;
 
-TOKEN* tokenize(char* expr);
+TOKEN* tokenize(char* expr, int* num_tokens);

@@ -49,7 +49,7 @@ char is_num(char c)
 }
 
 // Tokenizes the expression and returns a pointer to the array of tokens
-TOKEN* tokenize(char* expr)
+TOKEN* tokenize(char* expr, int* array_size)
 {
     // Create the initial array of tokens 
     TOKEN* arr_tok = (TOKEN*)malloc(strlen(expr) * sizeof(TOKEN));
@@ -483,5 +483,6 @@ TOKEN* tokenize(char* expr)
         x++;
     }
     arr_tok = (TOKEN*)realloc(arr_tok, num_tokens * sizeof(TOKEN));
+    *array_size = num_tokens;
     return arr_tok;
 }
