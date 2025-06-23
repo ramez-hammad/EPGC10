@@ -8,7 +8,7 @@ To build and run unit tests:
 
 ```
 git clone --recurse-submodules https://github.com/ramez-hammad/EPGC10.git
-cd EPCGC10
+cd EPGC10
 mkdir build && cd build
 cmake ..
 make
