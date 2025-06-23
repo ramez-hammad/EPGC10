@@ -3,37 +3,37 @@
 #include <string.h>
 
 // Create a token for a number
-TOKEN* create_token_num(double val)
+TOKEN create_token_num(double val)
 {
-    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
-    token->type = TOKEN_NUM;
-    token->val = val;
+    TOKEN token;
+    token.type = TOKEN_NUM;
+    token.val = val;
     return token;
 }
 
 // Create a token for an operator
-TOKEN* create_token_op(TOKEN_TYPE type)
+TOKEN create_token_op(TOKEN_TYPE type)
 {
-    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
-    token->type = type;
+    TOKEN token;
+    token.type = type;
     return token;
 }
 
 // Create a token for a function
-TOKEN* create_token_func(TOKEN_TYPE type, double arg)
+TOKEN create_token_func(TOKEN_TYPE type, double arg)
 {
-    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
-    token->type = type;
-    token->arg = arg;
+    TOKEN token;
+    token.type = type;
+    token.arg = arg;
     return token;
 }
 
 // Create a token for a variable
-TOKEN* create_token_var(char name)
+TOKEN create_token_var(char name)
 {
-    TOKEN* token = (TOKEN*)malloc(sizeof(TOKEN));
-    token->type = TOKEN_VAR;
-    token->name = name;
+    TOKEN token;
+    token.type = TOKEN_VAR;
+    token.name = name;
     return token;
 }
 
@@ -49,10 +49,10 @@ char is_num(char c)
 }
 
 // Tokenizes the expression and returns a pointer to the array of tokens
-TOKEN** tokenize(char* expr)
+TOKEN* tokenize(char* expr)
 {
     // Create the initial array of tokens 
-    TOKEN** arr_tok = (TOKEN**)malloc(strlen(expr) * sizeof(TOKEN));
+    TOKEN* arr_tok = (TOKEN*)malloc(strlen(expr) * sizeof(TOKEN));
 
     // Placeholder number string
     char num[strlen(expr)];
@@ -482,6 +482,6 @@ TOKEN** tokenize(char* expr)
         } 
         x++;
     }
-    arr_tok = (TOKEN**)realloc(arr_tok, num_tokens * sizeof(TOKEN));
+    arr_tok = (TOKEN*)realloc(arr_tok, num_tokens * sizeof(TOKEN));
     return arr_tok;
 }
