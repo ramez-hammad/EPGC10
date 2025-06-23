@@ -75,11 +75,11 @@ TOKEN* tokenize(char* expr, int* array_size)
                     num_width++;
                     num[num_width] = expr[y];
                 } else {
-                    num_width = 0;
-                    x = y - 1;
                     break;
                 }
             }
+            x = x + num_width;
+            num_width = 0;
             num_tokens++;
             arr_tok[num_tokens-1] = create_token_num(atof(num));
             for (size_t z = 0; z < strlen(expr); z++)
