@@ -89,7 +89,6 @@ TOKEN* tokenize(char* expr, int* array_size)
     TOKEN* arr_tok = (TOKEN*)malloc(strlen(expr) * sizeof(TOKEN));
 
     // Placeholder number string
-    //char num[strlen(expr)];
     char* num = (char*)malloc(sizeof(char) * strlen(expr));
 
     // Number width
