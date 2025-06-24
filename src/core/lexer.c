@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // Create a token for a number
 TOKEN create_token_num(double val)
@@ -20,7 +21,7 @@ TOKEN create_token_op(TOKEN_TYPE type)
 }
 
 // Create a token for a function
-TOKEN create_token_func(TOKEN_TYPE type, double arg)
+TOKEN create_token_func(TOKEN_TYPE type, char* arg)
 {
     TOKEN token;
     token.type = type;
@@ -35,6 +36,39 @@ TOKEN create_token_var(char name)
     token.type = TOKEN_VAR;
     token.name = name;
     return token;
+}
+
+// Get function argument
+char* get_arg(char* expr, size_t index, int* width)
+{
+    char* arg = (char*)malloc(strlen(expr) * sizeof(char));
+    int arg_width = 0;
+    int num_paren = 0;
+
+    for (size_t u = index; u < strlen(expr); u++)
+    {
+        if (expr[u] == '(')
+        {
+            num_paren++;
+            arg[arg_width] = expr[u];
+            arg_width++;
+        } else if (expr[u] == ')') {
+            num_paren--;
+            if (num_paren >= 0)
+            {
+                arg[arg_width] = expr[u];
+                arg_width++;
+            } else {
+                break;
+            }
+        } else {
+            arg[arg_width] = expr[u];
+            arg_width++;
+        }
+    }
+    *width = arg_width;
+    arg[arg_width] = '\0';
+    return arg;
 }
 
 // Checks if character is a number
@@ -55,12 +89,15 @@ TOKEN* tokenize(char* expr, int* array_size)
     TOKEN* arr_tok = (TOKEN*)malloc(strlen(expr) * sizeof(TOKEN));
 
     // Placeholder number string
-    char num[strlen(expr)];
+    //char num[strlen(expr)];
+    char* num = (char*)malloc(sizeof(char) * strlen(expr));
 
     // Number width
     int num_width = 0;
 
     int num_tokens = 0;
+    
+    int* arg_width = (int*)malloc(sizeof(int));
 
     size_t x = 0;
     while (x < strlen(expr))
@@ -126,24 +163,10 @@ TOKEN* tokenize(char* expr, int* array_size)
                 case 'a':
                     if (expr[x+2] == 's') // Absolute value function
                     {
-                        for (size_t t = x + 4; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 3 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+4, arg_width));
+                        x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_ABS, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_ABS, num);
                         break;
                     }
                     switch (expr[x+3])
@@ -151,130 +174,46 @@ TOKEN* tokenize(char* expr, int* array_size)
                         case 'c':
                             if (expr[x+6] == '(') // Inverse cosine
                             {
-                                for (size_t t = x + 7; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 6 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
+                                strcpy(num, get_arg(expr, x+7, arg_width));
+                                x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOS, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOS, num);
                                 break;
                             } else { // Inverse hyperbolic cosine
-                                for (size_t t = x + 8; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 7 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
+                                strcpy(num, get_arg(expr, x+8, arg_width));
+                                x = x + 7 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOSH, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ACOSH, num);
                                 break;
                             }
                         case 's': 
                             if (expr[x+6] == '(') // Inverse sine
                             {
-                                for (size_t t = x + 7; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 6 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
+                                strcpy(num, get_arg(expr, x+7, arg_width));
+                                x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASIN, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASIN, num);
                                 break;
                             } else { // Inverse hyperbolic sine
-                                for (size_t t = x + 8; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 7 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
+                                strcpy(num, get_arg(expr, x+8, arg_width));
+                                x = x + 7 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASINH, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ASINH, num);
                                 break;
                             }
                         case 't': 
                             if (expr[x+6] == '(') // Inverse tangent
                             {
-                                for (size_t t = x + 7; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 6 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
+                                strcpy(num, get_arg(expr, x+7, arg_width));
+                                x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATAN, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATAN, num);
                                 break;
                             } else { // Inverse hyperbolic tangent
-                                for (size_t t = x + 8; t < strlen(expr); t++)
-                                {
-                                    if (expr[t] == ')')
-                                    {
-                                        x = x + 7 + num_width + 1;
-                                        num_width = 0;
-                                        break;
-                                    } else {
-                                        num[num_width] = expr[t];
-                                        num_width++;
-                                    }
-                                }
-                                num_tokens++;
-                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATANH, atof(num));
-                                for (size_t z = 0; z < strlen(expr); z++)
-                                {
-                                    num[z] = ' ';
-                                }
+                                strcpy(num, get_arg(expr, x+8, arg_width));
+                                x = x + 7 + *arg_width + 1;
+                                num_tokens++; 
+                                arr_tok[num_tokens-1] = create_token_func(TOKEN_ATANH, num);
                                 break;
                             }
                     }
@@ -283,193 +222,67 @@ TOKEN* tokenize(char* expr, int* array_size)
                 case 's':
                     if (expr[x+3] == '(') // Sine
                     {
-                        for (size_t t = x + 4; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 3 + num_width + 1;
-                                num_width = 0; 
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+4, arg_width)); 
+                        x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SIN, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SIN, num);
                         break;
                     } else if (expr[x+3] == 'h') { // Hyperbolic sine
-                        for (size_t t = x + 5; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 4 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+5, arg_width));
+                        x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SINH, atof(num)); 
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SINH, num); 
                         break;
                     } else { // Square root
-                        for (size_t t = x + 5; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 4 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+5, arg_width));
+                        x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SQRT, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_SQRT, num);
                         break;
                     }
                 case 'c':
                     if (expr[x+3] == '(') // Cosine
                     {
-                        for (size_t t = x + 4; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 3 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+4, arg_width));
+                        x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COS, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COS, num);
                         break;
                     } else { // Hyperbolic cosine
-                        for (size_t t = x + 5; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 4 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+5, arg_width));
+                        x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COSH, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_COSH, num);
                         break;
                     }
                 case 't':
                     if (expr[x+3] == '(') // Tangent
                     {
-                        for (size_t t = x + 4; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 3 + num_width + 1;
-                                num_width = 0;
-                                break; 
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+4, arg_width));
+                        x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TAN, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TAN, num);
                         break;
                     } else { // Hyperbolic tangent
-                        for (size_t t = x + 5; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 4 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+5, arg_width));
+                        x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TANH, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_TANH, num);
                         break;
                     }
                 case 'l':
                     if (expr[x+1] == 'n') // Natural logarithm
                     {
-                        for (size_t t = x + 3; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 2 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+3, arg_width));
+                        x = x + 2 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LN, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LN, num);
                         break;
                     } else { // Logarithm with base 10
-                        for (size_t t = x + 4; t < strlen(expr); t++)
-                        {
-                            if (expr[t] == ')')
-                            {
-                                x = x + 3 + num_width + 1;
-                                num_width = 0;
-                                break;
-                            } else {
-                                num[num_width] = expr[t];
-                                num_width++;
-                            }
-                        }
+                        strcpy(num, get_arg(expr, x+4, arg_width));
+                        x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LOG, atof(num));
-                        for (size_t z = 0; z < strlen(expr); z++)
-                        {
-                            num[z] = ' ';
-                        }
+                        arr_tok[num_tokens-1] = create_token_func(TOKEN_LOG, num);
                         break;
                     }
             }
@@ -484,5 +297,6 @@ TOKEN* tokenize(char* expr, int* array_size)
     }
     arr_tok = (TOKEN*)realloc(arr_tok, num_tokens * sizeof(TOKEN));
     *array_size = num_tokens;
+    free(arg_width);
     return arr_tok;
 }

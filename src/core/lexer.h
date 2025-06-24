@@ -31,7 +31,7 @@ typedef struct TOKEN {
     TOKEN_TYPE type;
     char name; // Only used for variables
     double val; // Only used for numbers
-    double arg;  // Only used for functions
+    char* arg;  // Only used for functions
 } TOKEN;
 
 TOKEN* tokenize(char* expr, int* array_size);
