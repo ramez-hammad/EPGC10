@@ -21,8 +21,8 @@ void test_num_tokens()
     tokenize("33000X^23234342+345^XXXX+243434+2XYZ^3234+ln(232.2)+log(2334)", num_tokens);
     TEST_ASSERT_EQUAL(24, *num_tokens);
 
-    tokenize("acosh(234)+32000*sin(32)+2334sin(23)", num_tokens);
-    TEST_ASSERT_EQUAL(8, *num_tokens);
+    tokenize("23+23233+23+sin(234)+2", num_tokens);
+    TEST_ASSERT_EQUAL(9, *num_tokens);
 
     tokenize("ED", num_tokens);
     TEST_ASSERT_EQUAL(2, *num_tokens);
@@ -32,29 +32,39 @@ void test_num_tokens()
 
     tokenize("33", num_tokens);
     TEST_ASSERT_EQUAL(1, *num_tokens);
+    
+    tokenize("33+334+343", num_tokens);
+    TEST_ASSERT_EQUAL(5, *num_tokens);
 }
 
 void test_func_arg(void)
 {
     int* num_tokens = (int*)malloc(sizeof(int));
 
-    TOKEN* array = tokenize("sin(23)", num_tokens);
-    TEST_ASSERT_EQUAL(23, array[0].arg);
+    TOKEN* array = tokenize("sin((23))", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("(23)", array[0].arg);
 
     array = tokenize("sinh(23)", num_tokens);
-    TEST_ASSERT_EQUAL(23, array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 
     array = tokenize("cos(23)", num_tokens);
-    TEST_ASSERT_EQUAL(23, array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 
-    array = tokenize("cosh(23)", num_tokens);
-    TEST_ASSERT_EQUAL(23, array[0].arg);
+    array = tokenize("cosh(23)sin(23)", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("23", array[1].arg);
 
     array = tokenize("asin(23)", num_tokens);
-    TEST_ASSERT_EQUAL(23, array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 
     array = tokenize("tan(233434.9)", num_tokens);
-    TEST_ASSERT_EQUAL(233434.9, array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("233434.9", array[0].arg);
+
+    array = tokenize("tan(cos(sin(cosh(arcosh(23.0(23))))))", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("cos(sin(cosh(arcosh(23.0(23)))))", array[0].arg);
+
+    array = tokenize("arcosh((2X+3)(2X+3)^2)", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("(2X+3)(2X+3)^2", array[0].arg);
 }
 
 int main(void)
