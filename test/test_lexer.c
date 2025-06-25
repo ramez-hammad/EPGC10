@@ -38,13 +38,20 @@ void test_num_tokens()
 
     tokenize("3XpeY", num_tokens);
     TEST_ASSERT_EQUAL(5, *num_tokens);
+
+    tokenize("3XYZ(23+sin(23238834ER))", num_tokens);
+    TEST_ASSERT_EQUAL(9, *num_tokens);
+
+    tokenize("sin(sinh(arcsin(arcsinh(cos(cosh(arccos(arccosh(tan(tanh(arctan(arctanh(23.00X))))))))))))", num_tokens);
+    TEST_ASSERT_EQUAL(1, *num_tokens);
 }
 
 void test_func_arg(void)
 {
     int* num_tokens = (int*)malloc(sizeof(int));
+    TOKEN* array;
 
-    TOKEN* array = tokenize("sin((23))", num_tokens);
+    array = tokenize("sin((23))", num_tokens);
     TEST_ASSERT_EQUAL_STRING("(23)", array[0].arg);
 
     array = tokenize("sinh(23)", num_tokens);
@@ -57,17 +64,35 @@ void test_func_arg(void)
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
     TEST_ASSERT_EQUAL_STRING("23", array[1].arg);
 
-    array = tokenize("asin(23)", num_tokens);
+    array = tokenize("arcsin(23)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 
     array = tokenize("tan(233434.9)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("233434.9", array[0].arg);
 
-    array = tokenize("tan(cos(sin(cosh(arcosh(23.0(23))))))", num_tokens);
-    TEST_ASSERT_EQUAL_STRING("cos(sin(cosh(arcosh(23.0(23)))))", array[0].arg);
+    array = tokenize("tan(cos(sin(cosh(arccosh(23.0(23))))))", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("cos(sin(cosh(arccosh(23.0(23)))))", array[0].arg);
 
-    array = tokenize("arcosh((2X+3)(2X+3)^2)", num_tokens);
+    array = tokenize("arccosh((2X+3)(2X+3)^2)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("(2X+3)(2X+3)^2", array[0].arg);
+
+    array = tokenize("arcsin(23)", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
+}
+
+void test_func_type(void)
+{
+    int* num_tokens = (int*)malloc(sizeof(int));
+    TOKEN* array;
+
+    array = tokenize("arccosh(45)", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_ACOSH, array[0].type);
+
+    array = tokenize("arcsin(23)", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_ASIN, array[0].type);
+
+    array = tokenize("arccosh(23)", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_ACOSH, array[0].type);
 }
 
 int main(void)
@@ -76,6 +101,7 @@ int main(void)
 
     RUN_TEST(test_num_tokens);
     RUN_TEST(test_func_arg);
+    RUN_TEST(test_func_type);
 
     return(UNITY_END());
 }
