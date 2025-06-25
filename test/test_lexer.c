@@ -35,6 +35,9 @@ void test_num_tokens()
     
     tokenize("33+334+343", num_tokens);
     TEST_ASSERT_EQUAL(5, *num_tokens);
+
+    tokenize("3XpeY", num_tokens);
+    TEST_ASSERT_EQUAL(5, *num_tokens);
 }
 
 void test_func_arg(void)
