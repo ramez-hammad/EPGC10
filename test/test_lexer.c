@@ -80,7 +80,7 @@ void test_func_arg(void)
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 }
 
-void test_func_type(void)
+void test_token_type(void)
 {
     int* num_tokens = (int*)malloc(sizeof(int));
     TOKEN* array;
@@ -93,6 +93,18 @@ void test_func_type(void)
 
     array = tokenize("arccosh(23)", num_tokens);
     TEST_ASSERT_EQUAL(TOKEN_ACOSH, array[0].type);
+
+    array = tokenize("+", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_PLUS, array[0].type);
+
+    array = tokenize("3++3", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_NUM, array[0].type);
+    TEST_ASSERT_EQUAL(TOKEN_PLUS, array[1].type);
+    TEST_ASSERT_EQUAL(TOKEN_PLUS, array[2].type);
+    TEST_ASSERT_EQUAL(TOKEN_NUM, array[3].type);
+
+    array = tokenize("(3+3)*(3+(3/2(sin(23))))", num_tokens);
+    TEST_ASSERT_EQUAL(TOKEN_SIN, array[14].type);
 }
 
 int main(void)
@@ -101,7 +113,7 @@ int main(void)
 
     RUN_TEST(test_num_tokens);
     RUN_TEST(test_func_arg);
-    RUN_TEST(test_func_type);
+    RUN_TEST(test_token_type);
 
     return(UNITY_END());
 }
