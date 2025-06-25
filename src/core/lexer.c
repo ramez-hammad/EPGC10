@@ -97,19 +97,31 @@ TOKEN* tokenize(char* expr, int* array_size)
     int num_tokens = 0;
     
     int* arg_width = (int*)malloc(sizeof(int));
-
+    
     size_t x = 0;
     while (x < strlen(expr))
     {
         if (is_num(expr[x]) == 1)
         {
+            // Decimal point
+            int dp_pres = 0;
+
             num[0] = expr[x];
             for (size_t y = x + 1; y < strlen(expr); y++)
             {
-                if (is_num(expr[y]) == 1 || expr[y] == '.')
+                if (is_num(expr[y]) == 1)
                 {
                     num_width++;
                     num[num_width] = expr[y];
+                } else if (expr[y] == '.') {
+                    if (dp_pres == 1)
+                    {
+                        // Syntax Error
+                    } else {
+                        num_width++;
+                        num[num_width] = expr[y];
+                        dp_pres = 1;
+                    }
                 } else {
                     break;
                 }
