@@ -296,6 +296,14 @@ TOKEN* tokenize(char* expr, int* array_size)
                         arr_tok[num_tokens-1] = create_token_func(TOKEN_LOG, num);
                         break;
                     }
+                case 'p': // Pi
+                    num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_var(expr[x]);
+                    break;
+                case 'e': // Euler's number 
+                    num_tokens++;
+                    arr_tok[num_tokens-1] = create_token_var(expr[x]);
+                    break;
             }
 
             if (expr[x] <= 90 && expr[x] >= 65) // ASCII for A to Z
