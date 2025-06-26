@@ -31,7 +31,7 @@ TOKEN next_token(void)
  *
  */
 
-NODE parse()
+NODE parse(void)
 {
     TOKEN current_token;
 

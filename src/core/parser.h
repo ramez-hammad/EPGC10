@@ -1,1 +1,1 @@
-char* parse(char expr[]);
+NODE parse(void);
