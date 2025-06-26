@@ -7,6 +7,6 @@ along with documentation of the modules and their submodules, how they are desig
 ## Structure
 ├── overview.md # Overview of the system architecture and design decisions\
 ├── interpreter.md # An overview of the 3 stage interpreter architecture\
-└── lexer.md # Lexer design documentation\
+└── lexer.md # Lexer design documentation
 
 >This project is still a work in progress, so documentation is not complete
