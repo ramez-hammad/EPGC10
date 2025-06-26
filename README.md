@@ -1,8 +1,7 @@
 <h1 align="center">EPGC10</h1>
-<p align="center">
-  <b>Expandable Programmable Graphing Calculator</b><br>
-  An open-source programmable graphing calculator, built from the ground up
-</p>
+
+## Expandable Programmable Graphing Calculator
+An open-source programmable graphing calculator, built from the ground up
 
 ## It aims to offer:
 - A lightning fast modular mathematical expression interpreter with many built in
