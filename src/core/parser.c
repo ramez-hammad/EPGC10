@@ -1,98 +1,42 @@
-#include <string.h>
+#include "lexer.h"
+
+#include <stdlib.h>
 #include <stdio.h>
 
-// Returns 1 if token is an operator
-int is_operator(char token)
+int next_index = 0;
+
+char* expr = "3+3*3";
+
+int num_tokens;
+TOKEN* arr_tok = tokenize(expr, &num_tokens); 
+
+TOKEN next_token(void)
 {
-    if (token == '+' || token == '-' || token == '*' || token == '/' || token == '^')
+    TOKEN next;
+    
+    if (next_index < num_tokens)
     {
-        return 1;
+        next = arr_tok[next_index];
+        next_index++;
     } else {
-        return 0;
+        return NULL;
     }
+
+    return next;
 }
 
 /*
  *
- * Converts an arithmetic expression that is in infix form into an abstract
- * syntax tree
+ * Creates an abstract syntax tree based on tokens from the lexer, and returns the root node 
  *
  */
 
-char* parse(char expr[])
+NODE parse()
 {
-    // Number placeholder
-    char x[3] = "";
-    
-    // Number length placeholder
-    int num_len = 0;
-    
-    // Output string
-    static char output_str[50] = "";
-    
-    // Number of operations
-    int num_operations = 0;
+    TOKEN current_token;
 
-    for (size_t h = 0; h < strlen(expr); h++)
+    while (next_index < num_tokens)
     {
-        if (h == (strlen(expr) - 1))
-        {
-            strncat(output_str, &expr[h], 1);
-            for (int l = 1; l <= num_operations; l++)
-            {
-                strcat(output_str, ")");
-            }
-        }
-
-        if (is_operator(expr[h]) != 1 && expr[h] != ' ')
-        {
-            x[num_len] = expr[h];
-            for (size_t j = h + 1; j < strlen(expr); j++)
-            {
-                if (is_operator(expr[j]) == 1 || expr[j] == ' ')
-                {
-                    num_len = 0;
-                    break;
-                } else {
-                    num_len++;
-                    x[num_len] = expr[j];
-                }
-            }
-        } else {
-            switch (expr[h])
-            {
-                case '+':
-                    strcat(output_str, "ADD(");
-                    strcat(output_str, x);
-                    strcat(output_str, ", ");
-                    num_operations++;
-                    break;
-                case '-':
-                    strcat(output_str, "SUB(");
-                    strcat(output_str, x);
-                    strcat(output_str, ", ");
-                    num_operations++;
-                    break;
-                case '*':
-                    strcat(output_str, "MUL(");
-                    strcat(output_str, x);
-                    strcat(output_str, ", ");
-                    num_operations++;
-                    break;
-                case '/':
-                    strcat(output_str, "DIV(");
-                    strcat(output_str, x);
-                    strcat(output_str, ", ");
-                    num_operations++;
-                    break;
-                case '^':
-                    strcat(output_str, "POW(");
-                    strcat(output_str, x);
-                    strcat(output_str, ", ");
-                    num_operations++;
-                    break;
-            }
-        }
+        current_token = next_token();
     }
-    return output_str;
 }
