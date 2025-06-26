@@ -14,7 +14,7 @@ An open-source programmable graphing calculator, built from the ground up
 ├── src/core/ # Interpreter\
 ├── tests/ # Unit tests using Unity\
 ├── docs/ # Documentation\
-└── third_party/Unity/ # Unity git submodule\ 
+└── third_party/Unity/ # Unity git submodule
 
 ## Planned Project Structure
 ├── src/core/ # Interpreter\
@@ -24,7 +24,7 @@ An open-source programmable graphing calculator, built from the ground up
 ├── docs/ # Documentation\
 ├── platform/pc/ # UI initialization code for the PC simulator\ 
 ├── platform/esp32/ # UI initization code for the ESP32\
-└── hardware/ # Hardware related files (Schematics, 3D models, etc.)\
+└── hardware/ # Hardware related files (Schematics, 3D models, etc.)
 
 ## Development Plan
 
