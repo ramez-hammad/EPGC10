@@ -6,7 +6,7 @@
 
 int next_index = 0;
 
-char *expr = "3*2*3+3*2/2-3*3";
+char *expr = "3*3";
 
 int num_tokens;
 
@@ -14,6 +14,7 @@ NODE *create_node_lit(double val)
 {
     NODE *node = (NODE *) malloc(sizeof(NODE));
     node->type = TOKEN_NUM;
+    node->val = val;
     return node;
 }
 
@@ -62,32 +63,25 @@ NODE *parse_factor(TOKEN *current_token)
 // Handles multiplication and division of factors
 NODE *parse_term(TOKEN *current_token)
 {
-    NODE *current_node = (NODE *) malloc(sizeof(NODE));
+    NODE *current_term = (NODE *) malloc(sizeof(NODE));
 
-    NODE *left;
-    NODE *right;
-
-    while (next_index < num_tokens) {
+    while (true) {
         if (current_token->type == TOKEN_MUL) {
             *current_token = next_token(0);
-            right = parse_factor(current_token);
-            current_node = create_node_op(TOKEN_MUL, left, right);
-            left = current_node;
+            current_term = create_node_op(TOKEN_MUL, current_term, parse_factor(current_token));
             *current_token = next_token(0);
         } else if (current_token->type == TOKEN_DIV) {
             *current_token = next_token(0);
-            right = parse_factor(current_token);
-            current_node = create_node_op(TOKEN_DIV, left, right);
-            left = current_node;
+            current_term = create_node_op(TOKEN_DIV, current_term, parse_factor(current_token));
             *current_token = next_token(0);
-        } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS) {
-            return current_node;
+        } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS || current_token->type == TOKEN_NULL) {
+            return current_term;
         } else {
-            left = parse_factor(current_token);
+            current_term = parse_factor(current_token);
             *current_token = next_token(0);
         }
     }
-    return current_node;
+    return current_term;
 }
 
 // expression -> term +|- term
