@@ -24,7 +24,8 @@ typedef enum TOKEN_TYPE {
     TOKEN_LOG,
     TOKEN_VAR,
     TOKEN_SQRT,
-    TOKEN_ABS
+    TOKEN_ABS,
+    TOKEN_NULL
 } TOKEN_TYPE;
 
 typedef struct TOKEN {
@@ -35,3 +36,4 @@ typedef struct TOKEN {
 } TOKEN;
 
 TOKEN* tokenize(char* expr, int* array_size);
+TOKEN create_token_op(TOKEN_TYPE type);
