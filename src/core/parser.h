@@ -4,3 +4,5 @@ typedef struct NODE {
     struct NODE *left;
     struct NODE *right;
 } NODE;
+
+NODE *parse_expression();
