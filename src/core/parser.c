@@ -49,11 +49,11 @@ TOKEN next_token(char look_ahead)
 }
 
 // factor -> number
-NODE *parse_factor(TOKEN current_token)
+NODE *parse_factor(TOKEN *current_token)
 {
-    switch (current_token.type) {
+    switch (current_token->type) {
         case TOKEN_NUM:
-            return create_node_lit(current_token.val);
+            return create_node_lit(current_token->val);
             break;
     }
 }
@@ -65,24 +65,25 @@ NODE *parse_term(TOKEN *current_token)
     NODE *current_node = (NODE *) malloc(sizeof(NODE));
 
     NODE *left;
+    NODE *right;
 
     while (next_index < num_tokens) {
         if (current_token->type == TOKEN_MUL) {
             *current_token = next_token(0);
-            NODE *right = parse_factor(*current_token);
+            right = parse_factor(current_token);
             current_node = create_node_op(TOKEN_MUL, left, right);
             left = current_node;
             *current_token = next_token(0);
         } else if (current_token->type == TOKEN_DIV) {
             *current_token = next_token(0);
-            NODE *right = parse_factor(*current_token);
+            right = parse_factor(current_token);
             current_node = create_node_op(TOKEN_DIV, left, right);
             left = current_node;
             *current_token = next_token(0);
         } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS) {
             return current_node;
         } else {
-            left = parse_factor(*current_token);
+            left = parse_factor(current_token);
             *current_token = next_token(0);
         }
     }
@@ -97,24 +98,17 @@ NODE *parse_expression()
 
     TOKEN current_token;
 
-    NODE *left = (NODE *) malloc(sizeof(NODE));
-    NODE *right = (NODE *) malloc(sizeof(NODE));
-
     current_token = next_token(0);
 
     while (next_index < num_tokens) {
         if (current_token.type == TOKEN_PLUS) {
             current_token = next_token(0);
-            right = parse_term(&current_token);
-            current_node = create_node_op(TOKEN_PLUS, left, right);
-            left = current_node;
+            current_node = create_node_op(TOKEN_PLUS, current_node, parse_term(&current_token));
         } else if (current_token.type == TOKEN_MINUS) {
             current_token = next_token(0);
-            right = parse_term(&current_token);
-            current_node = create_node_op(TOKEN_MINUS, left, right);
-            left = current_node;
+            current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
         } else {
-            left = parse_term(&current_token);
+            current_node = parse_term(&current_token);
         }
     }
     return current_node;
