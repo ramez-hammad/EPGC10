@@ -109,7 +109,6 @@ NODE *parse_expression()
             current_node = create_node_op(TOKEN_PLUS, left, right);
             left = current_node;
         } else if (current_token.type == TOKEN_MINUS) {
-            // TOKEN_MINUS
             current_token = next_token(0);
             right = parse_term(&current_token);
             current_node = create_node_op(TOKEN_MINUS, left, right);

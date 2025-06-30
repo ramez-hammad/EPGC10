@@ -1,4 +1,5 @@
-typedef enum TOKEN_TYPE {
+typedef enum TOKEN_TYPE
+{
     TOKEN_PLUS,
     TOKEN_MINUS,
     TOKEN_MUL,
@@ -28,12 +29,14 @@ typedef enum TOKEN_TYPE {
     TOKEN_NULL
 } TOKEN_TYPE;
 
-typedef struct TOKEN {
+typedef struct TOKEN
+{
     TOKEN_TYPE type;
     char name; // Only used for variables
     double val; // Only used for numbers
-    char* arg;  // Only used for functions
+    char *arg; // Only used for functions
 } TOKEN;
 
-TOKEN* tokenize(char* expr, int* array_size);
+TOKEN *tokenize(char *expr, int *array_size);
+
 TOKEN create_token_op(TOKEN_TYPE type);

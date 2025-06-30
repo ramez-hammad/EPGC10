@@ -1,4 +1,5 @@
-typedef struct NODE {
+typedef struct NODE
+{
     TOKEN_TYPE type;
     double val; // Only used for numbers
     struct NODE *left;
