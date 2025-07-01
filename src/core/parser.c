@@ -6,7 +6,7 @@
 
 int next_index = 0;
 
-char *expr = "3*3";
+char *expr = "(3+3)+3*3";
 
 int num_tokens;
 
@@ -42,20 +42,21 @@ TOKEN next_token(char look_ahead)
     } else {
         if (next_index < num_tokens) {
             return arr_tok[next_index];
-        } else {
-            return create_token_op(TOKEN_NULL);
         }
+        return create_token_op(TOKEN_NULL);
     }
     return next;
 }
 
 // factor -> number
+//        -> (expression)
 NODE *parse_factor(TOKEN *current_token)
 {
+    NODE *current_factor;
     switch (current_token->type) {
         case TOKEN_NUM:
-            return create_node_lit(current_token->val);
-            break;
+            current_factor = create_node_lit(current_token->val);
+            return current_factor;
     }
 }
 
@@ -74,14 +75,14 @@ NODE *parse_term(TOKEN *current_token)
             *current_token = next_token(0);
             current_term = create_node_op(TOKEN_DIV, current_term, parse_factor(current_token));
             *current_token = next_token(0);
-        } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS || current_token->type == TOKEN_NULL) {
+        } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS || current_token->type ==
+                   TOKEN_NULL) {
             return current_term;
         } else {
             current_term = parse_factor(current_token);
             *current_token = next_token(0);
         }
     }
-    return current_term;
 }
 
 // expression -> term +|- term
