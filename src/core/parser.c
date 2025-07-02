@@ -6,7 +6,7 @@
 
 int next_index = 0;
 
-char *expr = "(3+4*3)+(3+3*4)";
+char *expr = "((3+4)*(3+4))";
 
 int num_tokens;
 
@@ -29,6 +29,9 @@ NODE *create_node_op(TOKEN_TYPE type, NODE *left, NODE *right)
     return node;
 }
 
+// look_ahead: 0 -> advance normally
+// look_ahead: 1 -> look ahead to the next token
+// look_ahead: -1 -> look behind to the previous token
 TOKEN next_token(char look_ahead)
 {
     TOKEN *arr_tok = tokenize(expr, &num_tokens);
@@ -42,9 +45,21 @@ TOKEN next_token(char look_ahead)
         } else {
             return create_token_op(TOKEN_NULL);
         }
-    } else {
+    } else if (look_ahead == 1) {
         if (next_index < num_tokens) {
             return arr_tok[next_index];
+        } else {
+            return create_token_op(TOKEN_NULL);
+        }
+    } else {
+        // look_ahead == -1
+        /*
+         * If current index is not the first index, return the token
+         * at the previous index, if the current index is the first one,
+         * return TOKEN_NULL
+         */
+        if (next_index != 1) {
+            return arr_tok[next_index - 2];
         } else {
             return create_token_op(TOKEN_NULL);
         }
@@ -68,11 +83,24 @@ NODE *parse_factor(TOKEN *current_token)
             current_factor = parse_expression();
             *current_token = next_token(0);
             return current_factor;
+
+        case TOKEN_RIGHT_PAREN:
+            if (next_token(-1).type == TOKEN_NULL || next_token(1).type == TOKEN_LEFT_PAREN) {
+                /* Syntax Error, first token cannot be a )
+                 * And () is not a valid expression
+                 */
+            }
     }
 
 right_paren:
-    num_paren--;
-    next_token(0);
+    for (int i = 0; i < num_tokens; i++) {
+        if (next_token(1).type == TOKEN_RIGHT_PAREN) {
+            num_paren--;
+            next_token(0);
+        } else {
+            break;
+        }
+    }
     *current_token = create_token_op(TOKEN_NULL);
     return current_factor;
 }
