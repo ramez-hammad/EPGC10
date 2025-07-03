@@ -6,7 +6,7 @@
 
 int next_index = 0;
 
-char *expr = "((3+4)*(3+4))";
+char *expr = "(3*3+3)*(3+3*4)";
 
 int num_tokens;
 
@@ -137,7 +137,7 @@ NODE *parse_expression()
 
     current_token = next_token(0);
 
-    while (next_index < num_tokens) {
+    while (true) {
         if (current_token.type == TOKEN_PLUS) {
             current_token = next_token(0);
             current_node = create_node_op(TOKEN_PLUS, current_node, parse_term(&current_token));
@@ -145,7 +145,7 @@ NODE *parse_expression()
             current_token = next_token(0);
             current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
         } else if (current_token.type == TOKEN_NULL) {
-            return current_node;
+            break;
         } else {
             current_node = parse_term(&current_token);
         }
@@ -161,7 +161,7 @@ NODE *parse_expression()
 int main(void)
 {
     NODE *root = parse_expression();
-    //printf("%d", num_paren);
++    printf("1");
     free(root);
     return 0;
 }
