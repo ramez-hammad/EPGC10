@@ -1,16 +1,17 @@
 #include "lexer.h"
 #include "parser.h"
 
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 int next_index = 0;
 
-char *expr = "(3*3+3)*(3+3*4)";
-
 int num_tokens;
 
 int num_paren = 0;
+
+TOKEN* arr_tok;
 
 NODE *create_node_lit(double val)
 {
@@ -29,17 +30,29 @@ NODE *create_node_op(TOKEN_TYPE type, NODE *left, NODE *right)
     return node;
 }
 
+void init(char* expr)
+{
+    arr_tok = tokenize(expr, &num_tokens);
+}
+
+void insert_token(TOKEN token, int index, int* num_tokens)
+{
+    arr_tok = (TOKEN*)realloc(arr_tok, ((*num_tokens) + 1) * sizeof(TOKEN));
+    for (int i = *num_tokens - 1; i > index - 1; i--) {
+        arr_tok[i+1] = arr_tok[i];
+    }
+    arr_tok[index] = token;
+    (*num_tokens)++;
+}
+
 // look_ahead: 0 -> advance normally
 // look_ahead: 1 -> look ahead to the next token
 // look_ahead: -1 -> look behind to the previous token
 TOKEN next_token(char look_ahead)
 {
-    TOKEN *arr_tok = tokenize(expr, &num_tokens);
-    TOKEN next;
-
     if (look_ahead == 0) {
         if (next_index < num_tokens) {
-            next = arr_tok[next_index];
+            TOKEN next = arr_tok[next_index];
             next_index++;
             return next;
         } else {
@@ -75,20 +88,21 @@ NODE *parse_factor(TOKEN *current_token)
         case TOKEN_NUM:
             current_factor = create_node_lit(current_token->val);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
+            if (next_token(1).type == TOKEN_LEFT_PAREN) {
+                insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
+            }
             *current_token = next_token(0);
             return current_factor;
         case TOKEN_LEFT_PAREN:
             num_paren++;
-            if (next_token(1).type == TOKEN_RIGHT_PAREN); // Syntax Error
+            if (next_token(1).type == TOKEN_RIGHT_PAREN); // Syntax Error, () is not valid
             current_factor = parse_expression();
             *current_token = next_token(0);
             return current_factor;
 
         case TOKEN_RIGHT_PAREN:
-            if (next_token(-1).type == TOKEN_NULL || next_token(1).type == TOKEN_LEFT_PAREN) {
-                /* Syntax Error, first token cannot be a )
-                 * And () is not a valid expression
-                 */
+            if (next_token(-1).type == TOKEN_NULL) {
+                // Syntax Error, first token cannot be a )
             }
     }
 
@@ -100,6 +114,9 @@ right_paren:
         } else {
             break;
         }
+    }
+    if (next_token(1).type == TOKEN_LEFT_PAREN) {
+        insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
     }
     *current_token = create_token_op(TOKEN_NULL);
     return current_factor;
@@ -160,8 +177,8 @@ NODE *parse_expression()
 
 int main(void)
 {
+    init("9((3)(3))");
     NODE *root = parse_expression();
-+    printf("1");
     free(root);
     return 0;
 }
