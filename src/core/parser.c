@@ -11,7 +11,7 @@ int num_tokens;
 
 int num_paren = 0;
 
-TOKEN* arr_tok;
+TOKEN *arr_tok;
 
 NODE *create_node_lit(double val)
 {
@@ -30,16 +30,24 @@ NODE *create_node_op(TOKEN_TYPE type, NODE *left, NODE *right)
     return node;
 }
 
-void init(char* expr)
+NODE *create_node_var(char name)
+{
+    NODE *node = (NODE *) malloc(sizeof(NODE));
+    node->type = TOKEN_VAR;
+    node->name = name;
+    return node;
+}
+
+void init(char *expr)
 {
     arr_tok = tokenize(expr, &num_tokens);
 }
 
-void insert_token(TOKEN token, int index, int* num_tokens)
+void insert_token(TOKEN token, int index, int *num_tokens)
 {
-    arr_tok = (TOKEN*)realloc(arr_tok, ((*num_tokens) + 1) * sizeof(TOKEN));
+    arr_tok = (TOKEN *) realloc(arr_tok, ((*num_tokens) + 1) * sizeof(TOKEN));
     for (int i = *num_tokens - 1; i > index - 1; i--) {
-        arr_tok[i+1] = arr_tok[i];
+        arr_tok[i + 1] = arr_tok[i];
     }
     arr_tok[index] = token;
     (*num_tokens)++;
@@ -81,6 +89,7 @@ TOKEN next_token(char look_ahead)
 
 // factor -> number
 //        -> (expression)
+//        -> variable
 NODE *parse_factor(TOKEN *current_token)
 {
     NODE *current_factor = (NODE *) malloc(sizeof(NODE));
@@ -88,9 +97,7 @@ NODE *parse_factor(TOKEN *current_token)
         case TOKEN_NUM:
             current_factor = create_node_lit(current_token->val);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
-            if (next_token(1).type == TOKEN_LEFT_PAREN) {
-                insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
-            }
+            if (next_token(1).type == TOKEN_LEFT_PAREN || next_token(1).type == TOKEN_VAR) goto insert_mul;
             *current_token = next_token(0);
             return current_factor;
         case TOKEN_LEFT_PAREN:
@@ -104,7 +111,20 @@ NODE *parse_factor(TOKEN *current_token)
             if (next_token(-1).type == TOKEN_NULL) {
                 // Syntax Error, first token cannot be a )
             }
+            break;
+
+        case TOKEN_VAR:
+            current_factor = create_node_var(current_token->name);
+            if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
+            if (next_token(1).type == TOKEN_LEFT_PAREN) goto insert_mul;
+            *current_token = next_token(0);
+            return current_factor;
     }
+
+insert_mul:
+    insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
+    *current_token = next_token(0);
+    return current_factor;
 
 right_paren:
     for (int i = 0; i < num_tokens; i++) {
@@ -177,7 +197,7 @@ NODE *parse_expression()
 
 int main(void)
 {
-    init("9((3)(3))");
+    init("9X(9X)");
     NODE *root = parse_expression();
     free(root);
     return 0;
