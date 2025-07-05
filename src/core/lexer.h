@@ -2,6 +2,9 @@ typedef enum TOKEN_TYPE
 {
     TOKEN_PLUS,
     TOKEN_MINUS,
+    // Unary operators are only identified in the parser
+    TOKEN_UNARY_PLUS,
+    TOKEN_UNARY_MINUS,
     TOKEN_MUL,
     TOKEN_DIV,
     TOKEN_POW,

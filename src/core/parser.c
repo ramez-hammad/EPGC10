@@ -1,7 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
 
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -27,6 +26,15 @@ NODE *create_node_op(TOKEN_TYPE type, NODE *left, NODE *right)
     node->type = type;
     node->left = left;
     node->right = right;
+    return node;
+}
+
+// Unary operators only have one child
+NODE *create_node_unary_op(TOKEN_TYPE type, NODE *left)
+{
+    NODE *node = (NODE *) malloc(sizeof(NODE));
+    node->type = type;
+    node->left = left;
     return node;
 }
 
@@ -94,6 +102,15 @@ NODE *parse_factor(TOKEN *current_token)
 {
     NODE *current_factor = (NODE *) malloc(sizeof(NODE));
     switch (current_token->type) {
+        case TOKEN_MINUS:
+            *current_token = next_token(0);
+            current_factor = create_node_unary_op(TOKEN_UNARY_MINUS, parse_factor(current_token));
+            return current_factor;
+        case TOKEN_PLUS:
+            *current_token = next_token(0);
+            current_factor = create_node_unary_op(TOKEN_UNARY_PLUS, parse_factor(current_token));
+            return current_factor;
+
         case TOKEN_NUM:
             current_factor = create_node_lit(current_token->val);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
@@ -106,13 +123,11 @@ NODE *parse_factor(TOKEN *current_token)
             current_factor = parse_expression();
             *current_token = next_token(0);
             return current_factor;
-
         case TOKEN_RIGHT_PAREN:
             if (next_token(-1).type == TOKEN_NULL) {
                 // Syntax Error, first token cannot be a )
             }
             break;
-
         case TOKEN_VAR:
             current_factor = create_node_var(current_token->name);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
@@ -148,20 +163,23 @@ NODE *parse_term(TOKEN *current_token)
 {
     NODE *current_term = (NODE *) malloc(sizeof(NODE));
 
+    current_term = parse_factor(current_token);
+
     while (true) {
-        if (current_token->type == TOKEN_MUL) {
-            *current_token = next_token(0);
-            current_term = create_node_op(TOKEN_MUL, current_term, parse_factor(current_token));
-        } else if (current_token->type == TOKEN_DIV) {
-            *current_token = next_token(0);
-            current_term = create_node_op(TOKEN_DIV, current_term, parse_factor(current_token));
-        } else if (current_token->type == TOKEN_MINUS || current_token->type == TOKEN_PLUS || current_token->type ==
-                   TOKEN_NULL) {
-            return current_term;
-        } else {
-            current_term = parse_factor(current_token);
+        switch (current_token->type) {
+            case TOKEN_MUL:
+                *current_token = next_token(0);
+                current_term = create_node_op(TOKEN_MUL, current_term, parse_factor(current_token));
+                break;
+            case TOKEN_DIV:
+                *current_token = next_token(0);
+                current_term = create_node_op(TOKEN_DIV, current_term, parse_factor(current_token));
+                break;
         }
+        break;
     }
+
+    return current_term;
 }
 
 // expression -> term +|- term
@@ -173,19 +191,20 @@ NODE *parse_expression()
     TOKEN current_token;
 
     current_token = next_token(0);
+    current_node = parse_term(&current_token);
 
     while (true) {
-        if (current_token.type == TOKEN_PLUS) {
-            current_token = next_token(0);
-            current_node = create_node_op(TOKEN_PLUS, current_node, parse_term(&current_token));
-        } else if (current_token.type == TOKEN_MINUS) {
-            current_token = next_token(0);
-            current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
-        } else if (current_token.type == TOKEN_NULL) {
-            break;
-        } else {
-            current_node = parse_term(&current_token);
+        switch (current_token.type) {
+            case TOKEN_PLUS:
+                current_token = next_token(0);
+                current_node = create_node_op(TOKEN_PLUS, current_node, parse_term(&current_token));
+                break;
+            case TOKEN_MINUS:
+                current_token = next_token(0);
+                current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
+                break;
         }
+        break;
     }
 
     if (num_paren != 0) {
@@ -197,7 +216,7 @@ NODE *parse_expression()
 
 int main(void)
 {
-    init("9X(9X)");
+    init("-+(9)+-4");
     NODE *root = parse_expression();
     free(root);
     return 0;
