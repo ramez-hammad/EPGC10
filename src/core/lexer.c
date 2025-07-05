@@ -45,26 +45,27 @@ char *get_arg(char *expr, size_t index, int *width)
     int arg_width = 0;
     int num_paren = 0;
 
-    for (size_t u = index; u < strlen(expr); u++) {
-        if (expr[u] == '(') {
+    for (;index < strlen(expr); index++) {
+        if (expr[index] == '(') {
             num_paren++;
-            arg[arg_width] = expr[u];
+            arg[arg_width] = expr[index];
             arg_width++;
-        } else if (expr[u] == ')') {
+        } else if (expr[index] == ')') {
             num_paren--;
             if (num_paren >= 0) {
-                arg[arg_width] = expr[u];
+                arg[arg_width] = expr[index];
                 arg_width++;
             } else {
                 break;
             }
         } else {
-            arg[arg_width] = expr[u];
+            arg[arg_width] = expr[index];
             arg_width++;
         }
     }
+
     *width = arg_width;
-    arg[arg_width] = '\0';
+
     return arg;
 }
 
@@ -87,7 +88,7 @@ TOKEN *tokenize(char *expr, int *array_size)
 
     // Placeholder number string
     char *num = (char *) malloc(sizeof(char) * strlen(expr));
-
+    char *arg = (char*) malloc(strlen(expr) * sizeof(char));
     // Number width
     int num_width = 0;
 
@@ -164,59 +165,59 @@ TOKEN *tokenize(char *expr, int *array_size)
                 case 'a':
                     if (expr[x + 2] == 's') // Absolute value function
                     {
-                        strcpy(num, get_arg(expr, x + 4, arg_width));
+                        strcpy(arg, get_arg(expr, x + 4, arg_width));
                         x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_ABS, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_ABS, arg);
                         break;
                     }
                     switch (expr[x + 3]) {
                         case 'c':
                             if (expr[x + 6] == '(') // Inverse cosine
                             {
-                                strcpy(num, get_arg(expr, x + 7, arg_width));
+                                strcpy(arg, get_arg(expr, x + 7, arg_width));
                                 x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ACOS, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ACOS, arg);
                                 break;
                             } else {
                                 // Inverse hyperbolic cosine
-                                strcpy(num, get_arg(expr, x + 8, arg_width));
+                                strcpy(arg, get_arg(expr, x + 8, arg_width));
                                 x = x + 7 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ACOSH, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ACOSH, arg);
                                 break;
                             }
                         case 's':
                             if (expr[x + 6] == '(') // Inverse sine
                             {
-                                strcpy(num, get_arg(expr, x + 7, arg_width));
+                                strcpy(arg, get_arg(expr, x + 7, arg_width));
                                 x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ASIN, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ASIN, arg);
                                 break;
                             } else {
                                 // Inverse hyperbolic sine
-                                strcpy(num, get_arg(expr, x + 8, arg_width));
+                                strcpy(arg, get_arg(expr, x + 8, arg_width));
                                 x = x + 7 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ASINH, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ASINH, arg);
                                 break;
                             }
                         case 't':
                             if (expr[x + 6] == '(') // Inverse tangent
                             {
-                                strcpy(num, get_arg(expr, x + 7, arg_width));
+                                strcpy(arg, get_arg(expr, x + 7, arg_width));
                                 x = x + 6 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ATAN, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ATAN, arg);
                                 break;
                             } else {
                                 // Inverse hyperbolic tangent
-                                strcpy(num, get_arg(expr, x + 8, arg_width));
+                                strcpy(arg, get_arg(expr, x + 8, arg_width));
                                 x = x + 7 + *arg_width + 1;
                                 num_tokens++;
-                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ATANH, num);
+                                arr_tok[num_tokens - 1] = create_token_func(TOKEN_ATANH, arg);
                                 break;
                             }
                     }
@@ -225,72 +226,72 @@ TOKEN *tokenize(char *expr, int *array_size)
                 case 's':
                     if (expr[x + 3] == '(') // Sine
                     {
-                        strcpy(num, get_arg(expr, x + 4, arg_width));
+                        strcpy(arg, get_arg(expr, x + 4, arg_width));
                         x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SIN, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SIN, arg);
                         break;
                     } else if (expr[x + 3] == 'h') {
                         // Hyperbolic sine
-                        strcpy(num, get_arg(expr, x + 5, arg_width));
+                        strcpy(arg, get_arg(expr, x + 5, arg_width));
                         x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SINH, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SINH, arg);
                         break;
                     } else {
                         // Square root
-                        strcpy(num, get_arg(expr, x + 5, arg_width));
+                        strcpy(arg, get_arg(expr, x + 5, arg_width));
                         x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SQRT, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_SQRT, arg);
                         break;
                     }
                 case 'c':
                     if (expr[x + 3] == '(') // Cosine
                     {
-                        strcpy(num, get_arg(expr, x + 4, arg_width));
+                        strcpy(arg, get_arg(expr, x + 4, arg_width));
                         x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_COS, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_COS, arg);
                         break;
                     } else {
                         // Hyperbolic cosine
-                        strcpy(num, get_arg(expr, x + 5, arg_width));
+                        strcpy(arg, get_arg(expr, x + 5, arg_width));
                         x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_COSH, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_COSH, arg);
                         break;
                     }
                 case 't':
                     if (expr[x + 3] == '(') // Tangent
                     {
-                        strcpy(num, get_arg(expr, x + 4, arg_width));
+                        strcpy(arg, get_arg(expr, x + 4, arg_width));
                         x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_TAN, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_TAN, arg);
                         break;
                     } else {
                         // Hyperbolic tangent
-                        strcpy(num, get_arg(expr, x + 5, arg_width));
+                        strcpy(arg, get_arg(expr, x + 5, arg_width));
                         x = x + 4 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_TANH, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_TANH, arg);
                         break;
                     }
                 case 'l':
                     if (expr[x + 1] == 'n') // Natural logarithm
                     {
-                        strcpy(num, get_arg(expr, x + 3, arg_width));
+                        strcpy(arg, get_arg(expr, x + 3, arg_width));
                         x = x + 2 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_LN, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_LN, arg);
                         break;
                     } else {
                         // Logarithm with base 10
-                        strcpy(num, get_arg(expr, x + 4, arg_width));
+                        strcpy(arg, get_arg(expr, x + 4, arg_width));
                         x = x + 3 + *arg_width + 1;
                         num_tokens++;
-                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_LOG, num);
+                        arr_tok[num_tokens - 1] = create_token_func(TOKEN_LOG, arg);
                         break;
                     }
                 case 'p': // Pi

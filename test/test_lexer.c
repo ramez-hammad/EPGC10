@@ -46,6 +46,9 @@ void test_num_tokens()
 
     tokenize("sin(sinh(arcsin(arcsinh(cos(cosh(arccos(arccosh(tan(tanh(arctan(arctanh(23.00X))))))))))))", num_tokens);
     TEST_ASSERT_EQUAL(1, *num_tokens);
+
+    tokenize("sin(33)(-9--3)", num_tokens);
+    TEST_ASSERT_EQUAL(8, *num_tokens);
 }
 
 void test_func_arg(void)
@@ -80,6 +83,9 @@ void test_func_arg(void)
 
     array = tokenize("arcsin(23)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
+
+    array = tokenize("sin(30)(-9--9)", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("30", array[0].arg);
 }
 
 void test_token_type(void)
