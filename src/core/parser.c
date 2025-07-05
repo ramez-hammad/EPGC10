@@ -38,6 +38,14 @@ NODE *create_node_unary_op(TOKEN_TYPE type, NODE *left)
     return node;
 }
 
+NODE *create_node_func(TOKEN_TYPE type, char *arg)
+{
+    NODE *node = (NODE *) malloc(sizeof(NODE));
+    node->type = type;
+    node->arg = arg;
+    return node;
+}
+
 NODE *create_node_var(char name)
 {
     NODE *node = (NODE *) malloc(sizeof(NODE));
@@ -95,9 +103,11 @@ TOKEN next_token(char look_ahead)
     }
 }
 
-// factor -> number
-//        -> (expression)
-//        -> variable
+// factor -> (+/-) number
+//        -> (+/-) (expression)
+//        -> (+/-) variable
+//        -> (+/-) function
+
 NODE *parse_factor(TOKEN *current_token)
 {
     NODE *current_factor = (NODE *) malloc(sizeof(NODE));
@@ -110,7 +120,6 @@ NODE *parse_factor(TOKEN *current_token)
             *current_token = next_token(0);
             current_factor = create_node_unary_op(TOKEN_UNARY_PLUS, parse_factor(current_token));
             return current_factor;
-
         case TOKEN_NUM:
             current_factor = create_node_lit(current_token->val);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
@@ -134,7 +143,30 @@ NODE *parse_factor(TOKEN *current_token)
             if (next_token(1).type == TOKEN_LEFT_PAREN) goto insert_mul;
             *current_token = next_token(0);
             return current_factor;
+        case TOKEN_SIN: goto func;
+        case TOKEN_COS: goto func;
+        case TOKEN_TAN: goto func;
+        case TOKEN_SINH: goto func;
+        case TOKEN_COSH: goto func;
+        case TOKEN_TANH: goto func;
+        case TOKEN_ASIN: goto func;
+        case TOKEN_ACOS: goto func;
+        case TOKEN_ATAN: goto func;
+        case TOKEN_ASINH: goto func;
+        case TOKEN_ACOSH: goto func;
+        case TOKEN_ATANH: goto func;
+        case TOKEN_LN: goto func;
+        case TOKEN_LOG: goto func;
+        case TOKEN_SQRT: goto func;
+        case TOKEN_ABS: goto func;
     }
+
+func:
+    current_factor = create_node_func(current_token->type, current_token->arg);
+    if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
+    if (next_token(1).type == TOKEN_LEFT_PAREN || next_token(1).type == TOKEN_VAR) goto insert_mul;
+    *current_token = next_token(0);
+    return current_factor;
 
 insert_mul:
     insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
@@ -216,7 +248,7 @@ NODE *parse_expression()
 
 int main(void)
 {
-    init("-+(9)+-4");
+    init("sin(30)(-9--9)");
     NODE *root = parse_expression();
     free(root);
     return 0;
