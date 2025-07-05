@@ -45,7 +45,7 @@ char *get_arg(char *expr, size_t index, int *width)
     int arg_width = 0;
     int num_paren = 0;
 
-    for (;index < strlen(expr); index++) {
+    for (; index < strlen(expr); index++) {
         if (expr[index] == '(') {
             num_paren++;
             arg[arg_width] = expr[index];
@@ -88,7 +88,7 @@ TOKEN *tokenize(char *expr, int *array_size)
 
     // Placeholder number string
     char *num = (char *) malloc(sizeof(char) * strlen(expr));
-    char *arg = (char*) malloc(strlen(expr) * sizeof(char));
+    char *arg = (char *) malloc(strlen(expr) * sizeof(char));
     // Number width
     int num_width = 0;
 
