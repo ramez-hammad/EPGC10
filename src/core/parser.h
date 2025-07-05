@@ -9,3 +9,5 @@ typedef struct NODE
 } NODE;
 
 NODE *parse_expression();
+
+void init(char *expr);
