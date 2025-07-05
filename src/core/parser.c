@@ -189,28 +189,47 @@ right_paren:
     return current_factor;
 }
 
+NODE *parse_exponent(TOKEN *current_token)
+{
+    NODE *current_exponent = (NODE *) malloc(sizeof(NODE));
+
+    current_exponent = parse_factor(current_token);
+
+    while (true) {
+        switch (current_token->type) {
+            case TOKEN_POW:
+                *current_token = next_token(0);
+                current_exponent = create_node_op(TOKEN_POW, current_exponent, parse_factor(current_token));
+                break;
+            default: goto ret;
+        }
+    }
+ret:
+    return current_exponent;
+}
+
 // term -> factor *|/ factor
 // Handles multiplication and division of factors
 NODE *parse_term(TOKEN *current_token)
 {
     NODE *current_term = (NODE *) malloc(sizeof(NODE));
 
-    current_term = parse_factor(current_token);
+    current_term = parse_exponent(current_token);
 
     while (true) {
         switch (current_token->type) {
             case TOKEN_MUL:
                 *current_token = next_token(0);
-                current_term = create_node_op(TOKEN_MUL, current_term, parse_factor(current_token));
+                current_term = create_node_op(TOKEN_MUL, current_term, parse_exponent(current_token));
                 break;
             case TOKEN_DIV:
                 *current_token = next_token(0);
-                current_term = create_node_op(TOKEN_DIV, current_term, parse_factor(current_token));
+                current_term = create_node_op(TOKEN_DIV, current_term, parse_exponent(current_token));
                 break;
+            default: goto ret;
         }
-        break;
     }
-
+ret:
     return current_term;
 }
 
@@ -235,10 +254,11 @@ NODE *parse_expression()
                 current_token = next_token(0);
                 current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
                 break;
+            default: goto ret;
         }
-        break;
     }
 
+ret:
     if (num_paren != 0) {
         // Syntax error (Mismatched parentheses)
     }
@@ -248,7 +268,7 @@ NODE *parse_expression()
 
 int main(void)
 {
-    init("sin(30)(-9--9)");
+    init("2^3^4");
     NODE *root = parse_expression();
     free(root);
     return 0;
