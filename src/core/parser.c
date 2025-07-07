@@ -199,6 +199,18 @@ NODE *parse_exponent(TOKEN *current_token)
     while (true) {
         switch (current_token->type) {
             case TOKEN_POW:
+                insert_token(create_token_op(TOKEN_LEFT_PAREN), next_index, &num_tokens);
+                int temp_index = next_index;
+                next_token(0);
+                for (int i = 0; i < num_tokens; i++) {
+                    if (next_token(1).type == TOKEN_POW || next_token(1).type == TOKEN_NUM) {
+                        next_token(0);
+                    } else {
+                        insert_token(create_token_op(TOKEN_RIGHT_PAREN), next_index, &num_tokens);
+                        next_index = temp_index;
+                        break;
+                    }
+                }
                 *current_token = next_token(0);
                 current_exponent = create_node_op(TOKEN_POW, current_exponent, parse_factor(current_token));
                 break;
