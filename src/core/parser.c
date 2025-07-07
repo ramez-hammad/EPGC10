@@ -53,6 +53,30 @@ NODE *create_node_var(char name)
     return node;
 }
 
+char is_func(TOKEN_TYPE type)
+{
+    switch (type) {
+        case TOKEN_SIN:
+        case TOKEN_COS:
+        case TOKEN_TAN:
+        case TOKEN_SINH:
+        case TOKEN_COSH:
+        case TOKEN_TANH:
+        case TOKEN_ASIN:
+        case TOKEN_ACOS:
+        case TOKEN_ATAN:
+        case TOKEN_ASINH:
+        case TOKEN_ACOSH:
+        case TOKEN_ATANH:
+        case TOKEN_LN:
+        case TOKEN_LOG:
+        case TOKEN_SQRT:
+        case TOKEN_ABS:
+            return 1;
+        default: return 0;
+    }
+}
+
 void init(char *expr)
 {
     num_tokens = 0;
@@ -125,6 +149,7 @@ NODE *parse_factor(TOKEN *current_token)
             current_factor = create_node_lit(current_token->val);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
             if (next_token(1).type == TOKEN_LEFT_PAREN || next_token(1).type == TOKEN_VAR) goto insert_mul;
+            if (is_func(next_token(1).type) == 1) goto insert_mul;
             *current_token = next_token(0);
             return current_factor;
         case TOKEN_LEFT_PAREN:
@@ -166,6 +191,7 @@ func:
     current_factor = create_node_func(current_token->type, current_token->arg);
     if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
     if (next_token(1).type == TOKEN_LEFT_PAREN || next_token(1).type == TOKEN_VAR) goto insert_mul;
+    if (is_func(next_token(1).type) == 1) goto insert_mul;
     *current_token = next_token(0);
     return current_factor;
 
