@@ -8,6 +8,8 @@ typedef struct NODE
     struct NODE *right;
 } NODE;
 
-NODE *parse_expression();
-
 void init(char *expr);
+
+NODE *parse_expression(void);
+
+NODE *parse_expression_str(char *expr);

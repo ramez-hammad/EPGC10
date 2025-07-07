@@ -2,7 +2,6 @@
 #include "parser.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 
 int next_index = 0;
 
@@ -56,6 +55,8 @@ NODE *create_node_var(char name)
 
 void init(char *expr)
 {
+    num_tokens = 0;
+    next_index = 0;
     arr_tok = tokenize(expr, &num_tokens);
 }
 
@@ -235,7 +236,7 @@ ret:
 
 // expression -> term +|- term
 // Handles addition and subtraction of terms
-NODE *parse_expression()
+NODE *parse_expression(void)
 {
     NODE *current_node = (NODE *) malloc(sizeof(NODE));
 
@@ -266,10 +267,37 @@ ret:
     return current_node;
 }
 
-int main(void)
+// expression -> term +|- term
+// Handles addition and subtraction of terms
+NODE *parse_expression_str(char *expr)
 {
-    init("2^3^4");
-    NODE *root = parse_expression();
-    free(root);
-    return 0;
+    init(expr);
+
+    NODE *current_node = (NODE *) malloc(sizeof(NODE));
+
+    TOKEN current_token;
+
+    current_token = next_token(0);
+    current_node = parse_term(&current_token);
+
+    while (true) {
+        switch (current_token.type) {
+            case TOKEN_PLUS:
+                current_token = next_token(0);
+                current_node = create_node_op(TOKEN_PLUS, current_node, parse_term(&current_token));
+                break;
+            case TOKEN_MINUS:
+                current_token = next_token(0);
+                current_node = create_node_op(TOKEN_MINUS, current_node, parse_term(&current_token));
+                break;
+            default: goto ret;
+        }
+    }
+
+ret:
+    if (num_paren != 0) {
+        // Syntax error (Mismatched parentheses)
+    }
+
+    return current_node;
 }
