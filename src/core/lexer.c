@@ -1,7 +1,6 @@
 #include "lexer.h"
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 // Create a token for a number
 TOKEN create_token_num(double val)
