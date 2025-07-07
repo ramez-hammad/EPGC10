@@ -1,0 +1,1 @@
+double interpret(char *expr);
