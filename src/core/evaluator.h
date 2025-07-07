@@ -1,0 +1,1 @@
+double evaluate(NODE *root);
