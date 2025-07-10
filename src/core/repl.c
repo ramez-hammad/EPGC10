@@ -9,7 +9,11 @@ size_t len;
 
 int main(void)
 {
+    // Clear the screen
+    printf("\033[2J");
+
     printf("REPL\n\n");
+
     while (true) {
         printf("> ");
         getline(&expr, &len, stdin);
