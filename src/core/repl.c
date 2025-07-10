@@ -2,16 +2,17 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 char *expr;
 size_t len;
 
 int main(void)
 {
-    printf("REPL v0.1\n\nss");
+    printf("REPL\n\n");
     while (true) {
         printf("> ");
         getline(&expr, &len, stdin);
-        printf("%0.1f\n", interpret(expr));
+        if (strcmp(expr, "\n") != 0) printf("%0.1f\n", interpret(expr));
     }
 }
