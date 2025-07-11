@@ -17,6 +17,6 @@ int main(void)
     while (true) {
         printf("> ");
         getline(&expr, &len, stdin);
-        if (strcmp(expr, "\n") != 0) printf("%0.1f\n", interpret(expr));
+        if (strcmp(expr, "\n") != 0) printf("%f\n", interpret(expr));
     }
 }
