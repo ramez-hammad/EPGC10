@@ -2,6 +2,7 @@
 #include "parser.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 int next_index = 0;
 
