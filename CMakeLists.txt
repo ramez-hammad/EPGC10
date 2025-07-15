@@ -15,6 +15,10 @@ include_directories(
 # Your app sources
 set(SRC_UI
         src/ui/ui.c
+        src/core/interpreter.c
+        src/core/parser.c
+        src/core/lexer.c
+        src/core/evaluator.c
 )
 
 set(SRC_TEST
