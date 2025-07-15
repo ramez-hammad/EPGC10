@@ -12,4 +12,4 @@ void init(char *expr);
 
 NODE *parse_expression(void);
 
-NODE *parse_expression_str(char *expr);
+NODE *parse_expression_str(const char *expr);
