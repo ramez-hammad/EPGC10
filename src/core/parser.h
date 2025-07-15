@@ -8,7 +8,7 @@ typedef struct NODE
     struct NODE *right;
 } NODE;
 
-void init(char *expr);
+void init(const char *expr);
 
 NODE *parse_expression(void);
 
