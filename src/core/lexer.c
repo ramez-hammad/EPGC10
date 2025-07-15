@@ -38,7 +38,7 @@ TOKEN create_token_var(char name)
 }
 
 // Get function argument
-char *get_arg(char *expr, size_t index, int *width)
+char *get_arg(const char *expr, size_t index, int *width)
 {
     char *arg = (char *) malloc(strlen(expr) * sizeof(char));
     int arg_width = 0;
@@ -88,6 +88,7 @@ TOKEN *tokenize(const char *expr, int *array_size)
     // Placeholder number string
     char *num = (char *) malloc(sizeof(char) * strlen(expr));
     char *arg = (char *) malloc(strlen(expr) * sizeof(char));
+
     // Number width
     int num_width = 0;
 

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdbool.h>
 
 #include "lexer.h"
 #include "parser.h"
@@ -20,7 +21,7 @@ double evaluate(NODE *root)
                 return evaluate(root->left) * evaluate(root->right);
             case TOKEN_DIV:
                 if (evaluate(root->right) != 0) return evaluate(root->left) / evaluate(root->right);
-                // Divide by zero error
+            // Divide by zero error
             case TOKEN_POW:
                 return pow(evaluate(root->left), evaluate(root->right));
             case TOKEN_NUM:
