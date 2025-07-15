@@ -80,7 +80,7 @@ char is_num(char c)
 }
 
 // Tokenizes the expression and returns a pointer to the array of tokens
-TOKEN *tokenize(char *expr, int *array_size)
+TOKEN *tokenize(const char *expr, int *array_size)
 {
     // Create the initial array of tokens
     TOKEN *arr_tok = (TOKEN *) malloc(strlen(expr) * sizeof(TOKEN));

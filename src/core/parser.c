@@ -77,7 +77,7 @@ char is_func(TOKEN_TYPE type)
     }
 }
 
-void init(char *expr)
+void init(const char *expr)
 {
     num_tokens = 0;
     next_index = 0;
@@ -307,7 +307,7 @@ ret:
 
 // expression -> term +|- term
 // Handles addition and subtraction of terms
-NODE *parse_expression_str(char *expr)
+NODE *parse_expression_str(const char *expr)
 {
     init(expr);
 
