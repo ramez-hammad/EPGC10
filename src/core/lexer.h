@@ -40,6 +40,6 @@ typedef struct TOKEN
     char *arg; // Only used for functions
 } TOKEN;
 
-TOKEN *tokenize(char *expr, int *array_size);
+TOKEN *tokenize(const char *expr, int *array_size);
 
 TOKEN create_token_op(TOKEN_TYPE type);

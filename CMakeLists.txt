@@ -4,8 +4,33 @@ project(EPGC10 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 
-include_directories(src/core/)
-include_directories(third_party/unity/src)
+file(GLOB_RECURSE SRC_LVGL third_party/lv_port_linux/lvgl/src/*.c)
 
-# Test executables
-add_executable(test_lexer test/test_lexer.c src/core/lexer.c third_party/Unity/src/unity.c)
+include_directories(
+        third_party/lv_port_linux/lvgl/
+        src/core/
+        src/ui/
+)
+
+# Your app sources
+set(SRC_UI
+        src/ui/ui.c
+)
+
+set(SRC_TEST
+        test/test_lexer.c
+        src/core/lexer.c
+        third_party/Unity/src/unity.c
+)
+
+# SDL2
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(SDL2 REQUIRED sdl2)
+include_directories(${SDL2_INCLUDE_DIRS})
+
+# Build target
+add_executable(ui ${SRC_UI} ${SRC_LVGL})
+add_executable(test_lexer ${SRC_TEST})
+
+# Link SDL2
+target_link_libraries(ui ${SDL2_LIBRARIES} m)
