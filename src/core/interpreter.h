@@ -1,1 +1,1 @@
-double interpret(char *expr);
+double interpret(const char *expr);
