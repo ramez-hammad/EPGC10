@@ -27,9 +27,36 @@ double evaluate(NODE *root)
             case TOKEN_NUM:
                 return root->val;
             case TOKEN_UNARY_PLUS:
-                return root->left->val;
+                return evaluate(root->left);
             case TOKEN_UNARY_MINUS:
-                return root->left->val * -1;
+                switch (root->left->type) {
+                    case TOKEN_UNARY_MINUS:
+                        root->left->type = TOKEN_UNARY_PLUS;
+                        return evaluate(root->left);
+                    case TOKEN_UNARY_PLUS:
+                        root->left->type = TOKEN_UNARY_MINUS;
+                        return evaluate(root->left);
+                    case TOKEN_NUM:
+                        return root->left->val * -1;
+                    case TOKEN_SIN:
+                    case TOKEN_COS:
+                    case TOKEN_TAN:
+                    case TOKEN_SINH:
+                    case TOKEN_COSH:
+                    case TOKEN_TANH:
+                    case TOKEN_ASIN:
+                    case TOKEN_ACOS:
+                    case TOKEN_ATAN:
+                    case TOKEN_ASINH:
+                    case TOKEN_ACOSH:
+                    case TOKEN_ATANH:
+                    case TOKEN_LN:
+                    case TOKEN_LOG:
+                    case TOKEN_SQRT:
+                    case TOKEN_ABS:
+                    case TOKEN_VAR:
+                        return -1 * evaluate(root->left);
+                }
             case TOKEN_SIN:
                 return sin(to_rad(evaluate(parse_expression_str(root->arg))));
             case TOKEN_COS:
