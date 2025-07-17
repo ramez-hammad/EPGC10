@@ -4,10 +4,10 @@ project(EPGC10 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 
-file(GLOB_RECURSE SRC_LVGL third_party/lv_port_linux/lvgl/src/*.c)
+file(GLOB_RECURSE SRC_LVGL third_party/lvgl/src/*.c)
 
 include_directories(
-        third_party/lv_port_linux/lvgl/
+        third_party/lvgl/
         src/core/
         src/ui/
 )
