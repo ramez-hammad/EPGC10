@@ -6,9 +6,30 @@
 extern lv_obj_t *input_base;
 extern lv_obj_t *line;
 extern lv_obj_t *input_area;
+extern lv_obj_t *input_area_container;
 extern lv_obj_t *btn_matrix_part_up;
 extern lv_obj_t *btn_matrix_part_down;
 extern lv_obj_t *btn_matrix_part_mid;
+
+void nav_cb_right(lv_event_t *event)
+{
+    lv_textarea_cursor_right(input_area);
+}
+
+void nav_cb_left(lv_event_t *event)
+{
+    lv_textarea_cursor_left(input_area);
+}
+
+void nav_cb_up(lv_event_t *event)
+{
+    lv_obj_scroll_by(input_area_container, 0, -10, LV_ANIM_OFF);
+}
+
+void nav_cb_down(lv_event_t *event)
+{
+    lv_obj_scroll_by(input_area_container, 0, 10, LV_ANIM_OFF);
+}
 
 void btn_matrix_down_cb(lv_event_t *event)
 {
@@ -41,10 +62,14 @@ void btn_matrix_down_cb(lv_event_t *event)
         lv_textarea_add_char(input_area, '-');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "X") == 0) {
         lv_textarea_add_char(input_area, '*');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "^") == 0) {
-        lv_textarea_add_char(input_area, '^');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "/") == 0) {
         lv_textarea_add_char(input_area, '/');
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "Pi") == 0) {
+        lv_textarea_add_char(input_area, 'p');
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "(") == 0) {
+        lv_textarea_add_char(input_area, '(');
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ")") == 0) {
+        lv_textarea_add_char(input_area, ')');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "DEL") == 0) {
         lv_textarea_delete_char(input_area);
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "=") == 0) {
@@ -54,7 +79,7 @@ void btn_matrix_down_cb(lv_event_t *event)
         create_input_area();
         lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
         lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "clear") == 0) {
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "AC") == 0) {
         lv_obj_delete(input_base);
         create_input_base();
         create_input_area_container();
@@ -65,10 +90,12 @@ void btn_matrix_down_cb(lv_event_t *event)
 
 void btn_matrix_up_cb(lv_event_t *event)
 {
-
 }
 
 void btn_matrix_mid_cb(lv_event_t *event)
 {
-
+    uint32_t *index = lv_event_get_param(event);
+    if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "^") == 0) {
+        lv_textarea_add_char(input_area, '^');
+    }
 }
