@@ -1,21 +1,20 @@
 #include <SDL_timer.h>
-#include <stdlib.h>
 #include <string.h>
 #include <lvgl.h>
-#include <interpreter.h>
+#include <button_matrix.h>
+
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
-lv_obj_t *btn_matrix;
 lv_obj_t *line;
-lv_obj_t *base;
+lv_obj_t *input_base;
 lv_obj_t *ans_label;
 lv_obj_t *display_format_label;
 lv_obj_t *deg_rad_label;
 lv_obj_t *status_bar;
 lv_obj_t *screen_mode;
 
-char* display_format;
+char *display_format;
 char deg_rad = 1;
 
 void create_line_ans(void);
@@ -30,13 +29,11 @@ void create_display_format_label(void);
 
 void create_status_bar(void);
 
-void create_base(void);
+void create_input_base(void);
 
 void create_input_area_container(void);
 
 void create_input_area(void);
-
-void create_button_matrix(void);
 
 void create_screen_mode(void);
 
@@ -52,64 +49,13 @@ void create_line_ans(void)
     lv_obj_set_style_line_width(line, 2, LV_PART_MAIN);
 }
 
-void btn_matrix_cb(lv_event_t *event)
-{
-    uint32_t *index = lv_event_get_param(event);
-    if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "1") == 0) {
-        lv_textarea_add_char(input_area, '1');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "2") == 0) {
-        lv_textarea_add_char(input_area, '2');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "3") == 0) {
-        lv_textarea_add_char(input_area, '3');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "4") == 0) {
-        lv_textarea_add_char(input_area, '4');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "5") == 0) {
-        lv_textarea_add_char(input_area, '5');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "6") == 0) {
-        lv_textarea_add_char(input_area, '6');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "7") == 0) {
-        lv_textarea_add_char(input_area, '7');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "8") == 0) {
-        lv_textarea_add_char(input_area, '8');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "9") == 0) {
-        lv_textarea_add_char(input_area, '9');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "0") == 0) {
-        lv_textarea_add_char(input_area, '0');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), ".") == 0) {
-        lv_textarea_add_char(input_area, '.');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "+") == 0) {
-        lv_textarea_add_char(input_area, '+');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "-") == 0) {
-        lv_textarea_add_char(input_area, '-');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "x") == 0) {
-        lv_textarea_add_char(input_area, '*');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "^") == 0) {
-        lv_textarea_add_char(input_area, '^');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "/") == 0) {
-        lv_textarea_add_char(input_area, '/');
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "del") == 0) {
-        lv_textarea_delete_char(input_area);
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "enter") == 0) {
-        create_ans_label(interpret(lv_textarea_get_text(input_area)));
-        create_line_ans();
-        lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
-        create_input_area();
-        lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
-        lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix, *index), "clear") == 0) {
-        lv_obj_delete(base);
-        create_base();
-        create_input_area_container();
-        create_status_bar();
-        create_input_area();
-    }
-}
 
 void create_ans_label(double ans)
 {
     char text[500];
     sprintf(text, "%.2f", ans);
     if (strlen(text) >= 14) sprintf(text, "%e", ans);
+    if (strcmp(text, "inf") == 0) strcpy(text, "Error");
     ans_label = lv_label_create(input_area_container);
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(0xffffff), LV_PART_MAIN);
@@ -138,7 +84,7 @@ void create_display_format_label(void)
 
 void create_status_bar(void)
 {
-    status_bar = lv_obj_create(base);
+    status_bar = lv_obj_create(input_base);
     lv_obj_set_size(status_bar, 320, 35);
     lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, -17);
     lv_obj_set_scrollbar_mode(status_bar, LV_SCROLLBAR_MODE_OFF);
@@ -151,21 +97,21 @@ void create_status_bar(void)
     create_deg_rad_label();
 }
 
-void create_base(void)
+void create_input_base(void)
 {
-    base = lv_obj_create(lv_screen_active());
-    lv_obj_align(base, LV_ALIGN_TOP_MID, 0, 0);
-    lv_obj_set_style_bg_color(base, lv_color_hex(0x000000), LV_PART_MAIN);
-    lv_obj_set_size(base, 320, 240);
-    lv_obj_set_style_radius(base, 0, LV_PART_MAIN);
-    lv_obj_set_scrollbar_mode(base, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_border_width(base, 0, LV_PART_MAIN);
-    lv_obj_remove_flag(base, LV_OBJ_FLAG_SCROLL_ELASTIC);
+    input_base = lv_obj_create(lv_screen_active());
+    lv_obj_align(input_base, LV_ALIGN_TOP_MID, 0, 0);
+    lv_obj_set_style_bg_color(input_base, lv_color_hex(0x000000), LV_PART_MAIN);
+    lv_obj_set_size(input_base, 320, 240);
+    lv_obj_set_style_radius(input_base, 0, LV_PART_MAIN);
+    lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
+    //lv_obj_set_style_border_width(input_base, 0, LV_PART_MAIN);
+    lv_obj_remove_flag(input_base, LV_OBJ_FLAG_SCROLL_ELASTIC);
 }
 
 void create_input_area_container(void)
 {
-    input_area_container = lv_obj_create(base);
+    input_area_container = lv_obj_create(input_base);
     lv_obj_align(input_area_container, LV_ALIGN_BOTTOM_MID, 0, 20);
     lv_obj_set_style_bg_color(input_area_container, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_set_size(input_area_container, 320, 210);
@@ -188,30 +134,6 @@ void create_input_area(void)
     lv_textarea_set_max_length(input_area, 50);
 }
 
-void create_button_matrix(void)
-{
-    static const char *btn_matrix_map[] = {
-        "y=", "   win", "zoom", "trace", "graph", " ", "\n",
-        "2nd", "mode", "del", " ", " ", " ", "\n",
-        "alpha", " ", "stat", " ", " ", " ", "\n",
-        "math", "apps", "prgm", "vars", "clear", "\n",
-        "x^-1", "sin", "cos", "tan", "^", "\n",
-        "log", "7", "8", "9", "x", "\n",
-        "ln", "4", "5", "6", "-", "\n",
-        "sto", "1", "2", "3", "+", "\n",
-        "on", "0", ".", "(-)", "enter", NULL
-    };
-
-    btn_matrix = lv_buttonmatrix_create(lv_screen_active());
-    lv_obj_set_size(btn_matrix, 370, 400);
-    lv_obj_align(btn_matrix, LV_ALIGN_BOTTOM_MID, 0, 0);
-    lv_obj_set_style_border_width(btn_matrix, 0, LV_PART_MAIN);
-    lv_buttonmatrix_set_map(btn_matrix, btn_matrix_map);
-    uint32_t index = lv_buttonmatrix_get_selected_button(btn_matrix);
-    lv_obj_add_event_cb(btn_matrix, btn_matrix_cb, LV_EVENT_VALUE_CHANGED, &index);
-    lv_obj_set_style_bg_color(btn_matrix, lv_color_hex(0x000000), LV_PART_MAIN);
-}
-
 void create_screen_mode(void)
 {
     screen_mode = lv_obj_create(lv_screen_active());
@@ -220,7 +142,7 @@ void create_screen_mode(void)
     lv_obj_set_style_radius(screen_mode, 0, LV_PART_MAIN);
     lv_obj_remove_flag(screen_mode, LV_OBJ_FLAG_SCROLL_ELASTIC);
     lv_obj_set_style_bg_color(screen_mode, lv_color_hex(0x000000), LV_PART_MAIN);
-    lv_obj_set_scrollbar_mode(base, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
 }
 
 int main(void)
@@ -243,10 +165,11 @@ int main(void)
     display_format = "NORMAL";
 
     // Create UI
-    create_base();
+    create_input_base();
     create_input_area_container();
     create_input_area();
     create_status_bar();
+    create_button_matrix_base();
     create_button_matrix();
 
     while (true) {

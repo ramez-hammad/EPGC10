@@ -19,6 +19,9 @@ set(SRC_UI
         src/core/parser.c
         src/core/lexer.c
         src/core/evaluator.c
+        src/ui/button_matrix.c
+        src/ui/button_matrix_callbacks.c
+        src/ui/button_matrix_callbacks.h
 )
 
 set(SRC_TEST
