@@ -1,6 +1,6 @@
 [submodule "third_party/Unity"]
 	path = third_party/Unity
 	url = https://github.com/ThrowTheSwitch/Unity.git
-[submodule "third_party/lv_port_linux"]
-	path = third_party/lv_port_linux
-	url = https://github.com/lvgl/lv_port_linux.git
+[submodule "third_party/lvgl"]
+	path = third_party/lvgl
+	url = https://github.com/lvgl/lvgl.git
