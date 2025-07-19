@@ -3,7 +3,6 @@
 #include <lvgl.h>
 #include <button_matrix.h>
 
-
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
 lv_obj_t *line;
@@ -118,6 +117,7 @@ void create_input_area_container(void)
     lv_obj_set_style_radius(input_area_container, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_container, LV_SCROLLBAR_MODE_OFF);
     lv_obj_set_style_border_width(input_area_container, 0, LV_PART_MAIN);
+    lv_obj_set_scroll_dir(input_area_container, LV_DIR_VER);
 }
 
 void create_input_area(void)

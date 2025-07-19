@@ -59,7 +59,7 @@ void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end, int x_
     lv_obj_set_size(*nav_sector, width, height);
     lv_obj_remove_style(*nav_sector, NULL, LV_PART_KNOB);
     lv_arc_set_bg_angles(*nav_sector, ang_start, ang_end);
-    lv_obj_set_style_arc_width(*nav_sector, 57, LV_PART_MAIN);
+    lv_obj_set_style_arc_width(*nav_sector, 25, LV_PART_MAIN);
     lv_obj_set_style_arc_width(*nav_sector, 0, LV_PART_INDICATOR);
     lv_obj_set_style_arc_rounded(*nav_sector, false, LV_PART_MAIN);
 }
@@ -93,30 +93,30 @@ void create_button_matrix_part_mid(void)
     btn_matrix_part_mid_nav_container = lv_obj_create(btn_matrix_part_mid_container);
     lv_obj_set_size(btn_matrix_part_mid_nav_container, 140, 115);
     lv_obj_align(btn_matrix_part_mid_nav_container, LV_ALIGN_RIGHT_MID, 17, 0);
-    lv_obj_set_flag(btn_matrix_part_mid_nav_container, LV_OBJ_FLAG_SCROLLABLE, false);
+    lv_obj_remove_flag(btn_matrix_part_mid_nav_container, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_style_bg_color(btn_matrix_part_mid_nav_container, lv_color_hex(0x000000), LV_PART_MAIN);
     lv_obj_set_style_border_width(btn_matrix_part_mid_nav_container, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(btn_matrix_part_mid_nav_container, 0, LV_PART_MAIN);
 
     // Left
     create_nav_sector(&btn_matrix_part_mid_nav_1, 135, 225, -1, 0, 110, 105);
-    lv_obj_add_flag(btn_matrix_part_mid_nav_1, LV_OBJ_FLAG_ADV_HITTEST);
     lv_obj_add_event_cb(btn_matrix_part_mid_nav_1, nav_cb_left, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_flag(btn_matrix_part_mid_nav_1, LV_OBJ_FLAG_ADV_HITTEST);
 
     // Right
     create_nav_sector(&btn_matrix_part_mid_nav_2, 315, 45, 1, 0, 110, 105);
-    lv_obj_add_flag(btn_matrix_part_mid_nav_2, LV_OBJ_FLAG_ADV_HITTEST);
     lv_obj_add_event_cb(btn_matrix_part_mid_nav_2, nav_cb_right, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_flag(btn_matrix_part_mid_nav_2, LV_OBJ_FLAG_ADV_HITTEST);
 
     // Up
     create_nav_sector(&btn_matrix_part_mid_nav_3, 225, 315, 0, -1, 110, 105);
-    lv_obj_add_flag(btn_matrix_part_mid_nav_3, LV_OBJ_FLAG_ADV_HITTEST);
     lv_obj_add_event_cb(btn_matrix_part_mid_nav_3, nav_cb_up, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_flag(btn_matrix_part_mid_nav_3, LV_OBJ_FLAG_ADV_HITTEST);
 
     // Down
     create_nav_sector(&btn_matrix_part_mid_nav_4, 45, 135, 0, 1, 110, 105);
-    lv_obj_add_flag(btn_matrix_part_mid_nav_4, LV_OBJ_FLAG_ADV_HITTEST);
     lv_obj_add_event_cb(btn_matrix_part_mid_nav_4, nav_cb_down, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_flag(btn_matrix_part_mid_nav_4, LV_OBJ_FLAG_ADV_HITTEST);
 
     // Center
     create_nav_sector(&btn_matrix_part_mid_nav_5, 0, 360, -2, 0, 55, 50);

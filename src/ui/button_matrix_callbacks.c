@@ -23,12 +23,14 @@ void nav_cb_left(lv_event_t *event)
 
 void nav_cb_up(lv_event_t *event)
 {
-    lv_obj_scroll_by(input_area_container, 0, -10, LV_ANIM_OFF);
+    if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, 20, LV_ANIM_OFF);
+    if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
 }
 
 void nav_cb_down(lv_event_t *event)
 {
-    lv_obj_scroll_by(input_area_container, 0, 10, LV_ANIM_OFF);
+    if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, -20, LV_ANIM_OFF);
+    if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
 }
 
 void btn_matrix_down_cb(lv_event_t *event)
