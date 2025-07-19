@@ -13,8 +13,10 @@ lv_obj_t *deg_rad_label;
 lv_obj_t *status_bar;
 lv_obj_t *screen_mode;
 
+char current_screen;
 char *display_format;
 char deg_rad = 1;
+double prev_ans;
 
 void create_line_ans(void);
 
@@ -60,6 +62,7 @@ void create_ans_label(double ans)
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_RIGHT, -25, 15);
     lv_obj_set_style_text_font(ans_label, &lv_font_montserrat_16, LV_PART_MAIN);
+    prev_ans = ans;
 }
 
 void create_deg_rad_label(void)
@@ -164,6 +167,8 @@ int main(void)
 
     display_format = "NORMAL";
 
+    current_screen = 0;
+
     // Create UI
     create_input_base();
     create_input_area_container();
@@ -171,6 +176,7 @@ int main(void)
     create_status_bar();
     create_button_matrix_base();
     create_button_matrix();
+
 
     while (true) {
         lv_timer_handler();
