@@ -42,6 +42,7 @@ void nav_cb_down(lv_event_t *event)
 void btn_matrix_down_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
+    lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
     if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "1") == 0) {
         lv_textarea_add_char(input_area, '1');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "2") == 0) {
