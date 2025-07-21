@@ -153,6 +153,7 @@ void btn_matrix_down_cb(lv_event_t *event)
         create_input_area_container();
         create_status_bar();
         create_input_area();
+        current_screen = 0;
     }
 }
 
