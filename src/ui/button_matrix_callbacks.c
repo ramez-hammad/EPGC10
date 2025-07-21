@@ -5,8 +5,8 @@
 #include <math.h>
 
 extern lv_obj_t *input_base;
-extern lv_obj_t *screen_mode;
-extern lv_obj_t *screen_mode_container;
+extern lv_obj_t *screen_menu;
+extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *line;
 extern lv_obj_t *input_area;
 extern lv_obj_t *input_area_container;
@@ -168,8 +168,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
         lv_textarea_add_char(input_area, '^');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
         current_screen = 1;
-        lv_obj_move_foreground(screen_mode);
-        lv_obj_move_foreground(screen_mode_container);
+        lv_obj_move_foreground(screen_menu);
+        lv_obj_move_foreground(screen_menu_container);
         lv_obj_move_foreground(label_mode_1);
         lv_obj_move_foreground(label_mode_2);
         lv_obj_move_foreground(status_bar);

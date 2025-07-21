@@ -16,4 +16,4 @@ void create_input_area_container(void);
 
 void create_input_area(void);
 
-void create_screen_mode(void);
+void create_screen_menu(void);
