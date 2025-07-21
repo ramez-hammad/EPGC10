@@ -12,6 +12,11 @@ lv_obj_t *display_format_label;
 lv_obj_t *deg_rad_label;
 lv_obj_t *status_bar;
 lv_obj_t *screen_mode;
+lv_obj_t *screen_mode_container;
+lv_obj_t *label_mode_1;
+lv_obj_t *label_mode_2;
+
+lv_obj_t *array_mode_screen[2];
 
 char current_screen;
 char *display_format;
@@ -86,9 +91,9 @@ void create_display_format_label(void)
 
 void create_status_bar(void)
 {
-    status_bar = lv_obj_create(input_base);
+    status_bar = lv_obj_create(lv_screen_active());
     lv_obj_set_size(status_bar, 320, 35);
-    lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, -17);
+    lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, 0);
     lv_obj_set_scrollbar_mode(status_bar, LV_SCROLLBAR_MODE_OFF);
     lv_obj_set_style_bg_color(status_bar, lv_color_hex(0x525552), LV_ANIM_IMAGE_PART_MAIN);
     lv_obj_set_style_radius(status_bar, 0, LV_PART_MAIN);
@@ -103,11 +108,10 @@ void create_input_base(void)
 {
     input_base = lv_obj_create(lv_screen_active());
     lv_obj_align(input_base, LV_ALIGN_TOP_MID, 0, 0);
-    lv_obj_set_style_bg_color(input_base, lv_color_hex(0x000000), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(input_base, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_set_size(input_base, 320, 240);
     lv_obj_set_style_radius(input_base, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
-    //lv_obj_set_style_border_width(input_base, 0, LV_PART_MAIN);
     lv_obj_remove_flag(input_base, LV_OBJ_FLAG_SCROLL_ELASTIC);
 }
 
@@ -141,11 +145,42 @@ void create_screen_mode(void)
 {
     screen_mode = lv_obj_create(lv_screen_active());
     lv_obj_set_size(screen_mode, 320, 240);
+    lv_obj_align(screen_mode, LV_ALIGN_TOP_MID, 0, 0);
     lv_obj_set_style_border_width(screen_mode, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(screen_mode, 0, LV_PART_MAIN);
     lv_obj_remove_flag(screen_mode, LV_OBJ_FLAG_SCROLL_ELASTIC);
-    lv_obj_set_style_bg_color(screen_mode, lv_color_hex(0x000000), LV_PART_MAIN);
-    lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_bg_color(screen_mode, lv_color_hex(0xffffff), LV_PART_MAIN);
+    lv_obj_set_scrollbar_mode(screen_mode, LV_SCROLLBAR_MODE_OFF);
+}
+
+void create_screen_mode_container(void)
+{
+    screen_mode_container = lv_obj_create(screen_mode);
+    lv_obj_align(screen_mode_container, LV_ALIGN_BOTTOM_MID, 0, 20);
+    lv_obj_set_style_bg_color(screen_mode_container, lv_color_hex(0xffffff), LV_PART_MAIN);
+    lv_obj_set_size(screen_mode_container, 320, 210);
+    lv_obj_set_style_radius(screen_mode_container, 0, LV_PART_MAIN);
+    lv_obj_set_scrollbar_mode(screen_mode_container, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_border_width(screen_mode_container, 0, LV_PART_MAIN);
+    lv_obj_set_scroll_dir(screen_mode_container, LV_DIR_VER);
+}
+
+void create_screen_mode_widgets(void)
+{
+    label_mode_1 = lv_label_create(screen_mode_container);
+    lv_obj_align(label_mode_1, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_label_set_text(label_mode_1, "Mode");
+    label_mode_2 = lv_label_create(screen_mode_container);
+    lv_obj_align(label_mode_2, LV_ALIGN_TOP_RIGHT, 0, 0);
+    lv_label_set_text(label_mode_2, "Mode2");
+    lv_obj_set_style_bg_color(label_mode_1, lv_color_hex(0xffffff),  LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(label_mode_1, lv_color_hex(0xff0000),  LV_STATE_FOCUSED);
+
+    lv_obj_set_style_bg_color(label_mode_2, lv_color_hex(0xffffff),  LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(label_mode_2, lv_color_hex(0xff0000),  LV_STATE_FOCUSED);
+
+    lv_obj_set_style_bg_opa(label_mode_1, LV_OPA_MAX, LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(label_mode_2, LV_OPA_MAX, LV_PART_MAIN);
 }
 
 int main(void)
@@ -170,6 +205,13 @@ int main(void)
     current_screen = 0;
 
     // Create UI
+    create_screen_mode();
+    create_screen_mode_container();
+    create_screen_mode_widgets();
+
+    array_mode_screen[0] = label_mode_1;
+    array_mode_screen[1] = label_mode_2;
+
     create_input_base();
     create_input_area_container();
     create_input_area();

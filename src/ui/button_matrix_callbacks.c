@@ -2,41 +2,98 @@
 #include <string.h>
 #include <ui.h>
 #include <interpreter.h>
+#include <math.h>
 
 extern lv_obj_t *input_base;
+extern lv_obj_t *screen_mode;
+extern lv_obj_t *screen_mode_container;
 extern lv_obj_t *line;
 extern lv_obj_t *input_area;
 extern lv_obj_t *input_area_container;
 extern lv_obj_t *btn_matrix_part_up;
 extern lv_obj_t *btn_matrix_part_down;
 extern lv_obj_t *btn_matrix_part_mid;
+extern lv_obj_t *status_bar;
+extern lv_obj_t *label_mode_1;
+extern lv_obj_t *label_mode_2;
+
+extern lv_obj_t *array_mode_screen[2];
+
 extern double prev_ans;
 extern char current_screen;
 
-void nav_cb_right(lv_event_t *event)
-{
-    if (current_screen != 0) return;
-    lv_textarea_cursor_right(input_area);
-}
+uint32_t index_mode = 0;
 
-void nav_cb_left(lv_event_t *event)
+void nav_cb(lv_event_t *event)
 {
-    if (current_screen != 0) return;
-    lv_textarea_cursor_left(input_area);
-}
+    lv_obj_t *btn = lv_event_get_target(event);
 
-void nav_cb_up(lv_event_t *event)
-{
-    if (current_screen != 0) return;
-    if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, 20, LV_ANIM_OFF);
-    if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
-}
+    lv_indev_t *index = lv_event_get_indev(event);
+    lv_point_t coords;
+    lv_indev_get_point(index, &coords);
 
-void nav_cb_down(lv_event_t *event)
-{
-    if (current_screen != 0) return;
-    if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, -20, LV_ANIM_OFF);
-    if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+    lv_area_t area;
+
+    lv_obj_get_coords(btn, &area);
+
+    double center_x = (area.x1 + area.x2) / 2;
+    double center_y = (area.y1 + area.y2) / 2;
+
+    coords.x = coords.x - center_x;
+    coords.y = -(coords.y - center_y);
+
+    double ang = (180 / M_PI) * atan2(coords.y, coords.x);
+
+    if (ang < 0) ang += 360;
+
+    // Left
+    if (ang >= 135 && ang <= 225) {
+        if (current_screen == 0) {
+            lv_textarea_cursor_left(input_area);
+        }
+
+        if (current_screen == 1) {
+            lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
+            lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
+            if (index_mode != 0) {
+                index_mode--;
+                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+            }
+        }
+    }
+
+    // Right
+    if ((ang >= 315 && ang <= 360) || (ang <= 45 && ang >= 0)) {
+        if (current_screen == 0) {
+            lv_textarea_cursor_right(input_area);
+        }
+
+        if (current_screen == 1) {
+            lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
+            lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
+            if (index_mode != 1) {
+                index_mode++;
+                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+            }
+        }
+    }
+
+    // Up
+    if (ang >= 45 && ang <= 135) {
+        if (current_screen != 0) return;
+        if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(
+            input_area_container, 0, 20, LV_ANIM_OFF);
+        if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(
+            input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+    }
+
+    // Down
+    if (ang >= 225 && ang <= 315) {
+        if (current_screen != 0) return;
+        if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(
+            input_area_container, 0, -20, LV_ANIM_OFF);
+        if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+    }
 }
 
 void btn_matrix_down_cb(lv_event_t *event)
@@ -107,5 +164,12 @@ void btn_matrix_mid_cb(lv_event_t *event)
     uint32_t *index = lv_event_get_param(event);
     if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "^") == 0) {
         lv_textarea_add_char(input_area, '^');
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
+        current_screen = 1;
+        lv_obj_move_foreground(screen_mode);
+        lv_obj_move_foreground(screen_mode_container);
+        lv_obj_move_foreground(label_mode_1);
+        lv_obj_move_foreground(label_mode_2);
+        lv_obj_move_foreground(status_bar);
     }
 }
