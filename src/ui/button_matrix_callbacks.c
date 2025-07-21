@@ -23,6 +23,7 @@ extern double prev_ans;
 extern char current_screen;
 
 uint32_t index_mode = 0;
+uint32_t num_obj = 2;
 
 void nav_cb(lv_event_t *event)
 {
@@ -53,9 +54,9 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == 1) {
-            lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
-            lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
             if (index_mode != 0) {
+                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
                 index_mode--;
                 lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
             }
@@ -69,9 +70,9 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == 1) {
-            lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
-            lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
             if (index_mode != 1) {
+                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
                 index_mode++;
                 lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
             }
