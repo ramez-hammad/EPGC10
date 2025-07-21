@@ -82,17 +82,20 @@ void nav_cb(lv_event_t *event)
     // Up
     if (ang >= 45 && ang <= 135) {
         if (current_screen != 0) return;
-        if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(
-            input_area_container, 0, 20, LV_ANIM_OFF);
-        if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(
-            input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+        if (lv_obj_get_scroll_top(input_area_container) >= 20)
+            lv_obj_scroll_by(
+                input_area_container, 0, 20, LV_ANIM_OFF);
+        if (lv_obj_get_scroll_top(input_area_container) < 20)
+            lv_obj_scroll_by(
+                input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
     }
 
     // Down
     if (ang >= 225 && ang <= 315) {
         if (current_screen != 0) return;
-        if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(
-            input_area_container, 0, -20, LV_ANIM_OFF);
+        if (lv_obj_get_scroll_bottom(input_area_container) >= 20)
+            lv_obj_scroll_by(
+                input_area_container, 0, -20, LV_ANIM_OFF);
         if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
     }
 }
@@ -168,6 +171,14 @@ void btn_matrix_mid_cb(lv_event_t *event)
         lv_textarea_add_char(input_area, '^');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
         current_screen = 1;
+        index_mode = 0;
+        lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+
+        for (uint32_t i = index_mode + 1; i < num_obj; i++) {
+            lv_obj_set_state(array_mode_screen[i], LV_STATE_DEFAULT, true);
+            lv_obj_remove_state(array_mode_screen[i], LV_STATE_FOCUSED);
+        }
+
         lv_obj_move_foreground(screen_menu);
         lv_obj_move_foreground(screen_menu_container);
         lv_obj_move_foreground(label_mode_1);
