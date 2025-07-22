@@ -1,3 +1,6 @@
+#define MENU_BUTTON_WIDTH 87
+#define MENU_BUTTON_HEIGHT 87
+
 void create_line_ans(void);
 
 void btn_matrix_cb(lv_event_t *event);

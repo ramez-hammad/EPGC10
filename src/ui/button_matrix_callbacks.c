@@ -3,6 +3,7 @@
 #include <ui.h>
 #include <interpreter.h>
 #include <math.h>
+#include <button_matrix_callbacks.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *screen_menu;
@@ -14,16 +15,18 @@ extern lv_obj_t *btn_matrix_part_up;
 extern lv_obj_t *btn_matrix_part_down;
 extern lv_obj_t *btn_matrix_part_mid;
 extern lv_obj_t *status_bar;
-extern lv_obj_t *label_mode_1;
-extern lv_obj_t *label_mode_2;
+extern lv_obj_t *back_button_menu;
+extern lv_obj_t *graph_button_menu;
 
-extern lv_obj_t *array_mode_screen[2];
 
 extern double prev_ans;
 extern char current_screen;
 
-uint32_t index_mode = 0;
-uint32_t num_obj = 2;
+uint32_t col_index = 0;
+uint32_t row_index = 0;
+uint32_t num_obj;
+
+extern lv_obj_t *array_mode_screen[3][3];
 
 void nav_cb(lv_event_t *event)
 {
@@ -54,11 +57,30 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == 1) {
-            if (index_mode != 0) {
-                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
-                lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
-                index_mode--;
-                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+            if (col_index > 0) {
+                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                col_index--;
+                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+            } else if (col_index == 0 && row_index > 0) {
+                if ((row_index + 1) % 2 == 0) {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    col_index = COL_INDEX_LAST;
+                    row_index--;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    if (row_index != 0) {
+                        lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
+                    } else {
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container), LV_ANIM_OFF);
+                    }
+                } else {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    col_index = COL_INDEX_LAST;
+                    row_index--;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                }
             }
         }
     }
@@ -70,33 +92,85 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == 1) {
-            if (index_mode != 1) {
-                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_DEFAULT, true);
-                lv_obj_remove_state(array_mode_screen[index_mode], LV_STATE_FOCUSED);
-                index_mode++;
-                lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+            if (col_index < COL_INDEX_LAST) {
+                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                col_index++;
+                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+            } else if (col_index == COL_INDEX_LAST && row_index < ROW_INDEX_LAST) {
+                if ((row_index + 1) % 2 == 0) {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    col_index = 0;
+                    row_index++;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_scroll_by(screen_menu_container, 0, -97, LV_ANIM_OFF);
+                } else {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    col_index = 0;
+                    row_index++;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                }
             }
         }
     }
 
     // Up
     if (ang >= 45 && ang <= 135) {
-        if (current_screen != 0) return;
-        if (lv_obj_get_scroll_top(input_area_container) >= 20)
-            lv_obj_scroll_by(
+        if (current_screen == 0) {
+            if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(
                 input_area_container, 0, 20, LV_ANIM_OFF);
-        if (lv_obj_get_scroll_top(input_area_container) < 20)
-            lv_obj_scroll_by(
+            if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(
                 input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+        }
+
+        if (current_screen == 1) {
+            if (row_index > 0) {
+                if ((row_index + 1) % 2 == 0) {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    row_index--;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    if (row_index != 0) {
+                        lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
+                    } else {
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container), LV_ANIM_OFF);
+                    }
+                } else {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    row_index--;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                }
+            }
+        }
     }
 
     // Down
     if (ang >= 225 && ang <= 315) {
-        if (current_screen != 0) return;
-        if (lv_obj_get_scroll_bottom(input_area_container) >= 20)
-            lv_obj_scroll_by(
+        if (current_screen == 0) {
+            if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(
                 input_area_container, 0, -20, LV_ANIM_OFF);
-        if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+        }
+
+        if (current_screen == 1) {
+            if (row_index < ROW_INDEX_LAST) {
+                if ((row_index + 1) % 2 == 0) {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    row_index++;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_scroll_by(screen_menu_container, 0, -97, LV_ANIM_OFF);
+                } else {
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    row_index++;
+                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                }
+            }
+        }
     }
 }
 
@@ -171,18 +245,30 @@ void btn_matrix_mid_cb(lv_event_t *event)
         lv_textarea_add_char(input_area, '^');
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
         current_screen = 1;
-        index_mode = 0;
-        lv_obj_set_state(array_mode_screen[index_mode], LV_STATE_FOCUSED, true);
+        num_obj = 0;
+        col_index = 0;
+        row_index = 0;
 
-        for (uint32_t i = index_mode + 1; i < num_obj; i++) {
-            lv_obj_set_state(array_mode_screen[i], LV_STATE_DEFAULT, true);
-            lv_obj_remove_state(array_mode_screen[i], LV_STATE_FOCUSED);
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
+                lv_obj_set_state(array_mode_screen[i][j], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_mode_screen[i][j], LV_STATE_FOCUSED);
+            }
         }
+
+        lv_obj_set_state(array_mode_screen[0][0], LV_STATE_FOCUSED, true);
 
         lv_obj_move_foreground(screen_menu);
         lv_obj_move_foreground(screen_menu_container);
-        lv_obj_move_foreground(label_mode_1);
-        lv_obj_move_foreground(label_mode_2);
+        lv_obj_move_foreground(back_button_menu);
+        lv_obj_move_foreground(graph_button_menu);
         lv_obj_move_foreground(status_bar);
+
+        for (uint32_t i = 0; i < 3; i++) {
+            for (uint32_t j = 0; j < 3; j++) {
+                lv_obj_move_to_index(array_mode_screen[i][j], num_obj);
+                num_obj++;
+            }
+        }
     }
 }

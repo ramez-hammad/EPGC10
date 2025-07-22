@@ -2,6 +2,7 @@
 #include <string.h>
 #include <lvgl.h>
 #include <button_matrix.h>
+#include <ui.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -13,10 +14,22 @@ lv_obj_t *deg_rad_label;
 lv_obj_t *status_bar;
 lv_obj_t *screen_menu;
 lv_obj_t *screen_menu_container;
-lv_obj_t *label_mode_1;
-lv_obj_t *label_mode_2;
 
-lv_obj_t *array_mode_screen[2];
+lv_obj_t *back_button_menu;
+lv_obj_t *back_button_menu_label;
+
+lv_obj_t *graph_button_menu;
+lv_obj_t *graph_button_menu_label;
+
+lv_obj_t *menu_button_3;
+lv_obj_t *menu_button_4;
+lv_obj_t *menu_button_5;
+lv_obj_t *menu_button_6;
+lv_obj_t *menu_button_7;
+lv_obj_t *menu_button_8;
+lv_obj_t *menu_button_9;
+
+lv_obj_t *array_mode_screen[3][3];
 
 char current_screen;
 char *display_format;
@@ -156,7 +169,6 @@ void create_screen_menu(void)
 void create_screen_menu_container(void)
 {
     screen_menu_container = lv_obj_create(screen_menu);
-    lv_obj_align(screen_menu_container, LV_ALIGN_BOTTOM_MID, 0, 20);
     lv_obj_set_style_bg_color(screen_menu_container, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_set_size(screen_menu_container, 320, 210);
     lv_obj_set_style_radius(screen_menu_container, 0, LV_PART_MAIN);
@@ -164,24 +176,89 @@ void create_screen_menu_container(void)
     lv_obj_set_style_border_width(screen_menu_container, 0, LV_PART_MAIN);
     lv_obj_set_scroll_dir(screen_menu_container, LV_DIR_VER);
     lv_obj_set_layout(screen_menu_container, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(screen_menu_container, LV_FLEX_FLOW_ROW_WRAP);
+    lv_obj_set_flex_align(screen_menu_container, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_ALIGN_CENTER);
+    lv_obj_align(screen_menu_container, LV_ALIGN_BOTTOM_MID, 0, lv_obj_get_style_pad_row(screen_menu_container, LV_PART_MAIN));
 }
 
 void create_screen_menu_widgets(void)
 {
-    label_mode_1 = lv_label_create(screen_menu_container);
-    lv_obj_align(label_mode_1, LV_ALIGN_TOP_LEFT, 0, 0);
-    lv_label_set_text(label_mode_1, "Mode");
-    label_mode_2 = lv_label_create(screen_menu_container);
-    lv_obj_align(label_mode_2, LV_ALIGN_TOP_RIGHT, 0, 0);
-    lv_label_set_text(label_mode_2, "Mode2");
-    lv_obj_set_style_bg_color(label_mode_1, lv_color_hex(0xffffff),  LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(label_mode_1, lv_color_hex(0xff0000),  LV_STATE_FOCUSED);
+    // Create menu button styles
 
-    lv_obj_set_style_bg_color(label_mode_2, lv_color_hex(0xffffff),  LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(label_mode_2, lv_color_hex(0xff0000),  LV_STATE_FOCUSED);
+    static lv_style_t menu_button_style_default;
+    lv_style_init(&menu_button_style_default);
+    lv_style_set_bg_opa(&menu_button_style_default, LV_OPA_MAX);
+    lv_style_set_bg_color(&menu_button_style_default, lv_color_hex(0xffffff));
 
-    lv_obj_set_style_bg_opa(label_mode_1, LV_OPA_MAX, LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(label_mode_2, LV_OPA_MAX, LV_PART_MAIN);
+    static lv_style_t menu_button_style_focused;
+    lv_style_init(&menu_button_style_focused);
+    lv_style_set_bg_opa(&menu_button_style_focused, LV_OPA_MAX);
+    lv_style_set_bg_color(&menu_button_style_focused, lv_color_hex(0xff0000));
+
+
+    // Placeholder menu buttons
+
+    menu_button_9 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_9, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_9, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_9, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_9, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_8 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_8, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_8, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_8, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_8, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_7 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_7, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_7, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_7, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_7, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_6 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_6, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_6, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_6, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_6, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_5 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_5, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_5, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_5, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_5, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_4 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_4, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_4, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_4, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_4, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    menu_button_3 = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(menu_button_3, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(menu_button_3, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(menu_button_3, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(menu_button_3, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    graph_button_menu = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(graph_button_menu, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(graph_button_menu, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(graph_button_menu, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(graph_button_menu, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    graph_button_menu_label = lv_label_create(graph_button_menu);
+    lv_obj_align(graph_button_menu_label, LV_ALIGN_CENTER, 0, 0);
+    lv_label_set_text(graph_button_menu_label, "Graph");
+
+    back_button_menu = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(back_button_menu, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(back_button_menu, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(back_button_menu, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(back_button_menu, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+    back_button_menu_label = lv_label_create(back_button_menu);
+    lv_obj_align(back_button_menu_label, LV_ALIGN_CENTER, 0, 0);
+    lv_label_set_text(back_button_menu_label, "Back");
 }
 
 int main(void)
@@ -210,8 +287,15 @@ int main(void)
     create_screen_menu_container();
     create_screen_menu_widgets();
 
-    array_mode_screen[0] = label_mode_1;
-    array_mode_screen[1] = label_mode_2;
+    array_mode_screen[0][0] = back_button_menu;
+    array_mode_screen[0][1] = graph_button_menu;
+    array_mode_screen[0][2] = menu_button_3;
+    array_mode_screen[1][0] = menu_button_4;
+    array_mode_screen[1][1] = menu_button_5;
+    array_mode_screen[1][2] = menu_button_6;
+    array_mode_screen[2][0] = menu_button_7;
+    array_mode_screen[2][1] = menu_button_8;
+    array_mode_screen[2][2] = menu_button_9;
 
     create_input_base();
     create_input_area_container();
