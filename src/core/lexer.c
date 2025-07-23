@@ -65,6 +65,8 @@ char *get_arg(const char *expr, size_t index, int *width)
 
     *width = arg_width;
 
+    arg[arg_width] = '\0';
+
     return arg;
 }
 
