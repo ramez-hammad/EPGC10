@@ -281,7 +281,7 @@ void btn_matrix_mid_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
     if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "^") == 0) {
-        append_text(input_area, "^\0");
+        append_text(input_buffer, "^\0");
         lv_textarea_set_text(input_area, get_text(input_buffer));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
         current_screen = 1;
