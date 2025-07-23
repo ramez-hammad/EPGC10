@@ -22,6 +22,8 @@ set(SRC_UI
         src/ui/button_matrix.c
         src/ui/button_matrix_callbacks.c
         src/ui/button_matrix_callbacks.h
+        src/ui/text.c
+        src/ui/text.h
 )
 
 set(SRC_TEST

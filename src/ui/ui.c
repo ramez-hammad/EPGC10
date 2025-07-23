@@ -3,6 +3,7 @@
 #include <lvgl.h>
 #include <button_matrix.h>
 #include <ui.h>
+#include <text.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -35,26 +36,6 @@ char current_screen;
 char *display_format;
 char deg_rad = 1;
 double prev_ans;
-
-void create_line_ans(void);
-
-void btn_matrix_cb(lv_event_t *event);
-
-void create_ans_label(double ans);
-
-void create_deg_rad_label(void);
-
-void create_display_format_label(void);
-
-void create_status_bar(void);
-
-void create_input_base(void);
-
-void create_input_area_container(void);
-
-void create_input_area(void);
-
-void create_screen_menu(void);
 
 void create_line_ans(void)
 {
@@ -151,7 +132,7 @@ void create_input_area(void)
     lv_obj_set_style_radius(input_area, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area, LV_SCROLLBAR_MODE_OFF);
     lv_obj_set_style_text_font(input_area, &lv_font_montserrat_16, LV_PART_MAIN);
-    lv_textarea_set_max_length(input_area, 50);
+    lv_textarea_set_max_length(input_area, MAXLEN_INPUT);
 }
 
 void create_screen_menu(void)
@@ -303,7 +284,6 @@ int main(void)
     create_status_bar();
     create_button_matrix_base();
     create_button_matrix();
-
 
     while (true) {
         lv_timer_handler();
