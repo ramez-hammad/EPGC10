@@ -4,6 +4,7 @@
 #include <interpreter.h>
 #include <math.h>
 #include <button_matrix_callbacks.h>
+#include <input_area.h>
 #include <text.h>
 
 extern lv_obj_t *input_base;

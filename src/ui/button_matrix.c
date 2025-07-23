@@ -135,6 +135,7 @@ void create_button_matrix_part_up(void)
 
 void create_button_matrix(void)
 {
+    create_button_matrix_base();
     create_button_matrix_part_down();
     create_button_matrix_part_mid();
     create_button_matrix_part_up();
