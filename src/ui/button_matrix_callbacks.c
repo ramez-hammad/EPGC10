@@ -292,5 +292,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
         row_index = 0;
 
         display_screen_menu();
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "x^2") == 0) {
+        append_text(input_buffer, "^2\0");
+        lv_textarea_set_text(input_area, get_text(input_buffer));
     }
 }
