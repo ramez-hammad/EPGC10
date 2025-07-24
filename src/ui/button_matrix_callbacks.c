@@ -6,6 +6,7 @@
 #include <button_matrix_callbacks.h>
 #include <text.h>
 #include <status_bar.h>
+#include <screen_menu.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *screen_menu;
@@ -290,26 +291,6 @@ void btn_matrix_mid_cb(lv_event_t *event)
         col_index = 0;
         row_index = 0;
 
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                lv_obj_set_state(array_mode_screen[i][j], LV_STATE_DEFAULT, true);
-                lv_obj_remove_state(array_mode_screen[i][j], LV_STATE_FOCUSED);
-            }
-        }
-
-        lv_obj_set_state(array_mode_screen[0][0], LV_STATE_FOCUSED, true);
-
-        lv_obj_move_foreground(screen_menu);
-        lv_obj_move_foreground(screen_menu_container);
-        lv_obj_move_foreground(back_button_menu);
-        lv_obj_move_foreground(graph_button_menu);
-        lv_obj_move_foreground(status_bar);
-
-        for (uint32_t i = 0; i < 3; i++) {
-            for (uint32_t j = 0; j < 3; j++) {
-                lv_obj_move_to_index(array_mode_screen[i][j], num_obj);
-                num_obj++;
-            }
-        }
+        display_screen_menu();
     }
 }
