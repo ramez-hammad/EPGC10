@@ -1,8 +1,9 @@
 #include <lvgl.h>
 #include <SDL_timer.h>
-#include <button_matrix.h>
-#include <ui.h>
 #include <screen_menu.h>
+#include <input_area.h>
+#include <status_bar.h>
+#include <button_matrix.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;

@@ -1,5 +1,4 @@
 #include <lvgl.h>
-#include <ui.h>
 
 extern lv_obj_t* status_bar;
 extern lv_obj_t* display_format_label;

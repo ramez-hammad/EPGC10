@@ -1,11 +1,11 @@
 #include <lvgl.h>
+#include <input_area.h>
 #include <string.h>
-#include <ui.h>
 #include <interpreter.h>
 #include <math.h>
 #include <button_matrix_callbacks.h>
-#include <input_area.h>
 #include <text.h>
+#include <status_bar.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *screen_menu;
