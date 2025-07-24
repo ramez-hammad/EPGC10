@@ -34,15 +34,16 @@ void create_button_matrix_base(void)
 void create_button_matrix_part_down(void)
 {
     static const char *btn_matrix_part_down_map[] = {
-        " ", "log", "ln", "sin", "cos", "tan", "\n",
+        " ", "log", "ln", "#c4a747 arcsin#\n   sin", "#c4a747 arccos#\n   cos", "#c4a747 arctan#\n   tan", "\n",
         " ", " ", "(", ")", ",", " ", "\n",
         "7", "8", "9", "DEL", "AC", "\n",
         "4", "5", "6", "X", "/", "\n",
         "1", "2", "3", "+", "-", "\n",
         "0", ".", "Pi", "Ans", "=", NULL
     };
+
     btn_matrix_part_down = lv_buttonmatrix_create(btn_matrix_base);
-    lv_obj_set_size(btn_matrix_part_down, 370, 235);
+    lv_obj_set_size(btn_matrix_part_down, 370, 294);
     lv_obj_align(btn_matrix_part_down, LV_ALIGN_BOTTOM_MID, 0, 16);
     lv_obj_set_style_radius(btn_matrix_part_down, 0, LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_part_down, lv_color_hex(0x000000), LV_PART_MAIN);
@@ -50,6 +51,7 @@ void create_button_matrix_part_down(void)
     lv_buttonmatrix_set_map(btn_matrix_part_down, btn_matrix_part_down_map);
     uint32_t index = lv_buttonmatrix_get_selected_button(btn_matrix_part_down);
     lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_cb, LV_EVENT_VALUE_CHANGED, &index);
+    lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_down, LV_BUTTONMATRIX_CTRL_RECOLOR);
 }
 
 void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
@@ -72,20 +74,20 @@ void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
 void create_button_matrix_part_mid(void)
 {
     btn_matrix_part_mid_container = lv_obj_create(btn_matrix_base);
-    lv_obj_set_size(btn_matrix_part_mid_container, 370, 115);
-    lv_obj_align_to(btn_matrix_part_mid_container, btn_matrix_part_down, LV_ALIGN_TOP_MID, 0, -130);
+    lv_obj_set_size(btn_matrix_part_mid_container, 370, 144);
+    lv_obj_align_to(btn_matrix_part_mid_container, btn_matrix_part_down, LV_ALIGN_TOP_MID, 0, -155);
     lv_obj_set_style_radius(btn_matrix_part_mid_container, 0, LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_part_mid_container, lv_color_hex(0x000000), LV_PART_MAIN);
     lv_obj_set_style_border_width(btn_matrix_part_mid_container, 0, LV_PART_MAIN);
 
     static const char *btn_matrix_part_mid_map[] = {
-        "SHIFT", "OPTN", "VARS", "MENU", "\n",
+        "#c4a747 SHIFT#", "OPTN", "VARS", "MENU", "\n",
         "ALPHA", "x^2", "^", "EXIT", NULL,
     };
 
 
     btn_matrix_part_mid = lv_buttonmatrix_create(btn_matrix_part_mid_container);
-    lv_obj_set_size(btn_matrix_part_mid, 255, 115);
+    lv_obj_set_size(btn_matrix_part_mid, 255, 144);
     lv_obj_set_style_radius(btn_matrix_part_mid, 0, LV_PART_MAIN);
     lv_obj_align(btn_matrix_part_mid, LV_ALIGN_LEFT_MID, -16, 0);
     lv_obj_set_flag(btn_matrix_part_mid_container, LV_OBJ_FLAG_SCROLLABLE, false);
@@ -104,6 +106,7 @@ void create_button_matrix_part_mid(void)
     lv_obj_set_style_bg_color(btn_matrix_part_mid_nav_container, lv_color_hex(0x000000), LV_PART_MAIN);
     lv_obj_set_style_border_width(btn_matrix_part_mid_nav_container, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(btn_matrix_part_mid_nav_container, 0, LV_PART_MAIN);
+    lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_mid, LV_BUTTONMATRIX_CTRL_RECOLOR);
 
     // Left
     create_nav_sector(&btn_matrix_part_mid_nav_1, 135, 225);
@@ -125,7 +128,7 @@ void create_button_matrix_part_up(void)
     };
 
     btn_matrix_part_up = lv_buttonmatrix_create(btn_matrix_base);
-    lv_obj_set_size(btn_matrix_part_up, 370, 50);
+    lv_obj_set_size(btn_matrix_part_up, 370, 62);
     lv_obj_set_style_radius(btn_matrix_part_up, 0, LV_PART_MAIN);
     lv_obj_align(btn_matrix_part_up, LV_ALIGN_TOP_MID, 0, -17);
     lv_buttonmatrix_set_map(btn_matrix_part_up, btn_matrix_part_up_map);

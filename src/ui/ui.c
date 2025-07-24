@@ -37,6 +37,7 @@ char current_screen;
 char *display_format;
 char deg_rad = 1;
 double prev_ans;
+char shift;
 
 int main(void)
 {

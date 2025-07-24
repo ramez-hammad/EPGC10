@@ -33,6 +33,8 @@ extern lv_obj_t *array_mode_screen[3][3];
 
 char* input_buffer[MAXLEN_INPUT + 1];
 
+extern char shift;
+
 void nav_cb(lv_event_t *event)
 {
     lv_obj_t *btn = lv_event_get_target(event);
@@ -237,15 +239,33 @@ void btn_matrix_down_cb(lv_event_t *event)
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ")") == 0) {
         append_text(input_buffer, ")\0");
         lv_textarea_set_text(input_area, get_text(input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "sin") == 0) {
-        append_text(input_buffer, "sin(\0");
-        lv_textarea_set_text(input_area, get_text(input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "cos") == 0) {
-        append_text(input_buffer, "cos(\0");
-        lv_textarea_set_text(input_area, get_text(input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "tan") == 0) {
-        append_text(input_buffer, "tan(\0");
-        lv_textarea_set_text(input_area, get_text(input_buffer));
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arcsin#\n   sin") == 0) {
+        if (shift == 1) {
+            append_text(input_buffer, "arcsin(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        } else {
+            append_text(input_buffer, "sin(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        }
+        shift = 0;
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arccos#\n   cos") == 0) {
+        if (shift == 1) {
+            append_text(input_buffer, "arccos(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        } else {
+            append_text(input_buffer, "cos(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        }
+        shift = 0;
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index),  "#c4a747 arctan#\n   tan") == 0) {
+        if (shift == 1) {
+            append_text(input_buffer, "arctan(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        } else {
+             append_text(input_buffer, "tan(\0");
+            lv_textarea_set_text(input_area, get_text(input_buffer));
+        }
+        shift = 0;
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "log") == 0) {
         append_text(input_buffer, "log(\0");
         lv_textarea_set_text(input_area, get_text(input_buffer));
@@ -253,9 +273,11 @@ void btn_matrix_down_cb(lv_event_t *event)
         append_text(input_buffer, "ln(\0");
         lv_textarea_set_text(input_area, get_text(input_buffer));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "DEL") == 0) {
+        shift = 0;
         delete_text(input_buffer);
         lv_textarea_set_text(input_area, get_text(input_buffer));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "=") == 0) {
+        shift = 0;
         create_ans_label(interpret(lv_textarea_get_text(input_area)));
         create_line_ans();
         lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
@@ -295,5 +317,11 @@ void btn_matrix_mid_cb(lv_event_t *event)
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "x^2") == 0) {
         append_text(input_buffer, "^2\0");
         lv_textarea_set_text(input_area, get_text(input_buffer));
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#c4a747 SHIFT#") == 0) {
+        if (shift == 1) {
+            shift = 0;
+        } else {
+            shift = 1;
+        }
     }
 }

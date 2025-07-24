@@ -67,6 +67,8 @@ void create_ans_label(double ans)
     sprintf(text, "%.2f", ans);
     if (strlen(text) >= 14) sprintf(text, "%e", ans);
     if (strcmp(text, "inf") == 0) strcpy(text, "Error");
+    if (strcmp(text, "-inf") == 0) strcpy(text, "Error");
+    if (strcmp(text, "nan") == 0) strcpy(text, "Error");
     ans_label = lv_label_create(input_area_container);
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(0xffffff), LV_PART_MAIN);
