@@ -9,6 +9,11 @@ double to_rad(double deg)
     return deg * (M_PI / 180);
 }
 
+double to_deg(double rad)
+{
+    return rad * (180 / M_PI);
+}
+
 double evaluate(NODE *root)
 {
     while (true) {
@@ -70,17 +75,17 @@ double evaluate(NODE *root)
             case TOKEN_TANH:
                 return tanh(to_rad(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ASIN:
-                return asin(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(asin(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ACOS:
-                return acos(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(acos(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ATAN:
-                return atan(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(atan(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ASINH:
-                return asinh(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(asinh(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ACOSH:
-                return acosh(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(acosh(evaluate(parse_expression_str(root->arg))));
             case TOKEN_ATANH:
-                return atanh(to_rad(evaluate(parse_expression_str(root->arg))));
+                return to_deg(atanh(evaluate(parse_expression_str(root->arg))));
             case TOKEN_LN:
                 return log(evaluate(parse_expression_str(root->arg)));
             case TOKEN_LOG:
