@@ -1,3 +1,6 @@
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+
 void create_input_base(void);
 void create_input_area_container(void);
 void create_input_area(void);

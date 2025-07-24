@@ -1,8 +1,8 @@
 #include <lvgl.h>
-#include <ui.h>
 #include <text.h>
 #include <stdio.h>
 #include <string.h>
+#include <input_area.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area_container;
@@ -17,7 +17,7 @@ void create_input_base(void)
     input_base = lv_obj_create(lv_screen_active());
     lv_obj_align(input_base, LV_ALIGN_TOP_MID, 0, 0);
     lv_obj_set_style_bg_color(input_base, lv_color_hex(0xffffff), LV_PART_MAIN);
-    lv_obj_set_size(input_base, 320, 240);
+    lv_obj_set_size(input_base, SCREEN_WIDTH, SCREEN_HEIGHT);
     lv_obj_set_style_radius(input_base, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
     lv_obj_remove_flag(input_base, LV_OBJ_FLAG_SCROLL_ELASTIC);
