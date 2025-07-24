@@ -12,7 +12,6 @@ include_directories(
         src/ui/
 )
 
-# Your app sources
 set(SRC_UI
         src/ui/ui.c
         src/core/interpreter.c
@@ -21,15 +20,10 @@ set(SRC_UI
         src/core/evaluator.c
         src/ui/button_matrix.c
         src/ui/button_matrix_callbacks.c
-        src/ui/button_matrix_callbacks.h
         src/ui/text.c
-        src/ui/text.h
         src/ui/input_area.c
-        src/ui/input_area.h
         src/ui/status_bar.c
-        src/ui/status_bar.h
         src/ui/screen_menu.c
-        src/ui/screen_menu.h
 )
 
 set(SRC_TEST
