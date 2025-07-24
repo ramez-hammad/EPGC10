@@ -1,5 +1,6 @@
 #include <lvgl.h>
 #include <screen_menu.h>
+#include <ui.h>
 
 extern lv_obj_t *screen_menu;
 extern lv_obj_t *screen_menu_container;
@@ -46,12 +47,12 @@ void create_screen_menu_widgets(void)
     static lv_style_t menu_button_style_default;
     lv_style_init(&menu_button_style_default);
     lv_style_set_bg_opa(&menu_button_style_default, LV_OPA_MAX);
-    lv_style_set_bg_color(&menu_button_style_default, lv_color_hex(0xffffff));
+    lv_style_set_bg_color(&menu_button_style_default, lv_color_hex(BG_COLOR_BUTTONS));
 
     static lv_style_t menu_button_style_focused;
     lv_style_init(&menu_button_style_focused);
     lv_style_set_bg_opa(&menu_button_style_focused, LV_OPA_MAX);
-    lv_style_set_bg_color(&menu_button_style_focused, lv_color_hex(0xff0000));
+    lv_style_set_bg_color(&menu_button_style_focused, lv_color_hex(BG_COLOR_MENU_SELECTED));
 
     graph_button_menu = lv_obj_create(screen_menu_container);
     lv_obj_set_size(graph_button_menu, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);

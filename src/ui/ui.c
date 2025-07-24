@@ -54,7 +54,7 @@ int main(void)
     lv_indev_t *lv_mouse = lv_sdl_mouse_create();
 
     // Change the background color of the active screen
-    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(0x000000), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(BG_COLOR), LV_PART_MAIN);
 
     display_format = "NORMAL";
 

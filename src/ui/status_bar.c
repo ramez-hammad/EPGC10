@@ -1,4 +1,5 @@
 #include <lvgl.h>
+#include <ui.h>
 
 extern lv_obj_t* status_bar;
 extern lv_obj_t* display_format_label;
@@ -32,7 +33,7 @@ void create_status_bar(void)
     lv_obj_set_size(status_bar, 320, 35);
     lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, 0);
     lv_obj_set_scrollbar_mode(status_bar, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_bg_color(status_bar, lv_color_hex(0x525552), LV_ANIM_IMAGE_PART_MAIN);
+    lv_obj_set_style_bg_color(status_bar, lv_color_hex(BG_COLOR_STATUS_BAR), LV_ANIM_IMAGE_PART_MAIN);
     lv_obj_set_style_radius(status_bar, 0, LV_PART_MAIN);
     lv_obj_set_style_border_width(status_bar, 2, LV_PART_MAIN);
     lv_obj_set_style_border_side(status_bar, LV_BORDER_SIDE_BOTTOM, LV_PART_MAIN);
