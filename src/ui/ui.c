@@ -4,6 +4,7 @@
 #include <input_area.h>
 #include <status_bar.h>
 #include <button_matrix.h>
+#include <ui.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -46,7 +47,7 @@ int main(void)
     lv_tick_set_cb(SDL_GetTicks);
 
     // Create window
-    lv_display_t *lvDisplay = lv_sdl_window_create(370, 640);
+    lv_display_t *lvDisplay = lv_sdl_window_create(SCREEN_WIDTH, SCREEN_HEIGHT);
 
     // Create mouse
     lv_indev_t *lv_mouse = lv_sdl_mouse_create();
