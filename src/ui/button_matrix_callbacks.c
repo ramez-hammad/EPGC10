@@ -31,8 +31,10 @@ uint32_t num_obj;
 extern lv_obj_t *array_mode_screen[3][3];
 
 char *input_buffer[MAXLEN_INPUT + 1];
+char *output_buffer[MAXLEN_INPUT + 1];
 
-int length_input_buffer = 0;
+int input_buffer_length = 0;
+int output_buffer_length = 0;
 
 extern char shift;
 
@@ -127,10 +129,8 @@ void nav_cb(lv_event_t *event)
     // Up
     if (ang >= 45 && ang <= 135) {
         if (current_screen == 0) {
-            if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(
-                input_area_container, 0, 20, LV_ANIM_OFF);
-            if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(
-                input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, 20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
         }
 
         if (current_screen == 1) {
@@ -143,7 +143,7 @@ void nav_cb(lv_event_t *event)
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
-                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container), LV_ANIM_OFF);
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container),LV_ANIM_OFF);
                     }
                 } else {
                     lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -158,8 +158,7 @@ void nav_cb(lv_event_t *event)
     // Down
     if (ang >= 225 && ang <= 315) {
         if (current_screen == 0) {
-            if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(
-                input_area_container, 0, -20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, -20, LV_ANIM_OFF);
             if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
         }
 
@@ -187,106 +186,80 @@ void btn_matrix_down_cb(lv_event_t *event)
     uint32_t *index = lv_event_get_param(event);
     lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
     if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "1") == 0) {
-        append_text(input_buffer, "1\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("1\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "2") == 0) {
-        append_text(input_buffer, "2\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("2\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "3") == 0) {
-        append_text(input_buffer, "3\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer ));
+        add_to_input_area("3\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "4") == 0) {
-        append_text(input_buffer, "4\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("4\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "5") == 0) {
-        append_text(input_buffer, "5\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("5\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "6") == 0) {
-        append_text(input_buffer, "6\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("6\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "7") == 0) {
-        append_text(input_buffer, "7\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("7\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "8") == 0) {
-        append_text(input_buffer, "8\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("8\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "9") == 0) {
-        append_text(input_buffer, "9\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("9\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "0") == 0) {
-        append_text(input_buffer, "0\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("0\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ".") == 0) {
-        append_text(input_buffer, ".\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area(".\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "+") == 0) {
-        append_text(input_buffer, "+\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("+\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "-") == 0) {
-        append_text(input_buffer, "-\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "X") == 0) {
-        append_text(input_buffer, "*\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "/") == 0) {
-        append_text(input_buffer, "/\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u03C0") == 0) {
-        append_text(input_buffer, "p\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("-\0");
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u00D7") == 0) { // Multiplication
+        add_to_input_area("*\0");
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u00F7") == 0) { // Division
+        add_to_input_area("/\0");
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u03C0") == 0) { // Pi
+        add_to_input_area("p\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "(") == 0) {
-        append_text(input_buffer, "(\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("(\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ")") == 0) {
-        append_text(input_buffer, ")\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area(")\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arcsin#\n   sin") == 0) {
         if (shift == 1) {
-            append_text(input_buffer, "arcsin(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("arcsin(\0");
         } else {
-            append_text(input_buffer, "sin(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("sin\0");
         }
         shift = 0;
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arccos#\n   cos") == 0) {
         if (shift == 1) {
-            append_text(input_buffer, "arccos(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("arccos(\0");
         } else {
-            append_text(input_buffer, "cos(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("cos(\0");
         }
         shift = 0;
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index),  "#c4a747 arctan#\n   tan") == 0) {
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arctan#\n   tan") == 0) {
         if (shift == 1) {
-            append_text(input_buffer, "arctan(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("arctan(\0");
         } else {
-             append_text(input_buffer, "tan(\0", &length_input_buffer);
-            lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+            add_to_input_area("tan(\0");
         }
         shift = 0;
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "log") == 0) {
-        append_text(input_buffer, "log(\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("log(\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "ln") == 0) {
-        append_text(input_buffer, "ln(\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        add_to_input_area("ln(\0");
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "DEL") == 0) {
         shift = 0;
-        delete_text(input_buffer, &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        delete_from_input_area();
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "=") == 0) {
         shift = 0;
         if (current_screen == 0) {
-            create_ans_label(interpret(lv_textarea_get_text(input_area)));
+            create_ans_label(interpret(get_text(input_buffer, &input_buffer_length)));
             create_line_ans();
             lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
             create_input_area();
             lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
             lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-            reset_input_buffer(input_buffer, &length_input_buffer);
+            reset_input_buffer(input_buffer, &input_buffer_length);
+            reset_input_buffer(output_buffer, &output_buffer_length);
         }
 
         if (current_screen == 1) {
@@ -302,7 +275,8 @@ void btn_matrix_down_cb(lv_event_t *event)
         create_input_area_container();
         create_status_bar();
         create_input_area();
-        reset_input_buffer(input_buffer, &length_input_buffer);
+        reset_input_buffer(input_buffer, &input_buffer_length);
+        reset_input_buffer(output_buffer, &output_buffer_length);
         current_screen = 0;
     }
 }
@@ -315,8 +289,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
     if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "^") == 0) {
-        append_text(input_buffer, "^\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        append_text(input_buffer, "^\0", &input_buffer_length);
+        lv_textarea_set_text(input_area, get_text(input_buffer, &input_buffer_length));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
         current_screen = 1;
         num_obj = 0;
@@ -325,8 +299,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
 
         display_screen_menu();
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "x^2") == 0) {
-        append_text(input_buffer, "^2\0", &length_input_buffer);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &length_input_buffer));
+        append_text(input_buffer, "^2\0", &input_buffer_length);
+        lv_textarea_set_text(input_area, get_text(input_buffer, &input_buffer_length));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#c4a747 SHIFT#") == 0) {
         if (shift == 1) {
             shift = 0;

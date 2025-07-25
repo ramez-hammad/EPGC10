@@ -37,7 +37,7 @@ void create_button_matrix_part_down(void)
         " ", "log", "ln", "#c4a747 arcsin#\n   sin", "#c4a747 arccos#\n   cos", "#c4a747 arctan#\n   tan", "\n",
         " ", " ", "(", ")", ",", " ", "\n",
         "7", "8", "9", "DEL", "AC", "\n",
-        "4", "5", "6", "X", "/", "\n",
+        "4", "5", "6", "\u00D7", "\u00F7", "\n",
         "1", "2", "3", "+", "-", "\n",
         "0", ".", "\u03C0", "Ans", "=", NULL
     };

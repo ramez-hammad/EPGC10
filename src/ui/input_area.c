@@ -14,6 +14,11 @@ extern lv_obj_t *status_bar;
 
 extern double prev_ans;
 
+extern char *input_buffer[];
+extern char *output_buffer[];
+extern int input_buffer_length;
+extern int output_buffer_length;
+
 void create_input_base(void)
 {
     input_base = lv_obj_create(lv_screen_active());
@@ -83,4 +88,32 @@ void display_screen_input(void)
 {
     lv_obj_move_foreground(input_base);
     lv_obj_move_foreground(status_bar);
+}
+
+void add_to_input_area(char *text)
+{
+    if (strcmp(text, "p") == 0) {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, "\u03c0\0", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else if (strcmp(text, "*") == 0) {
+        append_text(input_buffer, "*\0", &input_buffer_length);
+        append_text(output_buffer, "\u00D7\0", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else if (strcmp(text, "/") == 0) {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, "\u00F7\0", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, text, &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    }
+}
+
+void delete_from_input_area(void)
+{
+    delete_text(input_buffer, &input_buffer_length);
+    delete_text(output_buffer, &output_buffer_length);
+    lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
 }
