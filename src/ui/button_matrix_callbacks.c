@@ -278,14 +278,23 @@ void btn_matrix_down_cb(lv_event_t *event)
         lv_textarea_set_text(input_area, get_text(input_buffer));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "=") == 0) {
         shift = 0;
-        create_ans_label(interpret(lv_textarea_get_text(input_area)));
-        create_line_ans();
-        lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
-        create_input_area();
-        lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
-        lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-        reset_input_buffer(input_buffer);
-        current_screen = 0;
+        if (current_screen == 0) {
+            create_ans_label(interpret(lv_textarea_get_text(input_area)));
+            create_line_ans();
+            lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
+            create_input_area();
+            lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
+            lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+            reset_input_buffer(input_buffer);
+        }
+
+        if (current_screen == 1) {
+            // Back button pressed
+            if (row_index == 0 && col_index == 0) {
+                display_screen_input();
+                current_screen = 0;
+            }
+        }
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "AC") == 0) {
         lv_obj_delete(input_base);
         create_input_base();

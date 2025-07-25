@@ -9,6 +9,7 @@ extern lv_obj_t *input_area_container;
 extern lv_obj_t *input_area;
 extern lv_obj_t *line;
 extern lv_obj_t *ans_label;
+extern lv_obj_t *status_bar;
 
 extern double prev_ans;
 
@@ -75,4 +76,10 @@ void create_ans_label(double ans)
     lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_RIGHT, -25, 15);
     lv_obj_set_style_text_font(ans_label, &lv_font_montserrat_16, LV_PART_MAIN);
     prev_ans = ans;
+}
+
+void display_screen_input(void)
+{
+    lv_obj_move_foreground(input_base);
+    lv_obj_move_foreground(status_bar);
 }
