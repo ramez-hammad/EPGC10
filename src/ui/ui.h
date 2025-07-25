@@ -6,3 +6,6 @@
 #define BG_COLOR_STATUS_BAR 0xacb1b0
 #define BG_COLOR_MENU_SELECTED 0x977c75
 #define TEXT_COLOR 0x000000
+
+#define FONT &noto_sans_math_14
+#define FONT_INPUT_AREA &noto_sans_math_16

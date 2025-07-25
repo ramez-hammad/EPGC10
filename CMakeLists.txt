@@ -24,6 +24,8 @@ set(SRC_UI
         src/ui/input_area.c
         src/ui/status_bar.c
         src/ui/screen_menu.c
+        fonts/noto_sans_math_14.c
+        fonts/noto_sans_math_16.c
 )
 
 set(SRC_TEST

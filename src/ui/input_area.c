@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <input_area.h>
+#include <ui.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area_container;
@@ -46,7 +47,7 @@ void create_input_area(void)
     lv_obj_set_style_border_width(input_area, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(input_area, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area, &lv_font_montserrat_16, LV_PART_MAIN);
+    lv_obj_set_style_text_font(input_area, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area, MAXLEN_INPUT);
 }
 
@@ -74,7 +75,7 @@ void create_ans_label(double ans)
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_RIGHT, -25, 15);
-    lv_obj_set_style_text_font(ans_label, &lv_font_montserrat_16, LV_PART_MAIN);
+    lv_obj_set_style_text_font(ans_label, FONT_INPUT_AREA, LV_PART_MAIN);
     prev_ans = ans;
 }
 

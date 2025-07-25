@@ -39,7 +39,7 @@ void create_button_matrix_part_down(void)
         "7", "8", "9", "DEL", "AC", "\n",
         "4", "5", "6", "X", "/", "\n",
         "1", "2", "3", "+", "-", "\n",
-        "0", ".", "Pi", "Ans", "=", NULL
+        "0", ".", "\u03C0", "Ans", "=", NULL
     };
 
     btn_matrix_part_down = lv_buttonmatrix_create(btn_matrix_base);
@@ -53,6 +53,7 @@ void create_button_matrix_part_down(void)
     uint32_t index = lv_buttonmatrix_get_selected_button(btn_matrix_part_down);
     lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_cb, LV_EVENT_VALUE_CHANGED, &index);
     lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_down, LV_BUTTONMATRIX_CTRL_RECOLOR);
+    lv_obj_set_style_text_font(btn_matrix_part_down, FONT, LV_PART_ITEMS);
 }
 
 void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
