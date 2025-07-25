@@ -95,6 +95,10 @@ double evaluate(NODE *root)
             case TOKEN_ABS:
                 return fabs(evaluate(parse_expression_str(root->arg)));
             case TOKEN_VAR:
+                switch (root->name) {
+                    case 'p':
+                        return M_PI;
+                }
             case TOKEN_NULL:
                 return 0;
         }
