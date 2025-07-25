@@ -3,40 +3,38 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint32_t num_strings_input = 0;
-
-void append_text(char *input_buffer[], char *text)
+void append_text(char *buffer[], char *text, int *length)
 {
-    input_buffer[num_strings_input] = strdup(text);
-    num_strings_input++;
+    buffer[*length] = strdup(text);
+    (*length)++;
 }
 
-char* get_text(char* input_buffer[])
+char* get_text(char* buffer[], int *length)
 {
     char *text = (char*) malloc(sizeof(char) * MAXLEN_INPUT * 3);
     text[0] = '\0';
 
-    for (uint32_t i = 0; i < num_strings_input; i++) {
-        strcat(text, input_buffer[i]);
+    for (uint32_t i = 0; i < *length; i++) {
+        strcat(text, buffer[i]);
     }
 
     return text;
 }
 
-void reset_input_buffer(char *input_buffer[])
+void reset_input_buffer(char *buffer[], int *length)
 {
-    for (uint32_t i = 0; i < num_strings_input; i++) {
-        free(input_buffer[i]);
-        input_buffer[i] = NULL;
+    for (uint32_t i = 0; i < *length; i++) {
+        free(buffer[i]);
+        buffer[i] = NULL;
     }
 
-    num_strings_input = 0;
+    *length = 0;
 }
 
-void delete_text(char *input_buffer[])
+void delete_text(char *buffer[], int *length)
 {
-    if (num_strings_input == 0) return;
-    free(input_buffer[num_strings_input - 1]);
-    input_buffer[num_strings_input - 1] = NULL;
-    num_strings_input--;
+    if (*length == 0) return;
+    free(buffer[*length - 1]);
+    buffer[*length - 1] = NULL;
+    (*length)--;
 }
