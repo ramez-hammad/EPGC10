@@ -97,12 +97,24 @@ void add_to_input_area(char *text)
         append_text(output_buffer, "\u03c0\0", &output_buffer_length);
         lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
     } else if (strcmp(text, "*") == 0) {
-        append_text(input_buffer, "*\0", &input_buffer_length);
+        append_text(input_buffer, text, &input_buffer_length);
         append_text(output_buffer, "\u00D7\0", &output_buffer_length);
         lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
     } else if (strcmp(text, "/") == 0) {
         append_text(input_buffer, text, &input_buffer_length);
         append_text(output_buffer, "\u00F7\0", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else if (strcmp(text, "arcsin(") == 0) {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, "sin\u207B\u00B9(", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else if (strcmp(text, "arccos(") == 0) {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, "cos\u207B\u00B9(", &output_buffer_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    } else if (strcmp(text, "arctan(") == 0) {
+        append_text(input_buffer, text, &input_buffer_length);
+        append_text(output_buffer, "tan\u207B\u00B9(", &output_buffer_length);
         lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
     } else {
         append_text(input_buffer, text, &input_buffer_length);

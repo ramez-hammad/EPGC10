@@ -223,7 +223,7 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("D\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arcsin\0");
+                add_to_input_area("arcsin(\0");
             } else {
                 add_to_input_area("sin(\0");
             }
@@ -234,7 +234,7 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("E\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arccos\0");
+                add_to_input_area("arccos(\0");
             } else {
                 add_to_input_area("cos(\0");
             }
@@ -245,7 +245,7 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("F\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arctan\0");
+                add_to_input_area("arctan(\0");
             } else {
                 add_to_input_area("tan(\0");
             }
