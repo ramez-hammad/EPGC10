@@ -37,6 +37,7 @@ int input_buffer_length = 0;
 int output_buffer_length = 0;
 
 extern char shift;
+extern char alpha;
 
 void nav_cb(lv_event_t *event)
 {
@@ -82,7 +83,8 @@ void nav_cb(lv_event_t *event)
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
-                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container), LV_ANIM_OFF);
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container),
+                                         LV_ANIM_OFF);
                     }
                 } else {
                     lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -129,8 +131,12 @@ void nav_cb(lv_event_t *event)
     // Up
     if (ang >= 45 && ang <= 135) {
         if (current_screen == 0) {
-            if (lv_obj_get_scroll_top(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, 20, LV_ANIM_OFF);
-            if (lv_obj_get_scroll_top(input_area_container) < 20) lv_obj_scroll_by(input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_area_container) >= 20)
+                lv_obj_scroll_by(
+                    input_area_container, 0, 20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_area_container) < 20)
+                lv_obj_scroll_by(
+                    input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
         }
 
         if (current_screen == 1) {
@@ -143,7 +149,8 @@ void nav_cb(lv_event_t *event)
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
-                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container),LV_ANIM_OFF);
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container),
+                                         LV_ANIM_OFF);
                     }
                 } else {
                     lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -158,7 +165,9 @@ void nav_cb(lv_event_t *event)
     // Down
     if (ang >= 225 && ang <= 315) {
         if (current_screen == 0) {
-            if (lv_obj_get_scroll_bottom(input_area_container) >= 20) lv_obj_scroll_by(input_area_container, 0, -20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_bottom(input_area_container) >= 20)
+                lv_obj_scroll_by(
+                    input_area_container, 0, -20, LV_ANIM_OFF);
             if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
         }
 
@@ -185,99 +194,270 @@ void btn_matrix_down_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
     lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-    if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "1") == 0) {
-        add_to_input_area("1\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "2") == 0) {
-        add_to_input_area("2\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "3") == 0) {
-        add_to_input_area("3\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "4") == 0) {
-        add_to_input_area("4\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "5") == 0) {
-        add_to_input_area("5\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "6") == 0) {
-        add_to_input_area("6\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "7") == 0) {
-        add_to_input_area("7\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "8") == 0) {
-        add_to_input_area("8\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "9") == 0) {
-        add_to_input_area("9\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "0") == 0) {
-        add_to_input_area("0\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ".") == 0) {
-        add_to_input_area(".\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "+") == 0) {
-        add_to_input_area("+\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "-") == 0) {
-        add_to_input_area("-\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u00D7") == 0) { // Multiplication
-        add_to_input_area("*\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u00F7") == 0) { // Division
-        add_to_input_area("/\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "\u03C0") == 0) { // Pi
-        add_to_input_area("p\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "(") == 0) {
-        add_to_input_area("(\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), ")") == 0) {
-        add_to_input_area(")\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arcsin#\n   sin") == 0) {
-        if (shift == 1) {
-            add_to_input_area("arcsin(\0");
-        } else {
-            add_to_input_area("sin\0");
-        }
-        shift = 0;
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arccos#\n   cos") == 0) {
-        if (shift == 1) {
-            add_to_input_area("arccos(\0");
-        } else {
-            add_to_input_area("cos(\0");
-        }
-        shift = 0;
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "#c4a747 arctan#\n   tan") == 0) {
-        if (shift == 1) {
-            add_to_input_area("arctan(\0");
-        } else {
-            add_to_input_area("tan(\0");
-        }
-        shift = 0;
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "log") == 0) {
-        add_to_input_area("log(\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "ln") == 0) {
-        add_to_input_area("ln(\0");
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "DEL") == 0) {
-        shift = 0;
-        delete_from_input_area();
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "=") == 0) {
-        shift = 0;
-        if (current_screen == 0) {
-            create_ans_label(interpret(get_text(input_buffer, &input_buffer_length)));
-            create_line_ans();
-            lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
-            create_input_area();
-            lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
-            lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-            reset_input_buffer(input_buffer, &input_buffer_length);
-            reset_input_buffer(output_buffer, &output_buffer_length);
-        }
-
-        if (current_screen == 1) {
-            // Back button pressed
-            if (row_index == 0 && col_index == 0) {
-                display_screen_input();
+    switch (*index) {
+        case 0:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("A\0");
+            }
+            break;
+        case 1:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("B\0");
+            } else {
+                add_to_input_area("log(\0");
+            }
+            break;
+        case 2:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("C\0");
+            } else {
+                add_to_input_area("ln(\0");
+            }
+            break;
+        case 3:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("D\0");
+            } else if (shift) {
+                shift = 0;
+                add_to_input_area("arcsin\0");
+            } else {
+                add_to_input_area("sin(\0");
+            }
+            break;
+        case 4:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("E\0");
+            } else if (shift) {
+                shift = 0;
+                add_to_input_area("arccos\0");
+            } else {
+                add_to_input_area("cos(\0");
+            }
+            break;
+        case 5:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("F\0");
+            } else if (shift) {
+                shift = 0;
+                add_to_input_area("arctan\0");
+            } else {
+                add_to_input_area("tan(\0");
+            }
+            break;
+        case 6:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("G\0");
+            }
+            break;
+        case 7:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("H\0");
+            }
+            break;
+        case 8:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("I\0");
+            } else {
+                add_to_input_area("(\0");
+            }
+            break;
+        case 9:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("J\0");
+            } else {
+                add_to_input_area(")\0");
+            }
+            break;
+        case 10:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("K\0");
+            }
+            break;
+        case 11:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("L\0");
+            }
+            break;
+        case 12:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("M\0");
+            } else {
+                add_to_input_area("7\0");
+            }
+            break;
+        case 13:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("N\0");
+            } else {
+                add_to_input_area("8\0");
+            }
+            break;
+        case 14:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("O\0");
+            } else {
+                add_to_input_area("9\0");
+            }
+            break;
+        case 15:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("P\0");
+            } else {
+                if (shift) shift = 0;
+                if (alpha) alpha = 0;
+                delete_from_input_area();
+            }
+            break;
+        case 16:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("Q\0");
+            } else {
+                if (shift) shift = 0;
+                if (alpha) alpha = 0;
+                lv_obj_delete(input_base);
+                create_input_base();
+                create_input_area_container();
+                create_status_bar();
+                create_input_area();
+                reset_input_buffer(input_buffer, &input_buffer_length);
+                reset_input_buffer(output_buffer, &output_buffer_length);
                 current_screen = 0;
             }
-        }
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_down, *index), "AC") == 0) {
-        lv_obj_delete(input_base);
-        create_input_base();
-        create_input_area_container();
-        create_status_bar();
-        create_input_area();
-        reset_input_buffer(input_buffer, &input_buffer_length);
-        reset_input_buffer(output_buffer, &output_buffer_length);
-        current_screen = 0;
+            break;
+        case 17:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("R\0");
+            } else {
+                add_to_input_area("4\0");
+            }
+            break;
+        case 18:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("S\0");
+            } else {
+                add_to_input_area("5\0");
+            }
+            break;
+        case 19:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("T\0");
+            } else {
+                add_to_input_area("6\0");
+            }
+            break;
+        case 20:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("U\0");
+            } else {
+                add_to_input_area("*\0");
+            }
+            break;
+        case 21:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("V\0");
+            } else {
+                add_to_input_area("/\0");
+            }
+            break;
+        case 22:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("W\0");
+            } else {
+                add_to_input_area("1\0");
+            }
+            break;
+        case 23:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("X\0");
+            } else {
+                add_to_input_area("2\0");
+            }
+            break;
+        case 24:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("Y\0");
+            } else {
+                add_to_input_area("3\0");
+            }
+            break;
+        case 25:
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("Z\0");
+            } else {
+                add_to_input_area("+\0");
+            }
+            break;
+        case 26:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            add_to_input_area("-\0");
+            break;
+        case 27:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            add_to_input_area("0\0");
+            break;
+        case 28:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            break;
+        case 29:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            add_to_input_area("p\0");
+            break;
+        case 30:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            break;
+        case 31:
+            if (alpha) alpha = 0;
+            if (shift) shift = 0;
+            if (current_screen == 0) {
+                create_ans_label(interpret(get_text(input_buffer, &input_buffer_length)));
+                create_line_ans();
+                lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
+                create_input_area();
+                lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
+                lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+                reset_input_buffer(input_buffer, &input_buffer_length);
+                reset_input_buffer(output_buffer, &output_buffer_length);
+            }
+
+            if (current_screen == 1) {
+                // Back button pressed
+                if (row_index == 0 && col_index == 0) {
+                    display_screen_input();
+                    current_screen = 0;
+                }
+            }
+            break;
     }
 }
 
@@ -302,10 +482,18 @@ void btn_matrix_mid_cb(lv_event_t *event)
         append_text(input_buffer, "^2\0", &input_buffer_length);
         lv_textarea_set_text(input_area, get_text(input_buffer, &input_buffer_length));
     } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#c4a747 SHIFT#") == 0) {
-        if (shift == 1) {
+        if (shift) {
             shift = 0;
         } else {
             shift = 1;
+            alpha = 0;
+        }
+    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#dc143c ALPHA#") == 0) {
+        if (alpha) {
+            alpha = 0;
+        } else {
+            alpha = 1;
+            shift = 0;
         }
     }
 }

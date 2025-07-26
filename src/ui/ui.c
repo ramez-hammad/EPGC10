@@ -38,6 +38,7 @@ char *display_format;
 char deg_rad = 1;
 double prev_ans;
 char shift;
+char alpha;
 
 int main(void)
 {
