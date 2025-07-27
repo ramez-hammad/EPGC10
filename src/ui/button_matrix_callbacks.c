@@ -468,32 +468,43 @@ void btn_matrix_up_cb(lv_event_t *event)
 void btn_matrix_mid_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
-    if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "^") == 0) {
-        append_text(input_buffer, "^\0", &input_buffer_length);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &input_buffer_length));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "MENU") == 0) {
-        current_screen = 1;
-        num_obj = 0;
-        col_index = 0;
-        row_index = 0;
 
-        display_screen_menu();
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "x^2") == 0) {
-        append_text(input_buffer, "^2\0", &input_buffer_length);
-        lv_textarea_set_text(input_area, get_text(input_buffer, &input_buffer_length));
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#c4a747 SHIFT#") == 0) {
-        if (shift) {
-            shift = 0;
-        } else {
-            shift = 1;
-            alpha = 0;
-        }
-    } else if (strcmp(lv_buttonmatrix_get_button_text(btn_matrix_part_mid, *index), "#dc143c ALPHA#") == 0) {
-        if (alpha) {
-            alpha = 0;
-        } else {
-            alpha = 1;
-            shift = 0;
-        }
+    switch (*index) {
+        case 0:
+            if (shift) {
+                shift = 0;
+            } else {
+                shift = 1;
+                alpha = 0;
+            }
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            current_screen = 1;
+            num_obj = 0;
+            col_index = 0;
+            row_index = 0;
+
+            display_screen_menu();
+            break;
+        case 4:
+            if (alpha) {
+                alpha = 0;
+            } else {
+                alpha = 1;
+                shift = 0;
+            }
+            break;
+        case 5:
+            add_to_input_area("^2\0");
+            break;
+        case 6:
+            add_to_input_area("^\0");
+            break;
+        case 7:
+            break;
     }
 }
