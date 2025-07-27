@@ -1,6 +1,5 @@
-#include "../lexer.h"
-#include "../parser.h"
-#include "evaluator.h"
+#include <parser.h>
+#include <evaluator.h>
 
 double interpret(const char *expr)
 {
