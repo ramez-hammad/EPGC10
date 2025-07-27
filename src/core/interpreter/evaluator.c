@@ -1,8 +1,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-#include "lexer.h"
-#include "parser.h"
+#include "../lexer.h"
+#include "../parser.h"
 
 double to_rad(double deg)
 {
