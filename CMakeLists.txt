@@ -8,16 +8,17 @@ file(GLOB_RECURSE SRC_LVGL third_party/lvgl/src/*.c)
 
 include_directories(
         third_party/lvgl/
-        src/core/
+        src/core/interpreter/
+        src/core/grapher/
         src/ui/
 )
 
 set(SRC_UI
+        src/core/interpreter/interpreter.c
+        src/core/interpreter/parser.c
+        src/core/interpreter/lexer.c
+        src/core/interpreter/evaluator.c
         src/ui/ui.c
-        src/core/interpreter.c
-        src/core/parser.c
-        src/core/lexer.c
-        src/core/evaluator.c
         src/ui/button_matrix.c
         src/ui/button_matrix_callbacks.c
         src/ui/text.c
@@ -32,7 +33,7 @@ set(SRC_UI
 
 set(SRC_TEST
         test/test_lexer.c
-        src/core/lexer.c
+        src/core/interpreter/lexer.c
         third_party/Unity/src/unity.c
 )
 
