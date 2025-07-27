@@ -34,9 +34,9 @@ void create_button_matrix_base(void)
 void create_button_matrix_part_down(void)
 {
     static const char *btn_matrix_part_down_map[] = {
-        "#dc143c          A#\n", "#dc143c          B#\n   log", "#dc143c          C#\n   ln",
-        "#c4a747  sin\u207B\u00B9##dc143c D#\n    sin", "#c4a747  cos\u207B\u00B9##dc143c E#\n    cos",
-        "#c4a747  tan\u207B\u00B9##dc143c F#\n    tan", "\n",
+        "#dc143c          A#\n", "#dc143c          B#\n   log", "#dc143c          C#\n    ln",
+        "#c4a747 sin\u207B\u00B9##dc143c  D#\n   sin", "#c4a747 cos\u207B\u00B9##dc143c  E#\n   cos",
+        "#c4a747 tan\u207B\u00B9##dc143c  F#\n   tan", "\n",
         "#dc143c         G#\n" , "#dc143c         H#\n", "#dc143c          I#\n     (", "#dc143c          J#\n     )", "#dc143c          K#\n     ,", "#dc143c          L#\n", "\n",
         "#dc143c            M#\n      7", "#dc143c            N#\n      8", "#dc143c            O#\n      9", "#dc143c            P#\n    DEL", "#dc143c            Q#\n     AC", "\n",
         "#dc143c            R#\n      4", "#dc143c            S#\n      5", "#dc143c            T#\n      6", "#dc143c            U#\n      \u00D7", "#dc143c            V#\n      \u00F7", "\n",
