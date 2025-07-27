@@ -1,3 +1,4 @@
+#include <lexer.h>
 #include <parser.h>
 #include <evaluator.h>
 
