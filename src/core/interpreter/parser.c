@@ -1,5 +1,5 @@
 #include "lexer.h"
-#include "parser.h"
+#include "../parser.h"
 
 #include <stdlib.h>
 #include <stdbool.h>

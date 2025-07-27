@@ -1,5 +1,5 @@
 #include "../third_party/Unity/src/unity.h"
-#include "../src/core/lexer.h"
+#include "../src/core/interpreter/lexer.h"
 #include <stdlib.h>
 
 

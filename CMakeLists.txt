@@ -8,4 +8,5 @@ include_directories(src/core/)
 include_directories(third_party/unity/src)
 
 # Test executables
-add_executable(test_lexer test/test_lexer.c src/core/lexer.c third_party/Unity/src/unity.c)
+add_executable(test_lexer test/test_lexer.c src/core/interpreter/lexer.c third_party/Unity/src/unity.c)
+Enable adding decimal point again
