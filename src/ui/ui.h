@@ -9,3 +9,6 @@
 
 #define FONT &noto_sans_regular_14
 #define FONT_INPUT_AREA &noto_sans_regular_16
+
+#define FONT_MATH &noto_sans_math_regular_comb_14
+#define FONT_MATH_INPUT_AREA &noto_sans_math_regular_comb_16

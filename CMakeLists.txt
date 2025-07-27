@@ -26,6 +26,8 @@ set(SRC_UI
         src/ui/screen_menu.c
         fonts/noto_sans_regular_14.c
         fonts/noto_sans_regular_16.c
+        fonts/noto_sans_math_regular_comb_14.c
+        fonts/noto_sans_math_regular_comb_16.c
 )
 
 set(SRC_TEST

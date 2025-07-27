@@ -499,7 +499,12 @@ void btn_matrix_mid_cb(lv_event_t *event)
             }
             break;
         case 5:
-            add_to_input_area("^2\0");
+            if (alpha) alpha = 0;
+            if (shift) {
+                add_to_input_area("sqrt(\0");
+            } else {
+                add_to_input_area("^2\0");
+            }
             break;
         case 6:
             add_to_input_area("^\0");

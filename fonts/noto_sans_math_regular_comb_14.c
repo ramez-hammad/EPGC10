@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Size: 14 px
  * Bpp: 4
- * Opts: --bpp 4 --size 14 --no-compress --stride 1 --align 1 --font NotoSans-Regular.ttf --range 33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,176,178,179,185,215,247,960,8304,8305,8308,8309,8310,8311,8312,8313,8315,8320,8321,8322,8323,8324,8325,8326,8327,8328,8329,101,102 --format lvgl -o noto_sans_regular_14.c
+ * Opts: --bpp 4 --size 14 --no-compress --stride 1 --align 1 --font NotoSansMath-Regular.ttf --range 119909,8730 --font NotoSans-Regular.ttf --range 33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,176,178,179,185,215,247,960,8304,8305,8308,8309,8310,8311,8312,8313,8315,8320,8321,8322,8323,8324,8325,8326,8327,8328,8329,101,102 --format lvgl -o noto_sans_math_regular_comb_14.c
  ******************************************************************************/
 
 #ifdef __has_include
@@ -20,11 +20,11 @@
 
 
 
-#ifndef NOTO_SANS_REGULAR_14
-#define NOTO_SANS_REGULAR_14 1
+#ifndef NOTO_SANS_MATH_REGULAR_COMB_14
+#define NOTO_SANS_MATH_REGULAR_COMB_14 1
 #endif
 
-#if NOTO_SANS_REGULAR_14
+#if NOTO_SANS_MATH_REGULAR_COMB_14
 
 /*-----------------
  *    BITMAPS
@@ -758,7 +758,25 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
 
     /* U+2089 "₉" */
     0x2c, 0xca, 0xb, 0x40, 0x87, 0xa5, 0x8, 0x92,
-    0xba, 0xa8, 0x0, 0xb, 0x33, 0xbc, 0x70
+    0xba, 0xa8, 0x0, 0xb, 0x33, 0xbc, 0x70,
+
+    /* U+221A "√" */
+    0x0, 0x0, 0x0, 0x0, 0x17, 0x0, 0x0, 0x0,
+    0x0, 0x68, 0x0, 0x0, 0x0, 0x0, 0xc3, 0x0,
+    0x0, 0x0, 0x2, 0xd0, 0x0, 0x0, 0x0, 0x7,
+    0x80, 0x0, 0x0, 0x0, 0xd, 0x20, 0x0, 0x0,
+    0x0, 0x3c, 0x0, 0x0, 0x0, 0x0, 0x97, 0x0,
+    0x1, 0x0, 0x0, 0xe1, 0x0, 0x4e, 0xe0, 0x4,
+    0xc0, 0x0, 0x0, 0xd4, 0xa, 0x60, 0x0, 0x0,
+    0x79, 0xe, 0x10, 0x0, 0x0, 0x2e, 0x5b, 0x0,
+    0x0, 0x0, 0xc, 0xe5, 0x0, 0x0, 0x0, 0x6,
+    0xf0, 0x0, 0x0, 0x0, 0x0, 0x20, 0x0, 0x0,
+
+    /* U+1D465 "𝑥" */
+    0x2, 0xf1, 0x2, 0xf4, 0x0, 0xb7, 0xd, 0x70,
+    0x0, 0x5d, 0xaa, 0x0, 0x0, 0xe, 0xd0, 0x0,
+    0x0, 0x4f, 0xc0, 0x0, 0x1, 0xe5, 0xf3, 0x0,
+    0xc, 0x80, 0x99, 0x0, 0x9c, 0x0, 0x3f, 0x10
 };
 
 
@@ -887,7 +905,9 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
     {.bitmap_index = 3537, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
     {.bitmap_index = 3552, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
     {.bitmap_index = 3567, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
-    {.bitmap_index = 3582, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2}
+    {.bitmap_index = 3582, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
+    {.bitmap_index = 3597, .adv_w = 152, .box_w = 10, .box_h = 16, .ofs_x = 0, .ofs_y = -1},
+    {.bitmap_index = 3677, .adv_w = 116, .box_w = 8, .box_h = 8, .ofs_x = 0, .ofs_y = 0}
 };
 
 /*---------------------
@@ -896,7 +916,9 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
 
 static const uint16_t unicode_list_1[] = {
     0x0, 0x2, 0x3, 0x9, 0x27, 0x47, 0x310, 0x1fc0,
-    0x1fc1, 0x1fc4, 0x1fc5, 0x1fc6, 0x1fc7, 0x1fc8, 0x1fc9, 0x1fcb
+    0x1fc1, 0x1fc4, 0x1fc5, 0x1fc6, 0x1fc7, 0x1fc8, 0x1fc9, 0x1fcb,
+    0x1fd0, 0x1fd1, 0x1fd2, 0x1fd3, 0x1fd4, 0x1fd5, 0x1fd6, 0x1fd7,
+    0x1fd8, 0x1fd9, 0x216a
 };
 
 /*Collect the unicode lists and glyph_id offsets*/
@@ -907,11 +929,11 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
         .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
     },
     {
-        .range_start = 176, .range_length = 8140, .glyph_id_start = 95,
-        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 16, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
+        .range_start = 176, .range_length = 8555, .glyph_id_start = 95,
+        .unicode_list = unicode_list_1, .glyph_id_ofs_list = NULL, .list_length = 27, .type = LV_FONT_FMT_TXT_CMAP_SPARSE_TINY
     },
     {
-        .range_start = 8320, .range_length = 10, .glyph_id_start = 111,
+        .range_start = 119909, .range_length = 1, .glyph_id_start = 122,
         .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
     }
 };
@@ -956,19 +978,19 @@ extern const lv_font_t lv_font_montserrat_16;
 
 /*Initialize a public general font descriptor*/
 #if LVGL_VERSION_MAJOR >= 8
-const lv_font_t noto_sans_regular_14 = {
+const lv_font_t noto_sans_math_regular_comb_14 = {
 #else
-lv_font_t noto_sans_regular_14 = {
+lv_font_t noto_sans_math_regular_comb_14 = {
 #endif
     .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
     .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
-    .line_height = 17,          /*The maximum line height required by the font*/
+    .line_height = 19,          /*The maximum line height required by the font*/
     .base_line = 4,             /*Baseline measured from the bottom of the line*/
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
 #if LV_VERSION_CHECK(7, 4, 0) || LVGL_VERSION_MAJOR >= 8
-    .underline_position = -1,
+    .underline_position = -2,
     .underline_thickness = 1,
 #endif
     .static_bitmap = 0,
@@ -981,4 +1003,4 @@ lv_font_t noto_sans_regular_14 = {
 
 
 
-#endif /*#if NOTO_SANS_REGULAR_14*/
+#endif /*#if NOTO_SANS_MATH_REGULAR_COMB_14*/

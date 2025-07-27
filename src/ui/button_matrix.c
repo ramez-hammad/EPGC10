@@ -40,7 +40,7 @@ void create_button_matrix_part_down(void)
         "#dc143c         G#\n" , "#dc143c         H#\n", "#dc143c          I#\n     (", "#dc143c          J#\n     )", "#dc143c          K#\n     ,", "#dc143c          L#\n", "\n",
         "#dc143c            M#\n      7", "#dc143c            N#\n      8", "#dc143c            O#\n      9", "#dc143c            P#\n    DEL", "#dc143c            Q#\n     AC", "\n",
         "#dc143c            R#\n      4", "#dc143c            S#\n      5", "#dc143c            T#\n      6", "#dc143c            U#\n      \u00D7", "#dc143c            V#\n      \u00F7", "\n",
-        "#dc143c            W#\n      1", "#dc143c            X#\n      2", "#dc143c            Y#\n      3", "#dc143c            Z#\n      +", "-", "\n",
+        "#dc143c            W#\n      1", "#dc143c            X#\n      2", "#dc143c            Y#\n      3", "#dc143c            Z#\n      +", " -", "\n",
         "0", ".", "\u03C0", "Ans", "=", NULL
     };
 
@@ -86,7 +86,7 @@ void create_button_matrix_part_mid(void)
 
     static const char *btn_matrix_part_mid_map[] = {
         "#c4a747 SHIFT#", "OPTN", "VARS", "MENU", "\n",
-        "#dc143c ALPHA#", "\U0001D465\u00B2", "^", "EXIT", NULL,
+        "#dc143c ALPHA#", "#c4a747 \u221A        #\n    \U0001D465\u00B2", "^", "EXIT", NULL,
     };
 
 
@@ -100,7 +100,7 @@ void create_button_matrix_part_mid(void)
     lv_obj_set_style_bg_color(btn_matrix_part_mid, lv_color_hex(BG_COLOR), LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_part_mid, lv_color_hex(BG_COLOR_BUTTONS), LV_PART_ITEMS);
     lv_obj_set_style_pad_right(btn_matrix_part_mid, 4, LV_PART_MAIN);
-    lv_obj_set_style_text_font(btn_matrix_part_mid, FONT, LV_PART_ITEMS);
+    lv_obj_set_style_text_font(btn_matrix_part_mid, FONT_MATH, LV_PART_ITEMS);
 
     uint32_t index = lv_buttonmatrix_get_selected_button(btn_matrix_part_mid);
     lv_obj_add_event_cb(btn_matrix_part_mid, btn_matrix_mid_cb, LV_EVENT_VALUE_CHANGED, &index);
