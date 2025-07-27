@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Size: 14 px
  * Bpp: 4
- * Opts: --bpp 4 --size 14 --no-compress --stride 1 --align 1 --font NotoSans-Regular.ttf --range 32-126,176,185,178,179,8304-8313,8320-8329,8315,215,247,960 --format lvgl -o noto_sans_math_14.c
+ * Opts: --bpp 4 --size 14 --no-compress --stride 1 --align 1 --font NotoSans-Regular.ttf --range 32-126,176,185,178,179,8304-8313,8320-8329,8315,215,247,960 --font NotoSansMath-Regular.ttf --range 119909 --format lvgl -o noto_sans_regular_14.c
  ******************************************************************************/
 
 #ifdef __has_include
@@ -20,11 +20,11 @@
 
 
 
-#ifndef NOTO_SANS_MATH_14
-#define NOTO_SANS_MATH_14 1
+#ifndef NOTO_SANS_REGULAR_14
+#define NOTO_SANS_REGULAR_14 1
 #endif
 
-#if NOTO_SANS_MATH_14
+#if NOTO_SANS_REGULAR_14
 
 /*-----------------
  *    BITMAPS
@@ -760,7 +760,13 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
 
     /* U+2089 "₉" */
     0x2c, 0xca, 0xb, 0x40, 0x87, 0xa5, 0x8, 0x92,
-    0xba, 0xa8, 0x0, 0xb, 0x33, 0xbc, 0x70
+    0xba, 0xa8, 0x0, 0xb, 0x33, 0xbc, 0x70,
+
+    /* U+1D465 "𝑥" */
+    0x2, 0xf1, 0x2, 0xf4, 0x0, 0xb7, 0xd, 0x70,
+    0x0, 0x5d, 0xaa, 0x0, 0x0, 0xe, 0xd0, 0x0,
+    0x0, 0x4f, 0xc0, 0x0, 0x1, 0xe5, 0xf3, 0x0,
+    0xc, 0x80, 0x99, 0x0, 0x9c, 0x0, 0x3f, 0x10
 };
 
 
@@ -890,7 +896,8 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
     {.bitmap_index = 3537, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
     {.bitmap_index = 3552, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
     {.bitmap_index = 3567, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
-    {.bitmap_index = 3582, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2}
+    {.bitmap_index = 3582, .adv_w = 78, .box_w = 5, .box_h = 6, .ofs_x = 0, .ofs_y = -2},
+    {.bitmap_index = 3597, .adv_w = 116, .box_w = 8, .box_h = 8, .ofs_x = 0, .ofs_y = 0}
 };
 
 /*---------------------
@@ -916,6 +923,10 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
     {
         .range_start = 8320, .range_length = 10, .glyph_id_start = 112,
         .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
+    },
+    {
+        .range_start = 119909, .range_length = 1, .glyph_id_start = 122,
+        .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
     }
 };
 
@@ -940,7 +951,7 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
     .cmaps = cmaps,
     .kern_dsc = NULL,
     .kern_scale = 0,
-    .cmap_num = 3,
+    .cmap_num = 4,
     .bpp = 4,
     .kern_classes = 0,
     .bitmap_format = 0,
@@ -961,7 +972,7 @@ extern const lv_font_t lv_font_montserrat_16;
 #if LVGL_VERSION_MAJOR >= 8
 const lv_font_t noto_sans_regular_14 = {
 #else
-lv_font_t noto_sans_math_14 = {
+lv_font_t noto_sans_regular_14 = {
 #endif
     .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
     .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
@@ -984,4 +995,4 @@ lv_font_t noto_sans_math_14 = {
 
 
 
-#endif /*#if NOTO_SANS_MATH_14*/
+#endif /*#if NOTO_SANS_REGULAR_14*/

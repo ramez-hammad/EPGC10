@@ -86,7 +86,7 @@ void create_button_matrix_part_mid(void)
 
     static const char *btn_matrix_part_mid_map[] = {
         "#c4a747 SHIFT#", "OPTN", "VARS", "MENU", "\n",
-        "#dc143c ALPHA#", "x\u00B2", "^", "EXIT", NULL,
+        "#dc143c ALPHA#", "\U0001D465\u00B2", "^", "EXIT", NULL,
     };
 
 
