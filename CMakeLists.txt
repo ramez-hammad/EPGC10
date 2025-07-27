@@ -4,7 +4,8 @@ project(EPGC10 LANGUAGES C)
 
 set(CMAKE_C_STANDARD 99)
 
-include_directories(src/core/)
+include_directories(src/core/interpreter/)
+include_directories(src/core/grapher/)
 include_directories(third_party/unity/src)
 
 # Test executables
