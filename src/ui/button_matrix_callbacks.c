@@ -426,6 +426,7 @@ void btn_matrix_down_cb(lv_event_t *event)
         case 28:
             if (alpha) alpha = 0;
             if (shift) shift = 0;
+            add_to_input_area(".\0");
             break;
         case 29:
             if (alpha) alpha = 0;
