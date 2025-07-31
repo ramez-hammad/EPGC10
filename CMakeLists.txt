@@ -20,7 +20,6 @@ set(SRC_UI
         src/core/interpreter/evaluator.c
         src/ui/ui.c
         src/ui/button_matrix.c
-        src/ui/button_matrix_callbacks.c
         src/ui/text.c
         src/ui/input_area.c
         src/ui/status_bar.c
@@ -33,6 +32,14 @@ set(SRC_UI
         src/ui/screen_graph_input.h
         src/ui/screen_graph.c
         src/ui/screen_graph.h
+        src/ui/button_matrix_down_callback.c
+        src/ui/button_matrix_down_callback.h
+        src/ui/button_matrix_up_callback.c
+        src/ui/button_matrix_up_callback.h
+        src/ui/button_matrix_mid_callback.c
+        src/ui/button_matrix_mid_callback.h
+        src/ui/button_matrix_nav_callback.c
+        src/ui/button_matrix_nav_callback.h
 )
 
 set(SRC_TEST

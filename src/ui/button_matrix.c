@@ -1,6 +1,9 @@
 #include <lvgl.h>
 #include <string.h>
-#include <button_matrix_callbacks.h>
+#include <button_matrix_down_callback.h>
+#include <button_matrix_mid_callback.h>
+#include <button_matrix_up_callback.h>
+#include <button_matrix_nav_callback.h>
 #include <ui.h>
 #include <input_area.h>
 

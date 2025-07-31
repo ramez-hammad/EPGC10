@@ -23,7 +23,7 @@ extern lv_obj_t *array_menu_screen[3][3];
 
 extern lv_obj_t *status_bar;
 
-extern uint32_t num_obj;
+uint32_t num_obj;
 
 void create_screen_menu_container(void)
 {
