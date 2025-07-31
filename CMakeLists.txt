@@ -29,6 +29,10 @@ set(SRC_UI
         fonts/noto_sans_regular_16.c
         fonts/noto_sans_math_regular_comb_14.c
         fonts/noto_sans_math_regular_comb_16.c
+        src/ui/screen_graph_input.c
+        src/ui/screen_graph_input.h
+        src/ui/screen_graph.c
+        src/ui/screen_graph.h
 )
 
 set(SRC_TEST

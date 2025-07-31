@@ -19,7 +19,7 @@ extern lv_obj_t *menu_button_7;
 extern lv_obj_t *menu_button_8;
 extern lv_obj_t *menu_button_9;
 
-extern lv_obj_t *array_mode_screen[3][3];
+extern lv_obj_t *array_menu_screen[3][3];
 
 extern lv_obj_t *status_bar;
 
@@ -132,27 +132,27 @@ void create_screen_menu(void)
     create_screen_menu_container();
     create_screen_menu_widgets();
 
-    array_mode_screen[0][0] = back_button_menu;
-    array_mode_screen[0][1] = graph_button_menu;
-    array_mode_screen[0][2] = menu_button_3;
-    array_mode_screen[1][0] = menu_button_4;
-    array_mode_screen[1][1] = menu_button_5;
-    array_mode_screen[1][2] = menu_button_6;
-    array_mode_screen[2][0] = menu_button_7;
-    array_mode_screen[2][1] = menu_button_8;
-    array_mode_screen[2][2] = menu_button_9;
+    array_menu_screen[0][0] = back_button_menu;
+    array_menu_screen[0][1] = graph_button_menu;
+    array_menu_screen[0][2] = menu_button_3;
+    array_menu_screen[1][0] = menu_button_4;
+    array_menu_screen[1][1] = menu_button_5;
+    array_menu_screen[1][2] = menu_button_6;
+    array_menu_screen[2][0] = menu_button_7;
+    array_menu_screen[2][1] = menu_button_8;
+    array_menu_screen[2][2] = menu_button_9;
 }
 
 void display_screen_menu(void)
 {
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
-            lv_obj_set_state(array_mode_screen[i][j], LV_STATE_DEFAULT, true);
-            lv_obj_remove_state(array_mode_screen[i][j], LV_STATE_FOCUSED);
+            lv_obj_set_state(array_menu_screen[i][j], LV_STATE_DEFAULT, true);
+            lv_obj_remove_state(array_menu_screen[i][j], LV_STATE_FOCUSED);
         }
     }
 
-    lv_obj_set_state(array_mode_screen[0][0], LV_STATE_FOCUSED, true);
+    lv_obj_set_state(array_menu_screen[0][0], LV_STATE_FOCUSED, true);
 
     lv_obj_move_foreground(screen_menu);
     lv_obj_move_foreground(screen_menu_container);
@@ -162,7 +162,7 @@ void display_screen_menu(void)
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
-            lv_obj_move_to_index(array_mode_screen[i][j], num_obj);
+            lv_obj_move_to_index(array_menu_screen[i][j], num_obj);
             num_obj++;
         }
     }

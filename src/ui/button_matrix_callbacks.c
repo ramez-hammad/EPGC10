@@ -7,6 +7,8 @@
 #include <text.h>
 #include <status_bar.h>
 #include <screen_menu.h>
+#include <screen_graph_input.h>
+#include <screen_graph.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *screen_menu;
@@ -28,13 +30,15 @@ uint32_t col_index = 0;
 uint32_t row_index = 0;
 uint32_t num_obj;
 
-extern lv_obj_t *array_mode_screen[3][3];
+extern lv_obj_t *array_menu_screen[3][3];
 
-char *input_buffer[MAXLEN_INPUT + 1];
-char *output_buffer[MAXLEN_INPUT + 1];
+extern lv_obj_t *array_graph_input_screen[];
+extern int array_graph_input_screen_index;
 
-int input_buffer_length = 0;
-int output_buffer_length = 0;
+extern char *input_buffer_main[];
+extern char *output_buffer_main[];
+extern int input_buffer_main_length;
+extern int output_buffer_main_length;
 
 extern char shift;
 extern char alpha;
@@ -69,17 +73,17 @@ void nav_cb(lv_event_t *event)
 
         if (current_screen == 1) {
             if (col_index > 0) {
-                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                 col_index--;
-                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
             } else if (col_index == 0 && row_index > 0) {
                 if ((row_index + 1) % 2 == 0) {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     col_index = COL_INDEX_LAST;
                     row_index--;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
@@ -87,11 +91,11 @@ void nav_cb(lv_event_t *event)
                                          LV_ANIM_OFF);
                     }
                 } else {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     col_index = COL_INDEX_LAST;
                     row_index--;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                 }
             }
         }
@@ -105,24 +109,24 @@ void nav_cb(lv_event_t *event)
 
         if (current_screen == 1) {
             if (col_index < COL_INDEX_LAST) {
-                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                 col_index++;
-                lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
             } else if (col_index == COL_INDEX_LAST && row_index < ROW_INDEX_LAST) {
                 if ((row_index + 1) % 2 == 0) {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     col_index = 0;
                     row_index++;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                     lv_obj_scroll_by(screen_menu_container, 0, -97, LV_ANIM_OFF);
                 } else {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     col_index = 0;
                     row_index++;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                 }
             }
         }
@@ -142,10 +146,10 @@ void nav_cb(lv_event_t *event)
         if (current_screen == 1) {
             if (row_index > 0) {
                 if ((row_index + 1) % 2 == 0) {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     row_index--;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
@@ -153,12 +157,21 @@ void nav_cb(lv_event_t *event)
                                          LV_ANIM_OFF);
                     }
                 } else {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     row_index--;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                 }
             }
+        }
+
+        if (current_screen == 2) {
+            if (array_graph_input_screen_index == 0) return;
+            lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
+            array_graph_input_screen_index--;
+            lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
         }
     }
 
@@ -174,18 +187,27 @@ void nav_cb(lv_event_t *event)
         if (current_screen == 1) {
             if (row_index < ROW_INDEX_LAST) {
                 if ((row_index + 1) % 2 == 0) {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     row_index++;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                     lv_obj_scroll_by(screen_menu_container, 0, -97, LV_ANIM_OFF);
                 } else {
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_DEFAULT, true);
-                    lv_obj_remove_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
                     row_index++;
-                    lv_obj_set_state(array_mode_screen[row_index][col_index], LV_STATE_FOCUSED, true);
+                    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                 }
             }
+        }
+
+        if (current_screen == 2) {
+            if (array_graph_input_screen_index == 4) return;
+            lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
+            array_graph_input_screen_index++;
+            lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
         }
     }
 }
@@ -336,8 +358,8 @@ void btn_matrix_down_cb(lv_event_t *event)
                 create_input_area_container();
                 create_status_bar();
                 create_input_area();
-                reset_input_buffer(input_buffer, &input_buffer_length);
-                reset_input_buffer(output_buffer, &output_buffer_length);
+                reset_buffer(input_buffer_main, &input_buffer_main_length);
+                reset_buffer(output_buffer_main, &output_buffer_main_length);
                 current_screen = 0;
             }
             break;
@@ -440,15 +462,20 @@ void btn_matrix_down_cb(lv_event_t *event)
         case 31:
             if (alpha) alpha = 0;
             if (shift) shift = 0;
+
+            if (current_screen == 2) {
+                display_screen_graph();
+            }
+
             if (current_screen == 0) {
-                create_ans_label(interpret(get_text(input_buffer, &input_buffer_length)));
+                create_ans_label(interpret(get_text(input_buffer_main, &input_buffer_main_length)));
                 create_line_ans();
                 lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
                 create_input_area();
                 lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
                 lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-                reset_input_buffer(input_buffer, &input_buffer_length);
-                reset_input_buffer(output_buffer, &output_buffer_length);
+                reset_buffer(input_buffer_main, &input_buffer_main_length);
+                reset_buffer(output_buffer_main, &output_buffer_main_length);
             }
 
             if (current_screen == 1) {
@@ -457,7 +484,14 @@ void btn_matrix_down_cb(lv_event_t *event)
                     display_screen_input();
                     current_screen = 0;
                 }
+
+                // Graph button pressed
+                if (row_index == 0 && col_index == 1) {
+                    display_screen_graph_input();
+                    current_screen = 2;
+                }
             }
+
             break;
     }
 }

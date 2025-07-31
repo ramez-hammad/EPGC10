@@ -5,6 +5,8 @@
 #include <status_bar.h>
 #include <button_matrix.h>
 #include <ui.h>
+#include <screen_graph_input.h>
+#include <screen_graph.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -31,7 +33,7 @@ lv_obj_t *menu_button_7;
 lv_obj_t *menu_button_8;
 lv_obj_t *menu_button_9;
 
-lv_obj_t *array_mode_screen[3][3];
+lv_obj_t *array_menu_screen[3][3];
 
 char current_screen;
 char *display_format;
@@ -63,6 +65,8 @@ int main(void)
 
     // Create UI
     create_screen_menu();
+    create_screen_graph_input();
+    create_screen_graph();
     create_input_base();
     create_input_area_container();
     create_input_area();

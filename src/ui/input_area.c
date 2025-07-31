@@ -14,10 +14,14 @@ extern lv_obj_t *status_bar;
 
 extern double prev_ans;
 
-extern char *input_buffer[];
-extern char *output_buffer[];
-extern int input_buffer_length;
-extern int output_buffer_length;
+char *input_buffer_main[MAXLEN_INPUT + 1];
+char *output_buffer_main[MAXLEN_INPUT + 1];
+
+int input_buffer_main_length = 0;
+int output_buffer_main_length = 0;
+
+int current_input_length;
+int current_output_length;
 
 void create_input_base(void)
 {
@@ -93,39 +97,39 @@ void display_screen_input(void)
 void add_to_input_area(char *text)
 {
     if (strcmp(text, "p") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "\u03c0\0", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "\u03c0\0", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else if (strcmp(text, "*") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "\u00D7\0", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "\u00D7\0", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else if (strcmp(text, "/") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "\u00F7\0", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "\u00F7\0", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else if (strcmp(text, "arcsin(") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "sin\u207B\u00B9(", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "sin\u207B\u00B9(", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else if (strcmp(text, "arccos(") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "cos\u207B\u00B9(", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "cos\u207B\u00B9(", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else if (strcmp(text, "arctan(") == 0) {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, "tan\u207B\u00B9(", &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(input_buffer_main, text, &input_buffer_main_length);
+        append_text(output_buffer_main, "tan\u207B\u00B9(", &output_buffer_main_length);
+        lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
     } else {
-        append_text(input_buffer, text, &input_buffer_length);
-        append_text(output_buffer, text, &output_buffer_length);
-        lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+        append_text(get_buffer(0), text, get_length(0));
+        append_text(get_buffer(1), text, get_length(1));
+        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     }
 }
 
 void delete_from_input_area(void)
 {
-    delete_text(input_buffer, &input_buffer_length);
-    delete_text(output_buffer, &output_buffer_length);
-    lv_textarea_set_text(input_area, get_text(output_buffer, &output_buffer_length));
+    delete_text(input_buffer_main, &input_buffer_main_length);
+    delete_text(output_buffer_main, &output_buffer_main_length);
+    lv_textarea_set_text(input_area, get_text(output_buffer_main, &output_buffer_main_length));
 }
