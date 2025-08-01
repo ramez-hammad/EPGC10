@@ -181,6 +181,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             } else {
                 if (shift) shift = 0;
                 if (alpha) alpha = 0;
+                if (current_screen != 0) break;
                 lv_obj_delete(input_base);
                 create_input_base();
                 create_input_area_container();
