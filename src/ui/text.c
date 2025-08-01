@@ -38,7 +38,17 @@ lv_obj_t *input_area_current;
 
 void append_text(char *buffer[], char *text, int *length)
 {
-    buffer[*length] = strdup(text);
+    uint32_t current_pos = lv_textarea_get_cursor_pos(get_input_area());
+
+    if (current_pos == *length) {
+        buffer[*length] = strdup(text);
+    } else {
+        for (uint32_t i = *length - 1; i > current_pos - 1; i--) {
+            if (i != MAXLEN_INPUT) buffer[i + 1] = buffer[i];
+        }
+        buffer[current_pos] = strdup(text);
+    }
+
     (*length)++;
 }
 
@@ -67,8 +77,8 @@ void reset_buffer(char *buffer[], int *length)
 void delete_text(char *buffer[], int *length)
 {
     if (*length == 0) return;
-    free(buffer[*length - 1]);
-    buffer[*length - 1] = NULL;
+    free(buffer[lv_textarea_get_cursor_pos(get_input_area()) - 1]);
+    buffer[lv_textarea_get_cursor_pos(get_input_area()) -1 ] = NULL;
     (*length)--;
 }
 

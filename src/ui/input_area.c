@@ -101,6 +101,8 @@ void display_screen_input(void)
 
 void add_to_input_area(char *text)
 {
+    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
+
     if (strcmp(text, "p") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u03c0\0", get_length(1));
@@ -130,6 +132,8 @@ void add_to_input_area(char *text)
         append_text(get_buffer(1), text, get_length(1));
         lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     }
+
+    lv_textarea_set_cursor_pos(get_input_area(), cursor_pos + 1);
 }
 
 void delete_from_input_area(void)
