@@ -10,7 +10,7 @@ extern char current_screen;
 
 extern uint32_t col_index;
 extern uint32_t row_index;
-extern uint32_t num_obj;
+extern uint32_t num_menu_buttons;
 
 void btn_matrix_mid_cb(lv_event_t *event)
 {
@@ -31,9 +31,7 @@ void btn_matrix_mid_cb(lv_event_t *event)
             break;
         case 3:
             current_screen = 1;
-            num_obj = 0;
-            col_index = 0;
-            row_index = 0;
+            num_menu_buttons = 0;
 
             display_screen_menu();
             break;

@@ -21,9 +21,12 @@ extern lv_obj_t *menu_button_9;
 
 extern lv_obj_t *array_menu_screen[3][3];
 
+extern uint32_t col_index;
+extern uint32_t row_index;
+
 extern lv_obj_t *status_bar;
 
-uint32_t num_obj;
+uint32_t num_menu_buttons;
 
 void create_screen_menu_container(void)
 {
@@ -154,7 +157,7 @@ void display_screen_menu(void)
         }
     }
 
-    lv_obj_set_state(array_menu_screen[0][0], LV_STATE_FOCUSED, true);
+    lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
 
     lv_obj_move_foreground(screen_menu);
     lv_obj_move_foreground(screen_menu_container);
@@ -164,8 +167,8 @@ void display_screen_menu(void)
 
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
-            lv_obj_move_to_index(array_menu_screen[i][j], num_obj);
-            num_obj++;
+            lv_obj_move_to_index(array_menu_screen[i][j], num_menu_buttons);
+            num_menu_buttons++;
         }
     }
 }
