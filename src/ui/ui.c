@@ -51,7 +51,7 @@ int main(void)
     lv_tick_set_cb(SDL_GetTicks);
 
     // Create window
-    lv_display_t *lvDisplay = lv_sdl_window_create(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+    lv_display_t *lvDisplay = lv_sdl_window_create(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // Create mouse
     lv_indev_t *lv_mouse = lv_sdl_mouse_create();

@@ -25,7 +25,7 @@ lv_obj_t *btn_matrix_part_up;
 void create_button_matrix_base(void)
 {
     btn_matrix_base = lv_obj_create(lv_screen_active());
-    lv_obj_set_size(btn_matrix_base, 370, DISPLAY_HEIGHT - SCREEN_HEIGHT);
+    lv_obj_set_size(btn_matrix_base, 370, WINDOW_HEIGHT - SCREEN_HEIGHT);
     lv_obj_align(btn_matrix_base, LV_ALIGN_BOTTOM_MID, 0, 0);
     lv_obj_set_style_border_width(btn_matrix_base, 0, LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_base, lv_color_hex(BG_COLOR), LV_PART_MAIN);

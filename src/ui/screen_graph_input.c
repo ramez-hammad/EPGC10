@@ -63,6 +63,7 @@ void create_input_area_y_labels(void)
     lv_label_set_text(input_area_y_4_label, "#ffff00 Y4#");
     lv_obj_set_style_text_font(input_area_y_4_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_4_label, true);
+
     input_area_y_5_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_5_label, 50, 42);
     lv_obj_align_to(input_area_y_5_label, input_area_y_5, LV_ALIGN_LEFT_MID, -35, 9);
@@ -73,56 +74,56 @@ void create_input_area_y_labels(void)
 
 void create_input_area_y(void)
 {
+    static lv_style_t input_area_y_style;
+    lv_style_init(&input_area_y_style);
+    lv_style_set_size(&input_area_y_style, 270, 42);
+    lv_style_set_bg_color(&input_area_y_style, lv_color_hex(BG_COLOR_INPUT_AREA));
+    lv_style_set_border_width(&input_area_y_style, 0);
+    lv_style_set_text_font(&input_area_y_style, FONT_INPUT_AREA);
+    lv_style_set_text_color(&input_area_y_style, lv_color_hex(TEXT_COLOR));
+    lv_style_set_radius(&input_area_y_style, 0);
+
+
     input_area_y_1 = lv_textarea_create(screen_graph_input);
     lv_textarea_set_one_line(input_area_y_1, true);
     lv_obj_align(input_area_y_1, LV_ALIGN_TOP_RIGHT, 0, -11);
-    lv_obj_set_size(input_area_y_1, 270, 42);
-    lv_obj_set_style_border_width(input_area_y_1, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(input_area_y_1, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_y_1, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area_y_1, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area_y_1, MAXLEN_INPUT);
     lv_obj_add_state(input_area_y_1, LV_STATE_FOCUSED);
+    lv_obj_add_style(input_area_y_1, &input_area_y_style, LV_PART_MAIN);
+    lv_obj_set_style_border_color(input_area_y_1, lv_color_hex(TEXT_COLOR), LV_PART_CURSOR | LV_STATE_FOCUSED);
 
     input_area_y_2 = lv_textarea_create(screen_graph_input);
     lv_textarea_set_one_line(input_area_y_2, true);
     lv_obj_align_to(input_area_y_2, input_area_y_1, LV_ALIGN_BOTTOM_MID, -5, 50);
-    lv_obj_set_size(input_area_y_2, 270, 42);
-    lv_obj_set_style_border_width(input_area_y_2, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(input_area_y_2, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_y_2, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area_y_2, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area_y_2, MAXLEN_INPUT);
+    lv_obj_add_style(input_area_y_2, &input_area_y_style, LV_PART_MAIN);
+    lv_obj_set_style_border_color(input_area_y_2, lv_color_hex(TEXT_COLOR), LV_PART_CURSOR | LV_STATE_FOCUSED);
 
     input_area_y_3 = lv_textarea_create(screen_graph_input);
     lv_textarea_set_one_line(input_area_y_3, true);
     lv_obj_align_to(input_area_y_3, input_area_y_2, LV_ALIGN_BOTTOM_MID, -5, 50);
-    lv_obj_set_size(input_area_y_3, 270, 42);
-    lv_obj_set_style_border_width(input_area_y_3, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(input_area_y_3, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_y_3, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area_y_3, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area_y_3, MAXLEN_INPUT);
+    lv_obj_add_style(input_area_y_3, &input_area_y_style, LV_PART_MAIN);
+    lv_obj_set_style_border_color(input_area_y_3, lv_color_hex(TEXT_COLOR), LV_PART_CURSOR | LV_STATE_FOCUSED);
 
     input_area_y_4 = lv_textarea_create(screen_graph_input);
     lv_textarea_set_one_line(input_area_y_4, true);
     lv_obj_align_to(input_area_y_4, input_area_y_3, LV_ALIGN_BOTTOM_MID, -5, 50);
-    lv_obj_set_size(input_area_y_4, 270, 42);
-    lv_obj_set_style_border_width(input_area_y_4, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(input_area_y_4, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_y_4, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area_y_4, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area_y_4, MAXLEN_INPUT);
+    lv_obj_add_style(input_area_y_4, &input_area_y_style, LV_PART_MAIN);
+    lv_obj_set_style_border_color(input_area_y_4, lv_color_hex(TEXT_COLOR), LV_PART_CURSOR | LV_STATE_FOCUSED);
 
     input_area_y_5 = lv_textarea_create(screen_graph_input);
     lv_textarea_set_one_line(input_area_y_5, true);
     lv_obj_align_to(input_area_y_5, input_area_y_4, LV_ALIGN_BOTTOM_MID, -5, 50);
-    lv_obj_set_size(input_area_y_5, 270, 42);
-    lv_obj_set_style_border_width(input_area_y_5, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(input_area_y_5, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_area_y_5, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_text_font(input_area_y_5, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_textarea_set_max_length(input_area_y_5, MAXLEN_INPUT);
+    lv_obj_add_style(input_area_y_5, &input_area_y_style, LV_PART_MAIN);
+    lv_obj_set_style_border_color(input_area_y_5, lv_color_hex(TEXT_COLOR), LV_PART_CURSOR | LV_STATE_FOCUSED);
 
     create_input_area_y_labels();
 }
@@ -135,7 +136,7 @@ void create_screen_graph_input(void)
     lv_obj_set_style_border_width(screen_graph_input, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(screen_graph_input, 0, LV_PART_MAIN);
     lv_obj_remove_flag(screen_graph_input, LV_OBJ_FLAG_SCROLL_ELASTIC);
-    lv_obj_set_style_bg_color(screen_graph_input, lv_color_hex(0xffffff), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(screen_graph_input, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(screen_graph_input, LV_SCROLLBAR_MODE_OFF);
     create_input_area_y();
 
