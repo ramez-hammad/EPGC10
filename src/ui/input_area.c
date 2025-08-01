@@ -138,7 +138,11 @@ void add_to_input_area(char *text)
 
 void delete_from_input_area(void)
 {
+    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
+
     delete_text(get_buffer(0), get_length(0));
     delete_text(get_buffer(1), get_length(1));
     lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
+
+    lv_textarea_set_cursor_pos(get_input_area(), cursor_pos - 1);
 }
