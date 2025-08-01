@@ -71,9 +71,9 @@ void create_line_ans(void)
     lv_line_set_points(line, line_points, 2);
     lv_obj_set_style_line_dash_width(line, 3, LV_PART_MAIN);
     lv_obj_set_style_line_dash_gap(line, 3, LV_PART_MAIN);
-    lv_obj_set_style_bg_color(line, lv_color_hex(BG_COLOR_LINE), LV_PART_MAIN);
     lv_obj_align_to(line, input_area, LV_ALIGN_BOTTOM_MID, 0, 20);
     lv_obj_set_style_line_width(line, 2, LV_PART_MAIN);
+    lv_obj_set_style_line_color(line, lv_color_hex(BG_COLOR_LINE), LV_PART_MAIN);
 }
 
 void create_ans_label(double ans)
