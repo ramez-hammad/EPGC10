@@ -1,9 +1,9 @@
 #include <lvgl.h>
 #include <ui.h>
 
-extern lv_obj_t* status_bar;
-extern lv_obj_t* display_format_label;
-extern lv_obj_t* deg_rad_label;
+extern lv_obj_t *status_bar;
+extern lv_obj_t *display_format_label;
+extern lv_obj_t *deg_rad_label;
 
 extern char deg_rad;
 extern char *display_format;

@@ -81,11 +81,11 @@ char **get_buffer(char io)
         if (current_screen == 0) return input_buffer_main;
 
         if (current_screen == 2) {
-               if (input_area_current == input_area_y_1) return input_buffer_y_1;
-               if (input_area_current == input_area_y_2) return input_buffer_y_2;
-               if (input_area_current == input_area_y_3) return input_buffer_y_3;
-               if (input_area_current == input_area_y_4) return input_buffer_y_4;
-               if (input_area_current == input_area_y_5) return input_buffer_y_5;
+            if (input_area_current == input_area_y_1) return input_buffer_y_1;
+            if (input_area_current == input_area_y_2) return input_buffer_y_2;
+            if (input_area_current == input_area_y_3) return input_buffer_y_3;
+            if (input_area_current == input_area_y_4) return input_buffer_y_4;
+            if (input_area_current == input_area_y_5) return input_buffer_y_5;
         }
     }
 
@@ -94,11 +94,11 @@ char **get_buffer(char io)
         if (current_screen == 0) return output_buffer_main;
 
         if (current_screen == 2) {
-                if (input_area_current == input_area_y_1) return output_buffer_y_1;
-                if (input_area_current == input_area_y_2) return output_buffer_y_2;
-                if (input_area_current == input_area_y_3) return output_buffer_y_3;
-                if (input_area_current == input_area_y_4) return output_buffer_y_4;
-                if (input_area_current == input_area_y_5) return output_buffer_y_5;
+            if (input_area_current == input_area_y_1) return output_buffer_y_1;
+            if (input_area_current == input_area_y_2) return output_buffer_y_2;
+            if (input_area_current == input_area_y_3) return output_buffer_y_3;
+            if (input_area_current == input_area_y_4) return output_buffer_y_4;
+            if (input_area_current == input_area_y_5) return output_buffer_y_5;
         }
     }
 }
@@ -112,11 +112,11 @@ int *get_length(char io)
         if (current_screen == 0) return &input_buffer_main_length;
 
         if (current_screen == 2) {
-                 if (input_area_current == input_area_y_1) return &input_buffer_y_1_length;
-                 if (input_area_current == input_area_y_2) return &input_buffer_y_2_length;
-                 if (input_area_current == input_area_y_3) return &input_buffer_y_3_length;
-                 if (input_area_current == input_area_y_4) return &input_buffer_y_4_length;
-                 if (input_area_current == input_area_y_5) return &input_buffer_y_5_length;
+            if (input_area_current == input_area_y_1) return &input_buffer_y_1_length;
+            if (input_area_current == input_area_y_2) return &input_buffer_y_2_length;
+            if (input_area_current == input_area_y_3) return &input_buffer_y_3_length;
+            if (input_area_current == input_area_y_4) return &input_buffer_y_4_length;
+            if (input_area_current == input_area_y_5) return &input_buffer_y_5_length;
         }
     }
 
@@ -125,11 +125,11 @@ int *get_length(char io)
         if (current_screen == 0) return &output_buffer_main_length;
 
         if (current_screen == 2) {
-                 if (input_area_current == input_area_y_1) return &output_buffer_y_1_length;
-                 if (input_area_current == input_area_y_2) return &output_buffer_y_2_length;
-                 if (input_area_current == input_area_y_3) return &output_buffer_y_3_length;
-                 if (input_area_current == input_area_y_4) return &output_buffer_y_4_length;
-                 if (input_area_current == input_area_y_5) return &output_buffer_y_5_length;
+            if (input_area_current == input_area_y_1) return &output_buffer_y_1_length;
+            if (input_area_current == input_area_y_2) return &output_buffer_y_2_length;
+            if (input_area_current == input_area_y_3) return &output_buffer_y_3_length;
+            if (input_area_current == input_area_y_4) return &output_buffer_y_4_length;
+            if (input_area_current == input_area_y_5) return &output_buffer_y_5_length;
         }
     }
 }

@@ -185,4 +185,3 @@ void nav_cb(lv_event_t *event)
         }
     }
 }
-
