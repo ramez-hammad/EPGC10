@@ -34,30 +34,51 @@ extern lv_obj_t *input_area_y_4;
 extern lv_obj_t *input_area_y_5;
 extern lv_obj_t *input_area;
 
+extern uint32_t input_buffer_main_current_pos;
+extern uint32_t input_buffer_y_1_current_pos;
+extern uint32_t input_buffer_y_2_current_pos;
+extern uint32_t input_buffer_y_3_current_pos;
+extern uint32_t input_buffer_y_4_current_pos;
+extern uint32_t input_buffer_y_5_current_pos;
+
 lv_obj_t *input_area_current;
+
+uint32_t *get_current_pos(void)
+{
+    if (current_screen == 0) return &input_buffer_main_current_pos;
+
+    input_area_current = get_input_area();
+    if (current_screen == 2) {
+        if (input_area_current == input_area_y_1) return &input_buffer_y_1_current_pos;
+        if (input_area_current == input_area_y_2) return &input_buffer_y_2_current_pos;
+        if (input_area_current == input_area_y_3) return &input_buffer_y_3_current_pos;
+        if (input_area_current == input_area_y_4) return &input_buffer_y_4_current_pos;
+        if (input_area_current == input_area_y_5) return &input_buffer_y_5_current_pos;
+    }
+}
 
 void append_text(char *buffer[], char *text, int *length)
 {
-    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
+    uint32_t current_pos = *get_current_pos();
 
-    if (cursor_pos == *length) {
+    if (current_pos == *length) {
         buffer[*length] = strdup(text);
     } else {
-        for (uint32_t i = *length - 1; i > cursor_pos - 1; i--) {
-            if (i != MAXLEN_INPUT) buffer[i + 1] = buffer[i];
+        for (uint32_t i = *length; i > current_pos; i--) {
+            if (i != MAXLEN_INPUT) buffer[i] = buffer[i - 1];
         }
-        buffer[cursor_pos] = strdup(text);
+        buffer[current_pos] = strdup(text);
     }
 
     (*length)++;
 }
 
-char *get_text(char *buffer[], int *length)
+char *get_text(char *buffer[], int length)
 {
     char *text = (char *) malloc(sizeof(char) * MAXLEN_INPUT * 3);
     text[0] = '\0';
 
-    for (uint32_t i = 0; i < *length; i++) {
+    for (uint32_t i = 0; i < length; i++) {
         strcat(text, buffer[i]);
     }
 
@@ -72,20 +93,23 @@ void reset_buffer(char *buffer[], int *length)
     }
 
     *length = 0;
+
+    *get_current_pos() = 0;
 }
 
 void delete_text(char *buffer[], int *length)
 {
     if (*length == 0) return;
-    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
 
-    if (cursor_pos == *length) {
-        free(buffer[cursor_pos - 1]);
-        buffer[cursor_pos - 1] = NULL;
+    uint32_t *current_pos = get_current_pos();
+
+    if (*current_pos == *length) {
+        free(buffer[*current_pos - 1]);
+        buffer[*current_pos - 1] = NULL;
     } else {
-        free(buffer[cursor_pos - 1]);
-        buffer[cursor_pos - 1] = NULL;
-        for (uint32_t i = cursor_pos - 1; i < *length; i++) {
+        free(buffer[*current_pos - 1]);
+        buffer[*current_pos - 1] = NULL;
+        for (uint32_t i = *current_pos - 1; i < *length; i++) {
             buffer[i] = buffer[i + 1];
         }
     }

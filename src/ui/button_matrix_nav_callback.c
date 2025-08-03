@@ -2,6 +2,7 @@
 #include <math.h>
 #include <button_matrix_nav_callback.h>
 #include <text.h>
+#include <input_area.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -42,7 +43,7 @@ void nav_cb(lv_event_t *event)
     // Left
     if (ang >= 135 && ang <= 225) {
         if (current_screen == 0 || current_screen == 2) {
-            lv_textarea_cursor_left(get_input_area());
+            input_area_nav_left();
         }
 
         if (current_screen == 1) {
@@ -78,7 +79,7 @@ void nav_cb(lv_event_t *event)
     // Right
     if ((ang >= 315 && ang <= 360) || (ang <= 45 && ang >= 0)) {
         if (current_screen == 0 || current_screen == 2) {
-            lv_textarea_cursor_right(get_input_area());
+            input_area_nav_right();
         }
 
         if (current_screen == 1) {

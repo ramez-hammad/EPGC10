@@ -10,6 +10,8 @@ lv_obj_t *grid;
 
 extern lv_obj_t *status_bar;
 
+extern char current_screen;
+
 int graph_drawn = 0;
 
 void create_screen_graph_container(void)
@@ -84,5 +86,6 @@ void display_screen_graph(void)
 {
     lv_obj_move_foreground(status_bar);
     lv_obj_move_foreground(screen_graph_container);
+    current_screen = 3;
     if (!graph_drawn) draw_graph();
 }

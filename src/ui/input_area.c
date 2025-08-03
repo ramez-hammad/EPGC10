@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <input_area.h>
+#include <stdlib.h>
 #include <ui.h>
 
 extern lv_obj_t *input_base;
@@ -20,8 +21,23 @@ char *output_buffer_main[MAXLEN_INPUT + 1];
 int input_buffer_main_length = 0;
 int output_buffer_main_length = 0;
 
-int current_input_length;
-int current_output_length;
+uint32_t input_buffer_main_current_pos = 0;
+
+uint32_t buffer_pos_nav = 0;
+
+
+void render_input_area(void)
+{
+    lv_obj_t *current_input_area = get_input_area();
+
+    lv_textarea_set_text(current_input_area, get_text(get_buffer(1), *get_current_pos()));
+
+    int cursor_pos = lv_textarea_get_cursor_pos(current_input_area);
+
+    lv_textarea_set_text(current_input_area, get_text(get_buffer(1), *get_length(1)));
+
+    lv_textarea_set_cursor_pos(current_input_area, cursor_pos);
+}
 
 void create_input_base(void)
 {
@@ -101,48 +117,70 @@ void display_screen_input(void)
 
 void add_to_input_area(char *text)
 {
-    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
+    uint32_t *current_pos = get_current_pos();
 
     if (strcmp(text, "p") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u03c0\0", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else if (strcmp(text, "*") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u00D7\0", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else if (strcmp(text, "/") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u00F7\0", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else if (strcmp(text, "arcsin(") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "sin\u207B\u00B9(", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else if (strcmp(text, "arccos(") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "cos\u207B\u00B9(", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else if (strcmp(text, "arctan(") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "tan\u207B\u00B9(", get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     } else {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), text, get_length(1));
-        lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
     }
 
-    lv_textarea_set_cursor_pos(get_input_area(), cursor_pos + 1);
+    (*current_pos)++;
+
+    render_input_area();
 }
 
 void delete_from_input_area(void)
 {
-    uint32_t cursor_pos = lv_textarea_get_cursor_pos(get_input_area());
+    uint32_t *current_pos = get_current_pos();
+
+    if (*current_pos == 0) return;
 
     delete_text(get_buffer(0), get_length(0));
     delete_text(get_buffer(1), get_length(1));
-    lv_textarea_set_text(get_input_area(), get_text(get_buffer(1), get_length(1)));
 
-    lv_textarea_set_cursor_pos(get_input_area(), cursor_pos - 1);
+    (*current_pos)--;
+
+    render_input_area();
+}
+
+void input_area_nav_left(void)
+{
+    uint32_t *current_pos = get_current_pos();
+    if (*current_pos == 0) return;
+
+    (*current_pos)--;
+
+    int buffer_length = *get_length(0);
+
+    render_input_area();
+}
+
+void input_area_nav_right(void)
+{
+    int buffer_length = *get_length(0);
+
+    uint32_t *current_pos = get_current_pos();
+    if (*current_pos == buffer_length) return;
+
+    (*current_pos)++;
+
+    render_input_area();
 }

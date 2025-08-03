@@ -23,6 +23,8 @@ extern char current_screen;
 extern uint32_t col_index;
 extern uint32_t row_index;
 
+extern uint32_t input_buffer_main_current_pos;
+
 void btn_matrix_down_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
@@ -179,9 +181,9 @@ void btn_matrix_down_cb(lv_event_t *event)
                 alpha = 0;
                 add_to_input_area("Q\0");
             } else {
+                if (current_screen != 0) break;
                 if (shift) shift = 0;
                 if (alpha) alpha = 0;
-                if (current_screen != 0) break;
                 lv_obj_delete(input_base);
                 create_input_base();
                 create_input_area_container();
@@ -311,7 +313,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
 
             if (current_screen == 0) {
-                create_ans_label(interpret(get_text(input_buffer_main, &input_buffer_main_length)));
+                create_ans_label(interpret(get_text(input_buffer_main, input_buffer_main_length)));
                 create_line_ans();
                 lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
                 create_input_area();

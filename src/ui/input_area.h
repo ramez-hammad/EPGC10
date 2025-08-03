@@ -16,3 +16,7 @@ void display_screen_input(void);
 void add_to_input_area(char *text);
 
 void delete_from_input_area(void);
+
+void input_area_nav_left(void);
+
+void input_area_nav_right(void);

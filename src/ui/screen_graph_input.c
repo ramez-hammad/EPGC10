@@ -30,6 +30,12 @@ int input_buffer_y_3_length, output_buffer_y_3_length = 0;
 int input_buffer_y_4_length, output_buffer_y_4_length = 0;
 int input_buffer_y_5_length, output_buffer_y_5_length = 0;
 
+uint32_t input_buffer_y_1_current_pos = 0;
+uint32_t input_buffer_y_2_current_pos = 0;
+uint32_t input_buffer_y_3_current_pos = 0;
+uint32_t input_buffer_y_4_current_pos = 0;
+uint32_t input_buffer_y_5_current_pos = 0;
+
 lv_obj_t *array_graph_input_screen[5];
 
 int array_graph_input_screen_index = 0;
