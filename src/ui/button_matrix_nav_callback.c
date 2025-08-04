@@ -3,6 +3,8 @@
 #include <button_matrix_nav_callback.h>
 #include <text.h>
 #include <input_area.h>
+#include <screen_graph_input.h>
+#include <screen_menu.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -42,11 +44,11 @@ void nav_cb(lv_event_t *event)
 
     // Left
     if (ang >= 135 && ang <= 225) {
-        if (current_screen == 0 || current_screen == 2) {
+        if (current_screen == SCREEN_INPUT || current_screen == SCREEN_GRAPH_INPUT) {
             input_area_nav_left();
         }
 
-        if (current_screen == 1) {
+        if (current_screen == SCREEN_MENU) {
             if (col_index > 0) {
                 lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
                 lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
@@ -62,8 +64,7 @@ void nav_cb(lv_event_t *event)
                     if (row_index != 0) {
                         lv_obj_scroll_by(screen_menu_container, 0, 97, LV_ANIM_OFF);
                     } else {
-                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container),
-                                         LV_ANIM_OFF);
+                        lv_obj_scroll_by(screen_menu_container, 0, lv_obj_get_scroll_top(screen_menu_container), LV_ANIM_OFF);
                     }
                 } else {
                     lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -78,11 +79,11 @@ void nav_cb(lv_event_t *event)
 
     // Right
     if ((ang >= 315 && ang <= 360) || (ang <= 45 && ang >= 0)) {
-        if (current_screen == 0 || current_screen == 2) {
+        if (current_screen == SCREEN_INPUT || current_screen == SCREEN_GRAPH_INPUT) {
             input_area_nav_right();
         }
 
-        if (current_screen == 1) {
+        if (current_screen == SCREEN_MENU) {
             if (col_index < COL_INDEX_LAST) {
                 lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
                 lv_obj_remove_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED);
@@ -109,7 +110,7 @@ void nav_cb(lv_event_t *event)
 
     // Up
     if (ang >= 45 && ang <= 135) {
-        if (current_screen == 0) {
+        if (current_screen == SCREEN_INPUT) {
             if (lv_obj_get_scroll_top(input_area_container) >= 20)
                 lv_obj_scroll_by(
                     input_area_container, 0, 20, LV_ANIM_OFF);
@@ -118,7 +119,7 @@ void nav_cb(lv_event_t *event)
                     input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
         }
 
-        if (current_screen == 1) {
+        if (current_screen == SCREEN_MENU) {
             if (row_index > 0) {
                 if ((row_index + 1) % 2 == 0) {
                     lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -140,7 +141,7 @@ void nav_cb(lv_event_t *event)
             }
         }
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (array_graph_input_screen_index == 0) return;
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
@@ -152,14 +153,14 @@ void nav_cb(lv_event_t *event)
 
     // Down
     if (ang >= 225 && ang <= 315) {
-        if (current_screen == 0) {
+        if (current_screen == SCREEN_INPUT) {
             if (lv_obj_get_scroll_bottom(input_area_container) >= 20)
                 lv_obj_scroll_by(
                     input_area_container, 0, -20, LV_ANIM_OFF);
             if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
         }
 
-        if (current_screen == 1) {
+        if (current_screen == SCREEN_MENU) {
             if (row_index < ROW_INDEX_LAST) {
                 if ((row_index + 1) % 2 == 0) {
                     lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_DEFAULT, true);
@@ -176,7 +177,7 @@ void nav_cb(lv_event_t *event)
             }
         }
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (array_graph_input_screen_index == 4) return;
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);

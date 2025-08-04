@@ -1,6 +1,7 @@
 #include <lvgl.h>
 #include <ui.h>
 #include <text.h>
+#include <screen_graph_input.h>
 
 extern lv_obj_t *status_bar;
 
@@ -39,6 +40,8 @@ uint32_t input_buffer_y_5_current_pos = 0;
 lv_obj_t *array_graph_input_screen[5];
 
 int array_graph_input_screen_index = 0;
+
+extern char current_screen;
 
 void create_input_area_y_labels(void)
 {
@@ -157,6 +160,7 @@ void display_screen_graph_input(void)
 {
     lv_obj_move_foreground(screen_graph_input);
     lv_obj_move_foreground(status_bar);
+    current_screen = SCREEN_GRAPH_INPUT;
 }
 
 lv_obj_t *get_focused_input_y(void)

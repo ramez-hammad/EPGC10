@@ -1,3 +1,5 @@
+#define SCREEN_MENU 1
+
 #define MENU_BUTTON_WIDTH 87
 #define MENU_BUTTON_HEIGHT 87
 

@@ -4,6 +4,7 @@
 #include <string.h>
 #include <lvgl.h>
 #include <screen_graph_input.h>
+#include <input_area.h>
 
 extern char current_screen;
 
@@ -45,10 +46,10 @@ lv_obj_t *input_area_current;
 
 uint32_t *get_current_pos(void)
 {
-    if (current_screen == 0) return &input_buffer_main_current_pos;
+    if (current_screen == SCREEN_INPUT) return &input_buffer_main_current_pos;
 
     input_area_current = get_input_area();
-    if (current_screen == 2) {
+    if (current_screen == SCREEN_GRAPH_INPUT) {
         if (input_area_current == input_area_y_1) return &input_buffer_y_1_current_pos;
         if (input_area_current == input_area_y_2) return &input_buffer_y_2_current_pos;
         if (input_area_current == input_area_y_3) return &input_buffer_y_3_current_pos;
@@ -123,9 +124,9 @@ char **get_buffer(char io)
 
     // If input buffer is requested
     if (io == 0) {
-        if (current_screen == 0) return input_buffer_main;
+        if (current_screen == SCREEN_INPUT) return input_buffer_main;
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (input_area_current == input_area_y_1) return input_buffer_y_1;
             if (input_area_current == input_area_y_2) return input_buffer_y_2;
             if (input_area_current == input_area_y_3) return input_buffer_y_3;
@@ -136,9 +137,9 @@ char **get_buffer(char io)
 
     // If  output buffer is requested
     if (io == 1) {
-        if (current_screen == 0) return output_buffer_main;
+        if (current_screen == SCREEN_INPUT) return output_buffer_main;
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (input_area_current == input_area_y_1) return output_buffer_y_1;
             if (input_area_current == input_area_y_2) return output_buffer_y_2;
             if (input_area_current == input_area_y_3) return output_buffer_y_3;
@@ -154,9 +155,9 @@ int *get_length(char io)
 
     // If input buffer length is requested
     if (io == 0) {
-        if (current_screen == 0) return &input_buffer_main_length;
+        if (current_screen == SCREEN_INPUT) return &input_buffer_main_length;
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (input_area_current == input_area_y_1) return &input_buffer_y_1_length;
             if (input_area_current == input_area_y_2) return &input_buffer_y_2_length;
             if (input_area_current == input_area_y_3) return &input_buffer_y_3_length;
@@ -167,9 +168,9 @@ int *get_length(char io)
 
     // If  output buffer length is requested
     if (io == 1) {
-        if (current_screen == 0) return &output_buffer_main_length;
+        if (current_screen == SCREEN_INPUT) return &output_buffer_main_length;
 
-        if (current_screen == 2) {
+        if (current_screen == SCREEN_GRAPH_INPUT) {
             if (input_area_current == input_area_y_1) return &output_buffer_y_1_length;
             if (input_area_current == input_area_y_2) return &output_buffer_y_2_length;
             if (input_area_current == input_area_y_3) return &output_buffer_y_3_length;
@@ -181,6 +182,6 @@ int *get_length(char io)
 
 lv_obj_t *get_input_area(void)
 {
-    if (current_screen == 0) return input_area;
-    if (current_screen == 2) return get_focused_input_y();
+    if (current_screen == SCREEN_INPUT) return input_area;
+    if (current_screen == SCREEN_GRAPH_INPUT) return get_focused_input_y();
 }

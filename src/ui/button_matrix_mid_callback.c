@@ -30,9 +30,6 @@ void btn_matrix_mid_cb(lv_event_t *event)
         case 2:
             break;
         case 3:
-            current_screen = 1;
-            num_menu_buttons = 0;
-
             display_screen_menu();
             break;
         case 4:

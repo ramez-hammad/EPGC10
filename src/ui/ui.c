@@ -61,7 +61,7 @@ int main(void)
 
     display_format = "NORMAL";
 
-    current_screen = 0;
+    current_screen = SCREEN_INPUT;
 
     // Create UI
     create_screen_menu();

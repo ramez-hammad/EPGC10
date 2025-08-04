@@ -1,3 +1,5 @@
+#define SCREEN_GRAPH_INPUT 2
+
 void create_screen_graph_input(void);
 
 void display_screen_graph_input(void);

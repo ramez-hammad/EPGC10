@@ -28,6 +28,8 @@ extern lv_obj_t *status_bar;
 
 uint32_t num_menu_buttons;
 
+extern char current_screen;
+
 void create_screen_menu_container(void)
 {
     screen_menu_container = lv_obj_create(screen_menu);
@@ -165,10 +167,13 @@ void display_screen_menu(void)
     lv_obj_move_foreground(graph_button_menu);
     lv_obj_move_foreground(status_bar);
 
+    num_menu_buttons = 0;
     for (uint32_t i = 0; i < 3; i++) {
         for (uint32_t j = 0; j < 3; j++) {
             lv_obj_move_to_index(array_menu_screen[i][j], num_menu_buttons);
             num_menu_buttons++;
         }
     }
+
+    current_screen = SCREEN_MENU;
 }

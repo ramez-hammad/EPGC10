@@ -1,9 +1,5 @@
 #include <lvgl.h>
 #include <screen_graph.h>
-#include <math.h>
-#include <stdlib.h>
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_spline.h>
 
 lv_obj_t *screen_graph_container;
 lv_obj_t *grid;
@@ -86,6 +82,6 @@ void display_screen_graph(void)
 {
     lv_obj_move_foreground(status_bar);
     lv_obj_move_foreground(screen_graph_container);
-    current_screen = 3;
+    current_screen = SCREEN_GRAPH;
     if (!graph_drawn) draw_graph();
 }

@@ -25,6 +25,7 @@ uint32_t input_buffer_main_current_pos = 0;
 
 uint32_t buffer_pos_nav = 0;
 
+extern char current_screen;
 
 void render_input_area(void)
 {
@@ -113,6 +114,7 @@ void display_screen_input(void)
 {
     lv_obj_move_foreground(input_base);
     lv_obj_move_foreground(status_bar);
+    current_screen = SCREEN_INPUT;
 }
 
 void add_to_input_area(char *text)
