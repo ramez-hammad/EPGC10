@@ -40,6 +40,8 @@ set(SRC_UI
         src/ui/button_matrix_mid_callback.h
         src/ui/button_matrix_nav_callback.c
         src/ui/button_matrix_nav_callback.h
+        src/ui/button_matrix_down_draw_callback.c
+        src/ui/button_matrix_down_draw_callback.h
 )
 
 set(SRC_TEST

@@ -6,6 +6,7 @@
 #include <button_matrix_nav_callback.h>
 #include <ui.h>
 #include <input_area.h>
+#include <button_matrix_down_draw_callback.h>
 
 extern lv_obj_t *input_area;
 extern lv_obj_t *input_base;
@@ -56,6 +57,8 @@ void create_button_matrix_part_down(void)
     lv_obj_set_style_border_width(btn_matrix_part_down, 0, LV_PART_MAIN);
     lv_buttonmatrix_set_map(btn_matrix_part_down, btn_matrix_part_down_map);
     uint32_t index = lv_buttonmatrix_get_selected_button(btn_matrix_part_down);
+    lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_draw_cb, LV_EVENT_DRAW_TASK_ADDED, NULL);
+    lv_obj_add_flag(btn_matrix_part_down, LV_OBJ_FLAG_SEND_DRAW_TASK_EVENTS);
     lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_cb, LV_EVENT_VALUE_CHANGED, &index);
     lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_down, LV_BUTTONMATRIX_CTRL_RECOLOR);
     lv_obj_set_style_text_font(btn_matrix_part_down, FONT, LV_PART_ITEMS);
