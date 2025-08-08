@@ -5,6 +5,7 @@
 #include <input_area.h>
 #include <screen_graph_input.h>
 #include <screen_menu.h>
+#include <screen_settings.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -19,6 +20,14 @@ extern lv_obj_t *array_menu_screen[3][3];
 
 extern lv_obj_t *array_graph_input_screen[];
 extern int array_graph_input_screen_index;
+
+extern lv_obj_t *array_settings_section[];
+extern lv_obj_t *array_settings_angle_section[];
+extern lv_obj_t *array_settings_result_format_section[];
+
+extern char screen_settings_index;
+extern char screen_settings_angle_index;
+extern char screen_settings_result_format_index;
 
 void nav_cb(lv_event_t *event)
 {
@@ -149,6 +158,33 @@ void nav_cb(lv_event_t *event)
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
         }
+
+        if (current_screen == SCREEN_SETTINGS) {
+            if (screen_settings_index == 0) return;
+            lv_obj_clear_state(array_settings_section[screen_settings_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_section[screen_settings_index], LV_STATE_DEFAULT);
+            screen_settings_index--;
+            lv_obj_clear_state(array_settings_section[screen_settings_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_section[screen_settings_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_ANGLE) {
+            if (screen_settings_angle_index == 0) return;
+            lv_obj_clear_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_DEFAULT);
+            screen_settings_angle_index--;
+            lv_obj_clear_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_RESULT_FORMAT) {
+            if (screen_settings_result_format_index == 0) return;
+            lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
+            screen_settings_result_format_index--;
+            lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
+        }
     }
 
     // Down
@@ -184,6 +220,33 @@ void nav_cb(lv_event_t *event)
             array_graph_input_screen_index++;
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_SETTINGS) {
+            if (screen_settings_index == 1) return;
+            lv_obj_clear_state(array_settings_section[screen_settings_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_section[screen_settings_index], LV_STATE_DEFAULT);
+            screen_settings_index++;
+            lv_obj_clear_state(array_settings_section[screen_settings_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_section[screen_settings_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_ANGLE) {
+            if (screen_settings_angle_index == 2) return;
+            lv_obj_clear_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_DEFAULT);
+            screen_settings_angle_index++;
+            lv_obj_clear_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_angle_section[screen_settings_angle_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_RESULT_FORMAT) {
+            if (screen_settings_result_format_index == 2) return;
+            lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
+            lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
+            screen_settings_result_format_index++;
+            lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
+            lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
         }
     }
 }

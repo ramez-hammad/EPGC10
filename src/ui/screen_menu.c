@@ -11,7 +11,9 @@ extern lv_obj_t *back_button_menu_label;
 extern lv_obj_t *graph_button_menu;
 extern lv_obj_t *graph_button_menu_label;
 
-extern lv_obj_t *menu_button_3;
+extern lv_obj_t *settings_button_menu;
+extern lv_obj_t *settings_button_menu_label;
+
 extern lv_obj_t *menu_button_4;
 extern lv_obj_t *menu_button_5;
 extern lv_obj_t *menu_button_6;
@@ -53,13 +55,16 @@ void create_screen_menu_widgets(void)
     lv_style_init(&menu_button_style_default);
     lv_style_set_bg_opa(&menu_button_style_default, LV_OPA_MAX);
     lv_style_set_bg_color(&menu_button_style_default, lv_color_hex(BG_COLOR_BUTTONS));
-    //lv_style_set_border_width(&menu_button_style_default, 0);
+    lv_style_set_border_color(&menu_button_style_default, lv_color_hex(0xd3d3d3));
+    lv_style_set_border_width(&menu_button_style_default, 1);
+    lv_style_set_text_font(&menu_button_style_default, FONT);
 
     static lv_style_t menu_button_style_focused;
     lv_style_init(&menu_button_style_focused);
     lv_style_set_bg_opa(&menu_button_style_focused, LV_OPA_MAX);
     lv_style_set_bg_color(&menu_button_style_focused, lv_color_hex(BG_COLOR_MENU_SELECTED));
     lv_style_set_border_width(&menu_button_style_focused, 0);
+    lv_style_set_text_font(&menu_button_style_focused, FONT);
 
     graph_button_menu = lv_obj_create(screen_menu_container);
     lv_obj_set_size(graph_button_menu, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
@@ -80,6 +85,17 @@ void create_screen_menu_widgets(void)
     back_button_menu_label = lv_label_create(back_button_menu);
     lv_obj_align(back_button_menu_label, LV_ALIGN_CENTER, 0, 0);
     lv_label_set_text(back_button_menu_label, "Back");
+
+    settings_button_menu = lv_obj_create(screen_menu_container);
+    lv_obj_set_size(settings_button_menu, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
+    lv_obj_set_scrollbar_mode(settings_button_menu, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(settings_button_menu, &menu_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(settings_button_menu, &menu_button_style_focused, LV_STATE_FOCUSED);
+
+
+    settings_button_menu_label = lv_label_create(settings_button_menu);
+    lv_obj_align(settings_button_menu_label, LV_ALIGN_CENTER, 0, 0);
+    lv_label_set_text(settings_button_menu_label, "Settings");
 
     // Placeholder menu buttons
 
@@ -118,12 +134,6 @@ void create_screen_menu_widgets(void)
     lv_obj_set_scrollbar_mode(menu_button_4, LV_SCROLLBAR_MODE_OFF);
     lv_obj_add_style(menu_button_4, &menu_button_style_default, LV_STATE_DEFAULT);
     lv_obj_add_style(menu_button_4, &menu_button_style_focused, LV_STATE_FOCUSED);
-
-    menu_button_3 = lv_obj_create(screen_menu_container);
-    lv_obj_set_size(menu_button_3, MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
-    lv_obj_set_scrollbar_mode(menu_button_3, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_add_style(menu_button_3, &menu_button_style_default, LV_STATE_DEFAULT);
-    lv_obj_add_style(menu_button_3, &menu_button_style_focused, LV_STATE_FOCUSED);
 }
 
 void create_screen_menu(void)
@@ -141,7 +151,7 @@ void create_screen_menu(void)
 
     array_menu_screen[0][0] = back_button_menu;
     array_menu_screen[0][1] = graph_button_menu;
-    array_menu_screen[0][2] = menu_button_3;
+    array_menu_screen[0][2] = settings_button_menu;
     array_menu_screen[1][0] = menu_button_4;
     array_menu_screen[1][1] = menu_button_5;
     array_menu_screen[1][2] = menu_button_6;

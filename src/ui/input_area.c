@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <input_area.h>
-#include <stdlib.h>
 #include <ui.h>
+#include <math.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area_container;
@@ -26,6 +26,8 @@ uint32_t input_buffer_main_current_pos = 0;
 uint32_t buffer_pos_nav = 0;
 
 extern char current_screen;
+
+extern char *display_format;
 
 void render_input_area(void)
 {
@@ -96,17 +98,37 @@ void create_line_ans(void)
 void create_ans_label(double ans)
 {
     char text[500];
-    sprintf(text, "%.2f", ans);
+
+    if (strcmp(display_format, "NORMAL") == 0) {
+        sprintf(text, "%.2f", ans);
+    }
+
+    if (strcmp(display_format, "SCI") == 0) {
+        sprintf(text, "%.2e", ans);
+    }
+
+    if (strcmp(display_format, "ENG") == 0) {
+        int exponent = (int)floor(log10(fabs(ans)) / 3.0) * 3;
+        double mantissa = ans / pow(10, exponent);
+        sprintf(text, "%.2fe%d", mantissa, exponent);
+
+        if (ans == 0.0) sprintf(text, "%.2f", ans);
+    }
+
+
     if (strlen(text) >= 14) sprintf(text, "%e", ans);
     if (strcmp(text, "inf") == 0) strcpy(text, "Error");
     if (strcmp(text, "-inf") == 0) strcpy(text, "Error");
     if (strcmp(text, "nan") == 0) strcpy(text, "Error");
+
     ans_label = lv_label_create(input_area_container);
+
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);
     lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_RIGHT, -25, 15);
     lv_obj_set_style_text_font(ans_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_obj_set_style_text_color(ans_label, lv_color_hex(TEXT_COLOR), LV_PART_MAIN);
+
     prev_ans = ans;
 }
 

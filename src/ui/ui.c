@@ -7,6 +7,7 @@
 #include <ui.h>
 #include <screen_graph_input.h>
 #include <screen_graph.h>
+#include <screen_settings.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -25,7 +26,9 @@ lv_obj_t *back_button_menu_label;
 lv_obj_t *graph_button_menu;
 lv_obj_t *graph_button_menu_label;
 
-lv_obj_t *menu_button_3;
+lv_obj_t *settings_button_menu;
+lv_obj_t *settings_button_menu_label;
+
 lv_obj_t *menu_button_4;
 lv_obj_t *menu_button_5;
 lv_obj_t *menu_button_6;
@@ -37,7 +40,7 @@ lv_obj_t *array_menu_screen[3][3];
 
 char current_screen;
 char *display_format;
-char deg_rad = 1;
+char deg_rad = 0;
 double prev_ans;
 char shift;
 char alpha;
@@ -66,6 +69,7 @@ int main(void)
     // Create UI
     create_screen_menu();
     create_screen_graph_input();
+    create_screen_settings();
     create_screen_graph();
     create_input_base();
     create_input_area_container();

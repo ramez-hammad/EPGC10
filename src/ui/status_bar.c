@@ -15,16 +15,19 @@ void create_display_format_label(void)
     lv_label_set_text(display_format_label, display_format);
     lv_obj_set_style_radius(display_format_label, 0, LV_PART_MAIN);
     lv_obj_set_style_text_color(display_format_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
+    lv_obj_set_style_text_font(display_format_label, FONT, LV_PART_MAIN);
 }
 
 void create_deg_rad_label(void)
 {
     deg_rad_label = lv_label_create(status_bar);
     lv_obj_align_to(deg_rad_label, display_format_label, LV_ALIGN_RIGHT_MID, 35, 0);
-    if (deg_rad == 1) lv_label_set_text(deg_rad_label, "DEGREE");
-    if (deg_rad == 0) lv_label_set_text(deg_rad_label, "RADIAN");
+    if (deg_rad == 0) lv_label_set_text(deg_rad_label, "DEGREE");
+    if (deg_rad == 1) lv_label_set_text(deg_rad_label, "RADIAN");
+    if (deg_rad == 2) lv_label_set_text(deg_rad_label, "GRADIAN");
     lv_obj_set_style_radius(deg_rad_label, 0, LV_PART_MAIN);
     lv_obj_set_style_text_color(deg_rad_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
+    lv_obj_set_style_text_font(deg_rad_label, FONT, LV_PART_MAIN);
 }
 
 void create_status_bar(void)
@@ -38,6 +41,14 @@ void create_status_bar(void)
     lv_obj_set_style_border_width(status_bar, 2, LV_PART_MAIN);
     lv_obj_set_style_border_side(status_bar, LV_BORDER_SIDE_BOTTOM, LV_PART_MAIN);
     lv_obj_set_style_border_color(status_bar, lv_color_hex(BG_COLOR_STATUS_BAR), LV_PART_MAIN);
+    create_display_format_label();
+    create_deg_rad_label();
+}
+
+void refresh_status_bar(void)
+{
+    lv_obj_delete(deg_rad_label);
+    lv_obj_delete(display_format_label);
     create_display_format_label();
     create_deg_rad_label();
 }

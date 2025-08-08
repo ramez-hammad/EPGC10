@@ -2,6 +2,9 @@
 #include <input_area.h>
 #include <text.h>
 #include <screen_menu.h>
+#include <screen_settings.h>
+#include <screen_graph.h>
+#include <screen_graph_input.h>
 
 extern char alpha;
 extern char shift;
@@ -11,6 +14,8 @@ extern char current_screen;
 extern uint32_t col_index;
 extern uint32_t row_index;
 extern uint32_t num_menu_buttons;
+
+extern lv_obj_t *screen_settings;
 
 void btn_matrix_mid_cb(lv_event_t *event)
 {
@@ -52,6 +57,26 @@ void btn_matrix_mid_cb(lv_event_t *event)
             add_to_input_area("^\0");
             break;
         case 7:
+            switch (current_screen) {
+                case SCREEN_ANGLE:
+                case SCREEN_RESULT_FORMAT:
+                    lv_obj_send_event(lv_menu_get_main_header_back_button(screen_settings), LV_EVENT_CLICKED, NULL);
+                    current_screen = SCREEN_SETTINGS;
+                    break;
+
+                case SCREEN_SETTINGS:
+                case SCREEN_GRAPH_INPUT:
+                    display_screen_menu();
+                    break;
+
+                case SCREEN_GRAPH:
+                    display_screen_graph_input();
+                    break;
+
+                case SCREEN_MENU:
+                    display_screen_input();
+                    break;
+            }
             break;
     }
 }
