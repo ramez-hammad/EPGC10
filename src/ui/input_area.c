@@ -86,7 +86,7 @@ void create_input_area(void)
 void create_line_ans(void)
 {
     line = lv_line_create(input_area_container);
-    static lv_point_precise_t line_points[] = {{10, 0}, {360, 0}};
+    static lv_point_precise_t line_points[] = {{0, 0}, {320, 0}};
     lv_line_set_points(line, line_points, 2);
     lv_obj_set_style_line_dash_width(line, 3, LV_PART_MAIN);
     lv_obj_set_style_line_dash_gap(line, 3, LV_PART_MAIN);

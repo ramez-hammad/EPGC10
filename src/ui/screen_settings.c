@@ -1,6 +1,8 @@
 #include <lvgl.h>
 #include <input_area.h>
 #include <screen_settings.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <ui.h>
 
 #include "src/widgets/menu/lv_menu_private.h"
@@ -21,7 +23,7 @@ lv_obj_t *result_format_page;
 lv_obj_t *normal_section_result_format_page;
 lv_obj_t *sci_section_result_format_page;
 lv_obj_t *eng_section_result_format_page;
-lv_obj_t *float_section_result_format_page;
+lv_obj_t *dec_section_result_format_page;
 
 lv_obj_t *array_settings_section[2];
 lv_obj_t *array_settings_angle_section[3];
@@ -68,7 +70,7 @@ void create_screen_settings(void)
     lv_obj_remove_style_all(deg_section_angle_page);
     lv_obj_align(deg_section_angle_page, LV_ALIGN_TOP_MID, 0, 15);
     lv_obj_set_style_border_width(deg_section_angle_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(deg_section_angle_page, 280, 50);
+    lv_obj_set_size(deg_section_angle_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Degrees                                                 90\u00B0");
     lv_obj_add_style(deg_section_angle_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -78,9 +80,9 @@ void create_screen_settings(void)
     label = lv_label_create(rad_section_angle_page);
     lv_obj_add_flag(rad_section_angle_page, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_remove_style_all(rad_section_angle_page);
-    lv_obj_align_to(rad_section_angle_page, deg_section_angle_page, LV_ALIGN_TOP_MID, 20, 48);
+    lv_obj_align_to(rad_section_angle_page, deg_section_angle_page, LV_ALIGN_TOP_MID, 20, 38);
     lv_obj_set_style_border_width(rad_section_angle_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(rad_section_angle_page, 280, 50);
+    lv_obj_set_size(rad_section_angle_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Radians                                                    \u03c0");
     lv_obj_add_style(rad_section_angle_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -90,9 +92,9 @@ void create_screen_settings(void)
     label = lv_label_create(grad_section_angle_page);
     lv_obj_add_flag(grad_section_angle_page, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_remove_style_all(grad_section_angle_page);
-    lv_obj_align_to(grad_section_angle_page, rad_section_angle_page, LV_ALIGN_TOP_MID, -93, 48);
+    lv_obj_align_to(grad_section_angle_page, rad_section_angle_page, LV_ALIGN_TOP_MID, -93, 38);
     lv_obj_set_style_border_width(grad_section_angle_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(grad_section_angle_page, 280, 50);
+    lv_obj_set_size(grad_section_angle_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Gradians                                       100 gon");
     lv_obj_add_style(grad_section_angle_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -107,7 +109,7 @@ void create_screen_settings(void)
     lv_obj_remove_style_all(normal_section_result_format_page);
     lv_obj_align(normal_section_result_format_page, LV_ALIGN_TOP_MID, 0, 15);
     lv_obj_set_style_border_width(normal_section_result_format_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(normal_section_result_format_page, 280, 50);
+    lv_obj_set_size(normal_section_result_format_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Normal");
     lv_obj_add_style(normal_section_result_format_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -117,9 +119,9 @@ void create_screen_settings(void)
     label = lv_label_create(sci_section_result_format_page);
     lv_obj_add_flag(sci_section_result_format_page, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_remove_style_all(sci_section_result_format_page);
-    lv_obj_align_to(sci_section_result_format_page, normal_section_result_format_page, LV_ALIGN_TOP_MID, 20, 48);
+    lv_obj_align_to(sci_section_result_format_page, normal_section_result_format_page, LV_ALIGN_TOP_MID, 20, 38);
     lv_obj_set_style_border_width(sci_section_result_format_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(sci_section_result_format_page, 280, 50);
+    lv_obj_set_size(sci_section_result_format_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Scientific");
     lv_obj_add_style(sci_section_result_format_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -129,9 +131,9 @@ void create_screen_settings(void)
     label = lv_label_create(eng_section_result_format_page);
     lv_obj_add_flag(eng_section_result_format_page, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_remove_style_all(eng_section_result_format_page);
-    lv_obj_align_to(eng_section_result_format_page, sci_section_result_format_page, LV_ALIGN_TOP_MID, -93, 48);
+    lv_obj_align_to(eng_section_result_format_page, sci_section_result_format_page, LV_ALIGN_TOP_MID, -93, 38);
     lv_obj_set_style_border_width(eng_section_result_format_page, 1, LV_PART_MAIN);
-    lv_obj_set_size(eng_section_result_format_page, 280, 50);
+    lv_obj_set_size(eng_section_result_format_page, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_label_set_text(label, " Engineering");
     lv_obj_add_style(eng_section_result_format_page, &menu_button_style_default, LV_STATE_DEFAULT);
@@ -148,7 +150,7 @@ void create_screen_settings(void)
     lv_obj_remove_style_all(angle_section);
     lv_obj_align(angle_section, LV_ALIGN_TOP_MID, 0, 15);
     lv_obj_set_style_border_width(angle_section, 1, LV_PART_MAIN);
-    lv_obj_set_size(angle_section, 280, 50);
+    lv_obj_set_size(angle_section, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_add_style(angle_section, &menu_button_style_default, LV_STATE_DEFAULT);
     lv_obj_add_style(angle_section, &menu_button_style_focused, LV_STATE_FOCUSED);
@@ -159,9 +161,9 @@ void create_screen_settings(void)
     lv_menu_set_load_page_event(screen_settings, result_format_section, result_format_page);
     lv_obj_add_flag(result_format_section, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_remove_style_all(result_format_section);
-    lv_obj_align_to(result_format_section, angle_section, LV_ALIGN_BOTTOM_MID, 20, 16);
+    lv_obj_align_to(result_format_section, angle_section, LV_ALIGN_BOTTOM_MID, 20, 17);
     lv_obj_set_style_border_width(result_format_section, 1, LV_PART_MAIN);
-    lv_obj_set_size(result_format_section, 280, 50);
+    lv_obj_set_size(result_format_section, 280, 40);
     lv_obj_add_flag(label, LV_OBJ_FLAG_IGNORE_LAYOUT);
     lv_obj_add_style(result_format_section, &menu_button_style_default, LV_STATE_DEFAULT);
     lv_obj_add_style(result_format_section, &menu_button_style_focused, LV_STATE_FOCUSED);
