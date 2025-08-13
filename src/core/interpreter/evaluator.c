@@ -3,8 +3,13 @@
 
 #include <lexer.h>
 #include <parser.h>
+#include <error.h>
+
+double x_value = 0;
 
 extern char deg_rad;
+
+extern double prev_ans;
 
 double deg_to_rad(double deg)
 {
@@ -23,7 +28,7 @@ double rad_to_deg(double rad)
 
 double rad_to_grad(double rad)
 {
-    return rad *  (200 / M_PI);
+    return rad * (200 / M_PI);
 }
 
 double evaluate(NODE *root)
@@ -38,7 +43,8 @@ double evaluate(NODE *root)
                 return evaluate(root->left) * evaluate(root->right);
             case TOKEN_DIV:
                 if (evaluate(root->right) != 0) return evaluate(root->left) / evaluate(root->right);
-            // Divide by zero error
+                // Divide by zero error
+                if (!error_present) error(1);
             case TOKEN_POW:
                 return pow(evaluate(root->left), evaluate(root->right));
             case TOKEN_NUM:
@@ -134,9 +140,14 @@ double evaluate(NODE *root)
                 switch (root->name) {
                     case 'p':
                         return M_PI;
+                    case 'x':
+                        return x_value;
+                    case 'A':
+                        return prev_ans;
                 }
             case TOKEN_NULL:
                 return 0;
         }
     }
 }
+
