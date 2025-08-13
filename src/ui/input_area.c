@@ -5,6 +5,7 @@
 #include <input_area.h>
 #include <ui.h>
 #include <math.h>
+#include <error.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area_container;
@@ -99,27 +100,31 @@ void create_ans_label(double ans)
 {
     char text[500];
 
-    if (strcmp(display_format, "NORMAL") == 0) {
-        sprintf(text, "%.2f", ans);
+    if (error_present) {
+        strcpy(text, error_message);
+        error_present = 0;
+    } else {
+        if (strcmp(display_format, "NORMAL") == 0) {
+            sprintf(text, "%.2f", ans);
+        }
+
+        if (strcmp(display_format, "SCI") == 0) {
+            sprintf(text, "%.2e", ans);
+        }
+
+        if (strcmp(display_format, "ENG") == 0) {
+            int exponent = (int) floor(log10(fabs(ans)) / 3.0) * 3;
+            double mantissa = ans / pow(10, exponent);
+            sprintf(text, "%.2fe%d", mantissa, exponent);
+
+            if (ans == 0.0) sprintf(text, "%.2f", ans);
+        }
+
+        if (strlen(text) >= 14) sprintf(text, "%e", ans);
+        if (strcmp(text, "inf") == 0) strcpy(text, "Error");
+        if (strcmp(text, "-inf") == 0) strcpy(text, "Error");
+        if (strcmp(text, "nan") == 0) strcpy(text, "Error");
     }
-
-    if (strcmp(display_format, "SCI") == 0) {
-        sprintf(text, "%.2e", ans);
-    }
-
-    if (strcmp(display_format, "ENG") == 0) {
-        int exponent = (int)floor(log10(fabs(ans)) / 3.0) * 3;
-        double mantissa = ans / pow(10, exponent);
-        sprintf(text, "%.2fe%d", mantissa, exponent);
-
-        if (ans == 0.0) sprintf(text, "%.2f", ans);
-    }
-
-
-    if (strlen(text) >= 14) sprintf(text, "%e", ans);
-    if (strcmp(text, "inf") == 0) strcpy(text, "Error");
-    if (strcmp(text, "-inf") == 0) strcpy(text, "Error");
-    if (strcmp(text, "nan") == 0) strcpy(text, "Error");
 
     ans_label = lv_label_create(input_area_container);
 
@@ -161,6 +166,15 @@ void add_to_input_area(char *text)
     } else if (strcmp(text, "arctan(") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "tan\u207B\u00B9(", get_length(1));
+    } else if (strcmp(text, "arcsinh(") == 0) {
+        append_text(get_buffer(0), text, get_length(0));
+        append_text(get_buffer(1), "sinh\u207B\u00B9(", get_length(1));
+    } else if (strcmp(text, "arccosh(") == 0) {
+        append_text(get_buffer(0), text, get_length(0));
+        append_text(get_buffer(1), "cosh\u207B\u00B9(", get_length(1));
+    } else if (strcmp(text, "arctanh(") == 0) {
+        append_text(get_buffer(0), text, get_length(0));
+        append_text(get_buffer(1), "tanh\u207B\u00B9(", get_length(1));
     } else {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), text, get_length(1));
