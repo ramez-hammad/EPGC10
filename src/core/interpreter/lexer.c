@@ -304,6 +304,15 @@ TOKEN *tokenize(const char *expr, int *array_size)
                     num_tokens++;
                     arr_tok[num_tokens - 1] = create_token_var(expr[x]);
                     break;
+                case 'x': // Variable x
+                    num_tokens++;
+                    arr_tok[num_tokens - 1] = create_token_var(expr[x]);
+                    break;
+                case 'A': // Ans
+                    num_tokens++;
+                    arr_tok[num_tokens - 1] = create_token_var(expr[x]);
+                    x = x + 2;
+                    break;
             }
 
             if (expr[x] <= 90 && expr[x] >= 65) // ASCII for A to Z
