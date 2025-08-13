@@ -44,6 +44,8 @@ set(SRC_UI
         src/ui/button_matrix_down_draw_callback.h
         src/ui/screen_settings.c
         src/ui/screen_settings.h
+        src/core/interpreter/error.c
+        src/core/interpreter/error.h
 )
 
 set(SRC_TEST
