@@ -2,6 +2,8 @@
 #include <parser.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <error.h>
+#include <string.h>
 
 int next_index = 0;
 
@@ -154,40 +156,71 @@ NODE *parse_factor(TOKEN *current_token)
             return current_factor;
         case TOKEN_LEFT_PAREN:
             num_paren++;
-            if (next_token(1).type == TOKEN_RIGHT_PAREN); // Syntax Error, () is not valid
+
+            if (next_token(1).type == TOKEN_RIGHT_PAREN) {
+                // Syntax Error, () is not valid
+                error(0);
+                insert_token(create_token_num(0), next_index, &num_tokens);
+            }
+
+            if (next_token(1).type == TOKEN_NULL && next_token(-1).type == TOKEN_NULL) {
+                error(0);
+                insert_token(create_token_num(0), next_index, &num_tokens);
+                insert_token(create_token_op(TOKEN_RIGHT_PAREN), next_index + 1, &num_tokens);
+            }
+
             current_factor = parse_expression();
             *current_token = next_token(0);
             return current_factor;
         case TOKEN_RIGHT_PAREN:
             if (next_token(-1).type == TOKEN_NULL) {
                 // Syntax Error, first token cannot be a )
+                error(0);
+                insert_token(create_token_num(0), next_index, &num_tokens);
+                *current_token = next_token(0);
+                current_factor = parse_factor(current_token);
+                return current_factor;
             }
             break;
         case TOKEN_VAR:
             current_factor = create_node_var(current_token->name);
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
             if (next_token(1).type == TOKEN_LEFT_PAREN) goto insert_mul;
+            if (next_token(1).type == TOKEN_VAR) goto insert_mul;
             *current_token = next_token(0);
             return current_factor;
-        case TOKEN_SIN: goto func;
-        case TOKEN_COS: goto func;
-        case TOKEN_TAN: goto func;
-        case TOKEN_SINH: goto func;
-        case TOKEN_COSH: goto func;
-        case TOKEN_TANH: goto func;
-        case TOKEN_ASIN: goto func;
-        case TOKEN_ACOS: goto func;
-        case TOKEN_ATAN: goto func;
-        case TOKEN_ASINH: goto func;
-        case TOKEN_ACOSH: goto func;
-        case TOKEN_ATANH: goto func;
-        case TOKEN_LN: goto func;
-        case TOKEN_LOG: goto func;
-        case TOKEN_SQRT: goto func;
-        case TOKEN_ABS: goto func;
+
+        case TOKEN_SIN:
+        case TOKEN_COS:
+        case TOKEN_TAN:
+        case TOKEN_SINH:
+        case TOKEN_COSH:
+        case TOKEN_TANH:
+        case TOKEN_ASIN:
+        case TOKEN_ACOS:
+        case TOKEN_ATAN:
+        case TOKEN_ASINH:
+        case TOKEN_ACOSH:
+        case TOKEN_ATANH:
+        case TOKEN_LN:
+        case TOKEN_LOG:
+        case TOKEN_SQRT:
+        case TOKEN_ABS:
+            goto func;
+
+        case TOKEN_MUL:
+        case TOKEN_DIV:
+        case TOKEN_POW:
+            // Syntax error
+            error(0);
+            insert_token(create_token_num(0), next_index, &num_tokens);
+            *current_token = next_token(0);
+            current_factor = parse_factor(current_token);
+            return current_factor;
     }
 
 func:
+    if (strcmp(current_token->arg, "") == 0) error(0);
     current_factor = create_node_func(current_token->type, current_token->arg);
     if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
     if (next_token(1).type == TOKEN_LEFT_PAREN || next_token(1).type == TOKEN_VAR) goto insert_mul;
@@ -209,10 +242,13 @@ right_paren:
             break;
         }
     }
+
     if (next_token(1).type == TOKEN_LEFT_PAREN) {
         insert_token(create_token_op(TOKEN_MUL), next_index, &num_tokens);
     }
+
     *current_token = create_token_op(TOKEN_NULL);
+
     return current_factor;
 }
 
@@ -229,13 +265,17 @@ NODE *parse_exponent(TOKEN *current_token)
                 int temp_index = next_index;
                 next_token(0);
                 for (int i = 0; i < num_tokens; i++) {
-                    if (next_token(1).type == TOKEN_POW || next_token(1).type == TOKEN_NUM) {
-                        next_token(0);
-                    } else {
-                        insert_token(create_token_op(TOKEN_RIGHT_PAREN), next_index, &num_tokens);
-                        next_index = temp_index;
-                        break;
+                    switch (next_token(1).type) {
+                        case TOKEN_POW:
+                        case TOKEN_NUM:
+                            next_token(0);
+                            continue;
+                        default:
+                            insert_token(create_token_op(TOKEN_RIGHT_PAREN), next_index, &num_tokens);
+                            next_index = temp_index;
+                            break;
                     }
+                    break;
                 }
                 *current_token = next_token(0);
                 current_exponent = create_node_op(TOKEN_POW, current_exponent, parse_factor(current_token));
@@ -300,6 +340,8 @@ NODE *parse_expression(void)
 ret:
     if (num_paren != 0) {
         // Syntax error (Mismatched parentheses)
+        error(0);
+        num_paren = 0;
     }
 
     return current_node;
@@ -335,6 +377,8 @@ NODE *parse_expression_str(const char *expr)
 ret:
     if (num_paren != 0) {
         // Syntax error (Mismatched parentheses)
+        error(0);
+        num_paren = 0;
     }
 
     return current_node;
