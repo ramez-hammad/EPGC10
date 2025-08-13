@@ -38,7 +38,7 @@ void create_button_matrix_base(void)
 void create_button_matrix_part_down(void)
 {
     static const char *btn_matrix_part_down_map[] = {
-        "#dc143c          A#\n", "#dc143c          B#\n   log", "#dc143c          C#\n    ln",
+        "#dc143c          A#\n   hyp", "#dc143c          B#\n   log", "#dc143c          C#\n    ln",
         "#c4a747 sin\u207B\u00B9##dc143c  D#\n   sin", "#c4a747 cos\u207B\u00B9##dc143c  E#\n   cos",
         "#c4a747 tan\u207B\u00B9##dc143c  F#\n   tan", "\n",
         "#dc143c         G#\n", "#dc143c         H#\n", "#dc143c          I#\n     (", "#dc143c          J#\n     )", "#dc143c          K#\n     ,", "#dc143c          L#\n", "\n",
@@ -91,7 +91,7 @@ void create_button_matrix_part_mid(void)
     lv_obj_set_style_border_width(btn_matrix_part_mid_container, 0, LV_PART_MAIN);
 
     static const char *btn_matrix_part_mid_map[] = {
-        "#c4a747 SHIFT#", "OPTN", "VARS", "MENU", "\n",
+        "#c4a747 SHIFT#", "OPTN", "\U0001D465", "MENU", "\n",
         "#dc143c ALPHA#", "#c4a747 \u221A        #\n    \U0001D465\u00B2", "^", "EXIT", NULL,
     };
 
