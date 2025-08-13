@@ -43,3 +43,5 @@ typedef struct TOKEN
 TOKEN *tokenize(const char *expr, int *array_size);
 
 TOKEN create_token_op(TOKEN_TYPE type);
+
+TOKEN create_token_num(double val);
