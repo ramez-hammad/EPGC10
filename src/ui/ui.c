@@ -14,9 +14,7 @@ lv_obj_t *input_area_container;
 lv_obj_t *line;
 lv_obj_t *input_base;
 lv_obj_t *ans_label;
-lv_obj_t *display_format_label;
-lv_obj_t *deg_rad_label;
-lv_obj_t *status_bar;
+
 lv_obj_t *screen_menu;
 lv_obj_t *screen_menu_container;
 
@@ -39,8 +37,9 @@ lv_obj_t *menu_button_9;
 lv_obj_t *array_menu_screen[3][3];
 
 char current_screen;
-char *display_format;
-char deg_rad = 0;
+
+extern char *display_format;
+
 double prev_ans;
 char shift;
 char alpha;
