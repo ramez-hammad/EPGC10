@@ -38,6 +38,8 @@ extern char screen_settings_result_format_index;
 extern char deg_rad;
 extern char *display_format;
 
+char hyp;
+
 void btn_matrix_down_cb(lv_event_t *event)
 {
     uint32_t *index = lv_event_get_param(event);
@@ -45,10 +47,18 @@ void btn_matrix_down_cb(lv_event_t *event)
     switch (*index) {
         case 0:
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
-            if (alpha) {
+
+            if (hyp) {
+                hyp = 0;
+            } else if (alpha) {
                 alpha = 0;
                 add_to_input_area("A\0");
+            } else {
+                hyp = 1;
             }
+
+            refresh_status_bar();
+
             break;
         case 1:
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
@@ -75,9 +85,20 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("D\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arcsin(\0");
+
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("arcsinh(\0");
+                } else {
+                    add_to_input_area("arcsin(\0");
+                }
             } else {
-                add_to_input_area("sin(\0");
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("sinh(\0");
+                } else {
+                    add_to_input_area("sin(\0");
+                }
             }
             break;
         case 4:
@@ -87,9 +108,20 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("E\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arccos(\0");
+
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("arccosh(\0");
+                } else {
+                    add_to_input_area("arccos(\0");
+                }
             } else {
-                add_to_input_area("cos(\0");
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("cosh(\0");
+                } else {
+                    add_to_input_area("cos(\0");
+                }
             }
             break;
         case 5:
@@ -99,9 +131,20 @@ void btn_matrix_down_cb(lv_event_t *event)
                 add_to_input_area("F\0");
             } else if (shift) {
                 shift = 0;
-                add_to_input_area("arctan(\0");
+
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("arctanh(\0");
+                } else {
+                    add_to_input_area("arctan(\0");
+                }
             } else {
-                add_to_input_area("tan(\0");
+                if (hyp) {
+                    hyp = 0;
+                    add_to_input_area("tanh(\0");
+                } else {
+                    add_to_input_area("tan(\0");
+                }
             }
             break;
         case 6:
@@ -197,6 +240,7 @@ void btn_matrix_down_cb(lv_event_t *event)
                 if (current_screen != SCREEN_INPUT) break;
                 if (shift) shift = 0;
                 if (alpha) alpha = 0;
+                if (hyp) hyp = 0;
                 lv_obj_delete(input_base);
                 create_input_base();
                 create_input_area_container();
@@ -310,16 +354,22 @@ void btn_matrix_down_cb(lv_event_t *event)
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
+
             add_to_input_area("p\0");
+
             break;
         case 30:
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
+
+            add_to_input_area("Ans\0");
+
             break;
         case 31:
             if (alpha) alpha = 0;
             if (shift) shift = 0;
+            if (hyp) hyp = 0;
 
             if (current_screen == SCREEN_RESULT_FORMAT) {
                 // Normal
@@ -391,4 +441,5 @@ void btn_matrix_down_cb(lv_event_t *event)
 
             break;
     }
+    refresh_status_bar();
 }
