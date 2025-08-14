@@ -5,9 +5,11 @@
 #include <screen_settings.h>
 #include <screen_graph.h>
 #include <screen_graph_input.h>
+#include <status_bar.h>
 
 extern char alpha;
 extern char shift;
+extern char hyp;
 
 extern char current_screen;
 
@@ -29,10 +31,13 @@ void btn_matrix_mid_cb(lv_event_t *event)
                 shift = 1;
                 alpha = 0;
             }
+
+            refresh_status_bar();
             break;
         case 1:
             break;
         case 2:
+            add_to_input_area("x\0");
             break;
         case 3:
             display_screen_menu();
@@ -43,7 +48,10 @@ void btn_matrix_mid_cb(lv_event_t *event)
             } else {
                 alpha = 1;
                 shift = 0;
+                hyp = 0;
             }
+
+            refresh_status_bar();
             break;
         case 5:
             if (alpha) alpha = 0;
