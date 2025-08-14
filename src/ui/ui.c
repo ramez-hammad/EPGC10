@@ -8,6 +8,7 @@
 #include <screen_graph_input.h>
 #include <screen_graph.h>
 #include <screen_settings.h>
+#include <unistd.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -78,5 +79,6 @@ int main(void)
 
     while (true) {
         lv_timer_handler();
+        usleep(1000);
     }
 }
