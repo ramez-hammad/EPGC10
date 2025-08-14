@@ -7,6 +7,7 @@
 #include <interpreter.h>
 #include <screen_menu.h>
 #include <screen_settings.h>
+#include <string.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area;
@@ -412,14 +413,17 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
 
             if (current_screen == SCREEN_INPUT) {
-                create_ans_label(interpret(get_text(input_buffer_main, input_buffer_main_length)));
-                create_line_ans();
-                lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
-                create_input_area();
-                lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
-                lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-                reset_buffer(input_buffer_main, &input_buffer_main_length);
-                reset_buffer(output_buffer_main, &output_buffer_main_length);
+                char *expr = get_text(input_buffer_main, input_buffer_main_length);
+                if (strcmp(expr, "") != 0) {
+                    create_ans_label(interpret(expr));
+                    create_line_ans();
+                    lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
+                    create_input_area();
+                    lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
+                    lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+                    reset_buffer(input_buffer_main, &input_buffer_main_length);
+                    reset_buffer(output_buffer_main, &output_buffer_main_length);
+                }
             }
 
             if (current_screen == SCREEN_MENU) {
