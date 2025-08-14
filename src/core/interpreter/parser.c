@@ -208,6 +208,7 @@ NODE *parse_factor(TOKEN *current_token)
         case TOKEN_ABS:
             goto func;
 
+        case TOKEN_NULL:
         case TOKEN_MUL:
         case TOKEN_DIV:
         case TOKEN_POW:
