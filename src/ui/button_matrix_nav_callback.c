@@ -6,6 +6,7 @@
 #include <screen_graph_input.h>
 #include <screen_menu.h>
 #include <screen_settings.h>
+#include <screen_graph.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -84,6 +85,16 @@ void nav_cb(lv_event_t *event)
                 }
             }
         }
+
+        if (current_screen == SCREEN_GRAPH) {
+            const double dx = 0.1 * (x_max - x_min);
+
+            x_max -= dx;
+            x_min -= dx;
+
+            create_screen_graph();
+            draw_graph();
+        }
     }
 
     // Right
@@ -114,6 +125,16 @@ void nav_cb(lv_event_t *event)
                     lv_obj_set_state(array_menu_screen[row_index][col_index], LV_STATE_FOCUSED, true);
                 }
             }
+        }
+
+        if (current_screen == SCREEN_GRAPH) {
+            const double dx = 0.1 * (x_max - x_min);
+
+            x_max += dx;
+            x_min += dx;
+
+            create_screen_graph();
+            draw_graph();
         }
     }
 
@@ -185,6 +206,18 @@ void nav_cb(lv_event_t *event)
             lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
             lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
         }
+
+        if (current_screen == SCREEN_GRAPH) {
+            const double dy = 0.1 * (y_max - y_min);
+
+            y_max += dy;
+            y_min += dy;
+
+            create_screen_graph();
+            draw_graph();
+
+            LV_LOG_USER("Y_MIN: %f, Y_MAX %f", y_min, y_max);
+        }
     }
 
     // Down
@@ -247,6 +280,18 @@ void nav_cb(lv_event_t *event)
             screen_settings_result_format_index++;
             lv_obj_clear_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_DEFAULT);
             lv_obj_add_state(array_settings_result_format_section[screen_settings_result_format_index], LV_STATE_FOCUSED);
+        }
+
+        if (current_screen == SCREEN_GRAPH) {
+            const double dy = 0.1 * (y_max - y_min);
+
+            y_max -= dy;
+            y_min -= dy;
+
+            create_screen_graph();
+            draw_graph();
+
+            LV_LOG_USER("Y_MIN: %f, Y_MAX %f", y_min, y_max);
         }
     }
 }
