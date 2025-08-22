@@ -78,6 +78,8 @@ void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
     lv_obj_set_style_border_width(*nav_sector, 0, LV_PART_MAIN);
     lv_obj_set_style_arc_color(*nav_sector, lv_color_hex(BG_COLOR_BUTTONS), LV_PART_MAIN);
     lv_obj_add_event_cb(*nav_sector, nav_cb, LV_EVENT_PRESSED, NULL);
+    lv_obj_add_event_cb(*nav_sector, nav_cb, LV_EVENT_LONG_PRESSED, NULL);
+    lv_obj_add_event_cb(*nav_sector, nav_cb, LV_EVENT_LONG_PRESSED_REPEAT, NULL);
     lv_obj_set_ext_click_area(*nav_sector, 300);
 }
 
