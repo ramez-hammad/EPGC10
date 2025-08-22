@@ -22,8 +22,8 @@ int graph_drawn = 0;
 
 double x_min = -2 * M_PI;
 double x_max = 2 * M_PI;
-double y_min = -1.0;
-double y_max = 1.0;
+double y_min = -2.0;
+double y_max = 2.0;
 
 extern char *input_buffer_y_1[MAXLEN_INPUT + 1];
 extern char *input_buffer_y_2[MAXLEN_INPUT + 1];
@@ -47,6 +47,7 @@ void create_screen_graph_container(void)
     lv_obj_remove_flag(screen_graph_container, LV_OBJ_FLAG_SCROLL_ELASTIC);
     lv_obj_set_style_bg_color(screen_graph_container, lv_color_hex(0xffffff), LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(screen_graph_container, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_pad_all(screen_graph_container, LV_PART_MAIN, 0);
 }
 
 int x_to_px(double x)
@@ -59,56 +60,110 @@ int y_to_py(double y)
     return (int) ((y_max - y) * SCREEN_HEIGHT_GRAPH / (y_max - y_min));
 }
 
+void safe_set_px(int px, int py, lv_color_t color, int opa)
+{
+    if (px < SCREEN_WIDTH_GRAPH && px >= 0 && py < SCREEN_HEIGHT_GRAPH && py >= 0) {
+        lv_canvas_set_px(grid, px, py, color, opa);
+    }
+}
+
+void draw_tick_label(char axis, double val, int x, int y)
+{
+}
+
 void create_screen_graph_grid(void)
 {
+    lv_obj_clean(screen_graph_container);
+
     LV_DRAW_BUF_DEFINE_STATIC(draw_buf, 320, 210, LV_COLOR_FORMAT_ARGB8888);
     LV_DRAW_BUF_INIT_STATIC(draw_buf);
 
     grid = lv_canvas_create(screen_graph_container);
     lv_canvas_set_draw_buf(grid, &draw_buf);
-    lv_obj_center(grid);
+    lv_obj_align(grid, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_obj_scroll_by(screen_graph_container, -160, -105, LV_ANIM_OFF);
 
     lv_canvas_fill_bg(grid, lv_color_hex(0xffffff), LV_OPA_COVER);
 
-    // Draw x-axis
-    for (int x = 0; x < SCREEN_WIDTH_GRAPH; x++) {
-        lv_canvas_set_px(grid, x, SCREEN_HEIGHT_GRAPH / 2, lv_color_hex(0x000000), LV_OPA_MAX);
-        if (x % 5 == 0 || x == SCREEN_WIDTH_GRAPH - 1) {
-            for (int y = (SCREEN_HEIGHT_GRAPH / 2) - 2; y <= (SCREEN_HEIGHT_GRAPH / 2) + 2; y++) {
-                lv_canvas_set_px(grid, x, y, lv_color_hex(0x000000), LV_OPA_MAX);
-            }
+    // Draw vertical gridlines every 1 unit on x-axis
+    for (double x = floor(x_min); x <= ceil(x_max); x += 1.0) {
+        int px = x_to_px(x);
 
-            if (x % (SCREEN_WIDTH_GRAPH - (x_to_px(M_PI) + 1)) == 0) {
-                for (int y = 0; y < SCREEN_HEIGHT_GRAPH; y++) {
-                    lv_canvas_set_px(grid, x, y, lv_color_hex(0x808080), LV_OPA_MAX);
-                }
+        for (int y = 0; y < SCREEN_HEIGHT_GRAPH; y++) {
+            if (fmod(x, 2) == 0) {
+                safe_set_px(px, y, lv_color_hex(0xcccccc), LV_OPA_MAX);
+            } else {
+                safe_set_px(px, y, lv_color_hex(0xcccccc), LV_OPA_40);
             }
         }
-    }
 
-    // Draw y-axis
-    for (int y = 0; y < SCREEN_HEIGHT_GRAPH; y++) {
-        lv_canvas_set_px(grid, SCREEN_WIDTH_GRAPH / 2, y, lv_color_hex(0x000000), LV_OPA_MAX);
-        if (y % 5 == 0 || y == SCREEN_HEIGHT_GRAPH - 1) {
-            for (int x = (SCREEN_WIDTH_GRAPH / 2) - 2; x <= (SCREEN_WIDTH_GRAPH / 2) + 2; x++) {
-                lv_canvas_set_px(grid, x, y, lv_color_hex(0x000000), LV_OPA_MAX);
-            }
-
-
-            if (y == 0 || y % y_to_py(-1) == 0) {
-                for (int x = 0; x < SCREEN_WIDTH_GRAPH; x++) {
-                    lv_canvas_set_px(grid, x, y, lv_color_hex(0x808080), LV_OPA_MAX);
-                    if (y + 5 == SCREEN_HEIGHT_GRAPH / 2) lv_canvas_set_px(grid, x, y + 5, lv_color_hex(0x000000), LV_OPA_MAX);
-                }
+        if (x == 0) {
+            for (int y = 0; y < SCREEN_HEIGHT_GRAPH; y++) {
+                safe_set_px(px, y, lv_color_hex(0x000000), LV_OPA_MAX);
             }
         }
-    }
-}
 
-void create_screen_graph(void)
-{
-    create_screen_graph_container();
-    create_screen_graph_grid();
+        // Draw ticks on x-axis
+        int y0 = y_to_py(0);
+        for (int dy = -3; dy <= 3; dy++) {
+            int y_tick = y0 + dy;
+            if (y_tick >= 0 && y_tick < SCREEN_HEIGHT_GRAPH) {
+                safe_set_px(px, y_tick, lv_color_hex(0x000000), LV_OPA_MAX);
+            }
+        }
+
+        //draw_tick_label(0, x, px +2, y0 + 4);
+
+        //lv_obj_t *label_x = lv_label_create(screen_graph_container);
+        //lv_label_set_text_fmt(label_x, "%.0f", x); // Label text
+        //lv_obj_set_style_text_color(label_x, lv_color_hex(0x000000), 0);
+        //lv_obj_set_style_text_font(label_x, &lv_font_montserrat_12, 0);
+
+        //// Position label slightly below the x-axis
+        //lv_obj_set_pos(label_x, px + 2, y0 + 4);
+    }
+
+    int is_y_int = 0;
+
+    // Draw horizontal gridlines every 0.5 units on y-axis
+    for (double y = floor(y_min); y <= ceil(y_max); y += 0.5) {
+        int py = y_to_py(y);
+
+        is_y_int = is_y_int ^ 1 << 0;
+
+        for (int x = 0; x < SCREEN_WIDTH_GRAPH; x++) {
+            if (is_y_int) {
+                safe_set_px(x, py, lv_color_hex(0xcccccc), LV_OPA_MAX);
+            } else {
+                safe_set_px(x, py, lv_color_hex(0xcccccc), LV_OPA_40);
+            }
+        }
+
+        if (y == 0) {
+            for (int x = 0; x < SCREEN_WIDTH_GRAPH; x++) {
+                safe_set_px(x, py, lv_color_hex(0x000000), LV_OPA_MAX);
+            }
+        }
+
+        // Draw ticks on y-axis
+        int x0 = x_to_px(0);
+        for (int dx = -3; dx <= 3; dx++) {
+            int x_tick = x0 + dx;
+            if (x_tick >= 0 && x_tick < SCREEN_WIDTH_GRAPH) {
+                safe_set_px(x_tick, py, lv_color_hex(0x000000), LV_OPA_MAX);
+            }
+        }
+
+        //if (y != 0) {
+        //lv_obj_t *label_y = lv_label_create(screen_graph_container);
+        //lv_label_set_text_fmt(label_y, "%.0f", y); // Label text
+        //lv_obj_set_style_text_color(label_y, lv_color_hex(0x000000), 0);
+        //lv_obj_set_style_text_font(label_y, &lv_font_montserrat_12, 0);
+
+        //// Position label slightly to the left of the y-axis
+        //lv_obj_set_pos(label_y, x0 - 20, py - 5); // Adjust offset as needed
+        //}
+    }
 }
 
 static void plot_blend(lv_obj_t *grid, int x, int y, lv_color_t color, uint8_t opacity)
@@ -148,7 +203,6 @@ static void draw_line_aa(lv_obj_t *grid, int x0, int y0, int x1, int y1, lv_colo
     // First endpoint
     int xend = x0;
     double yend = y0 + gradient * (xend - x0);
-    double xgap = 1.0; // Always full pixel coverage for now
     int xpxl1 = xend;
     int ypxl1 = (int) floor(yend);
 
@@ -176,7 +230,6 @@ static void draw_line_aa(lv_obj_t *grid, int x0, int y0, int x1, int y1, lv_colo
         plot_blend(grid, xpxl2, ypxl2 + 1, color, (uint8_t) ((yend - ypxl2) * 255));
     }
 
-    // Main loop
     if (steep) {
         for (int x = xpxl1 + 1; x < xpxl2; x++) {
             int y = (int) floor(intery);
@@ -225,6 +278,13 @@ void draw_graph_func_canvas(const char *func, lv_color_t color)
     deg_rad = original_deg_rad;
 }
 
+void create_screen_graph(void)
+{
+    if (lv_obj_is_valid(screen_graph_container)) lv_obj_delete(screen_graph_container);
+    create_screen_graph_container();
+    create_screen_graph_grid();
+}
+
 void draw_graph(void)
 {
     // Draw Y1
@@ -251,7 +311,17 @@ void display_screen_graph(void)
 {
     lv_obj_move_foreground(status_bar);
     lv_obj_move_foreground(screen_graph_container);
+
     current_screen = SCREEN_GRAPH;
-    if (graph_drawn) create_screen_graph();
+
+    if (graph_drawn) {
+        x_min = -2 * M_PI;
+        x_max = 2 * M_PI;
+        y_min = -2.0;
+        y_max = 2.0;
+
+        create_screen_graph();
+    }
+
     draw_graph();
 }
