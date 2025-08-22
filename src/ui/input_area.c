@@ -155,8 +155,13 @@ void add_to_input_area(char *text)
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u00D7\0", get_length(1));
     } else if (strcmp(text, "/") == 0) {
-        append_text(get_buffer(0), text, get_length(0));
-        append_text(get_buffer(1), "\u00F7\0", get_length(1));
+        if (get_input_area() != input_area) {
+            append_text(get_buffer(0), text, get_length(0));
+            append_text(get_buffer(1), "/\0", get_length(1));
+        } else {
+            append_text(get_buffer(0), text, get_length(0));
+            append_text(get_buffer(1), "\u00F7\0", get_length(1));
+        }
     } else if (strcmp(text, "arcsin(") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "sin\u207B\u00B9(", get_length(1));
