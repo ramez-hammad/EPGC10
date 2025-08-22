@@ -325,16 +325,49 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 25:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH) break;
+
+            if (current_screen == SCREEN_GRAPH) {
+                // Zoom in
+
+                y_min = 0.7 * y_min;
+                y_max = 0.7 * y_max;
+
+                x_min = 0.7 * x_min;
+                x_max = 0.7 * x_max;
+
+                create_screen_graph();
+                draw_graph();
+
+                break;
+            }
+
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("Z\0");
             } else {
                 add_to_input_area("+\0");
             }
+
             break;
         case 26:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH) break;
+
+            if (current_screen == SCREEN_GRAPH) {
+                // Zoom in
+
+                y_min = 1.428571 * y_min;
+                y_max = 1.428571 * y_max;
+
+                x_min = 1.428571 * x_min;
+                x_max = 1.428571 * x_max;
+
+                create_screen_graph();
+                draw_graph();
+
+                break;
+            }
+
             if (alpha) alpha = 0;
             if (shift) shift = 0;
             add_to_input_area("-\0");
