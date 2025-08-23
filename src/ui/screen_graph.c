@@ -265,9 +265,9 @@ void draw_graph_func_canvas(const char *func, lv_color_t color)
             continue;
         }
 
-        int py = (int) ((y_max - y) * SCREEN_HEIGHT_GRAPH / (y_max - y_min));
+        int py = y_to_py(y);
 
-        if (prev_px >= 0) {
+        if (prev_px != -1) {
             draw_line_aa(grid, prev_px, prev_py, px, py, color);
         }
 
