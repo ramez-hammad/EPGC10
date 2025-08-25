@@ -10,7 +10,7 @@
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
-extern lv_obj_t *input_area_container;
+extern lv_obj_t *input_base;
 
 extern char current_screen;
 
@@ -29,6 +29,8 @@ extern lv_obj_t *array_settings_result_format_section[];
 extern char screen_settings_index;
 extern char screen_settings_angle_index;
 extern char screen_settings_result_format_index;
+
+char original_graph_slow_nav;
 
 void nav_cb(lv_event_t *event)
 {
@@ -87,13 +89,23 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
+            if (!graphing_finished) return;
+
+            graphing_finished = 0;
+
             const double dx = 0.1 * (x_max - x_min);
 
             x_max -= dx;
             x_min -= dx;
 
+            original_graph_slow_nav = graph_slow;
+
+            graph_slow = 0;
+
             create_screen_graph();
             draw_graph();
+
+            graph_slow = original_graph_slow_nav;
         }
     }
 
@@ -128,25 +140,33 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
+            if (!graphing_finished) return;
+
+            graphing_finished = 0;
+
             const double dx = 0.1 * (x_max - x_min);
 
             x_max += dx;
             x_min += dx;
 
+            original_graph_slow_nav = graph_slow;
+
+            graph_slow = 0;
+
             create_screen_graph();
             draw_graph();
+
+            graph_slow = original_graph_slow_nav;
         }
     }
 
     // Up
     if (ang >= 45 && ang <= 135) {
         if (current_screen == SCREEN_INPUT) {
-            if (lv_obj_get_scroll_top(input_area_container) >= 20)
-                lv_obj_scroll_by(
-                    input_area_container, 0, 20, LV_ANIM_OFF);
-            if (lv_obj_get_scroll_top(input_area_container) < 20)
-                lv_obj_scroll_by(
-                    input_area_container, 0, lv_obj_get_scroll_top(input_area_container), LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_base) >= 20)
+                lv_obj_scroll_by(input_base, 0, 20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_top(input_base) < 20)
+                lv_obj_scroll_by(input_base, 0, lv_obj_get_scroll_top(input_base), LV_ANIM_OFF);
         }
 
         if (current_screen == SCREEN_MENU) {
@@ -208,25 +228,32 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
+            if (!graphing_finished) return;
+
+            graphing_finished = 0;
+
             const double dy = 0.1 * (y_max - y_min);
 
             y_max += dy;
             y_min += dy;
 
+            original_graph_slow_nav = graph_slow;
+
+            graph_slow = 0;
+
             create_screen_graph();
             draw_graph();
 
-            LV_LOG_USER("Y_MIN: %f, Y_MAX %f", y_min, y_max);
+            graph_slow = original_graph_slow_nav;
         }
     }
 
     // Down
     if (ang >= 225 && ang <= 315) {
         if (current_screen == SCREEN_INPUT) {
-            if (lv_obj_get_scroll_bottom(input_area_container) >= 20)
-                lv_obj_scroll_by(
-                    input_area_container, 0, -20, LV_ANIM_OFF);
-            if (lv_obj_get_scroll_bottom(input_area_container) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_bottom(input_base) >= 20)
+                lv_obj_scroll_by(input_base, 0, -20, LV_ANIM_OFF);
+            if (lv_obj_get_scroll_bottom(input_base) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
         }
 
         if (current_screen == SCREEN_MENU) {
@@ -283,15 +310,23 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
+            if (!graphing_finished) return;
+
+            graphing_finished = 0;
+
             const double dy = 0.1 * (y_max - y_min);
 
             y_max -= dy;
             y_min -= dy;
 
+            original_graph_slow_nav = graph_slow;
+
+            graph_slow = 0;
+
             create_screen_graph();
             draw_graph();
 
-            LV_LOG_USER("Y_MIN: %f, Y_MAX %f", y_min, y_max);
+            graph_slow = original_graph_slow_nav;
         }
     }
 }
