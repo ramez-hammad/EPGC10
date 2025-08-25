@@ -57,7 +57,7 @@ void create_screen_settings(void)
 
     screen_settings = lv_menu_create(lv_screen_active());
     lv_obj_set_size(screen_settings, SCREEN_WIDTH, SCREEN_HEIGHT - 30);
-    lv_obj_align(screen_settings, LV_ALIGN_TOP_MID, 0, 30);
+    lv_obj_align(screen_settings, LV_ALIGN_TOP_MID, 0, 70);
 
     lv_obj_t *label;
 

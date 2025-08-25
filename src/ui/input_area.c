@@ -46,30 +46,18 @@ void render_input_area(void)
 void create_input_base(void)
 {
     input_base = lv_obj_create(lv_screen_active());
-    lv_obj_align(input_base, LV_ALIGN_TOP_MID, 0, 0);
     lv_obj_set_style_bg_color(input_base, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);
     lv_obj_set_style_border_width(input_base, 0, LV_PART_MAIN);
-    lv_obj_set_size(input_base, SCREEN_WIDTH, SCREEN_HEIGHT);
+    lv_obj_set_size(input_base, SCREEN_WIDTH, SCREEN_HEIGHT - 30);
     lv_obj_set_style_radius(input_base, 0, LV_PART_MAIN);
     lv_obj_set_scrollbar_mode(input_base, LV_SCROLLBAR_MODE_OFF);
     lv_obj_remove_flag(input_base, LV_OBJ_FLAG_SCROLL_ELASTIC);
-}
-
-void create_input_area_container(void)
-{
-    input_area_container = lv_obj_create(input_base);
-    lv_obj_align(input_area_container, LV_ALIGN_BOTTOM_MID, 0, 20);
-    lv_obj_set_style_bg_color(input_area_container, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);
-    lv_obj_set_size(input_area_container, 320, 210);
-    lv_obj_set_style_radius(input_area_container, 0, LV_PART_MAIN);
-    lv_obj_set_scrollbar_mode(input_area_container, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_border_width(input_area_container, 0, LV_PART_MAIN);
-    lv_obj_set_scroll_dir(input_area_container, LV_DIR_VER);
+    lv_obj_align(input_base, LV_ALIGN_TOP_MID, 0, 70);
 }
 
 void create_input_area(void)
 {
-    input_area = lv_textarea_create(input_area_container);
+    input_area = lv_textarea_create(input_base);
     lv_textarea_set_one_line(input_area, true);
     lv_obj_add_state(input_area, LV_STATE_FOCUSED);
     lv_obj_align(input_area, LV_ALIGN_TOP_LEFT, -18, -18);
@@ -86,7 +74,7 @@ void create_input_area(void)
 
 void create_line_ans(void)
 {
-    line = lv_line_create(input_area_container);
+    line = lv_line_create(input_base);
     static lv_point_precise_t line_points[] = {{0, 0}, {320, 0}};
     lv_line_set_points(line, line_points, 2);
     lv_obj_set_style_line_dash_width(line, 3, LV_PART_MAIN);
@@ -126,7 +114,7 @@ void create_ans_label(double ans)
         if (strcmp(text, "nan") == 0) strcpy(text, "Error");
     }
 
-    ans_label = lv_label_create(input_area_container);
+    ans_label = lv_label_create(input_base);
 
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);

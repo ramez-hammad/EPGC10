@@ -1,5 +1,5 @@
 #define WINDOW_WIDTH 370
-#define WINDOW_HEIGHT 740
+#define WINDOW_HEIGHT 770
 
 #define DARK_MODE 1
 

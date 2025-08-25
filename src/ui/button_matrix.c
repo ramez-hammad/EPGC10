@@ -144,7 +144,7 @@ void create_button_matrix_part_up(void)
     btn_matrix_part_up = lv_buttonmatrix_create(btn_matrix_base);
     lv_obj_set_size(btn_matrix_part_up, 370, 62);
     lv_obj_set_style_radius(btn_matrix_part_up, 0, LV_PART_MAIN);
-    lv_obj_align(btn_matrix_part_up, LV_ALIGN_TOP_MID, 0, -17);
+    lv_obj_align_to(btn_matrix_part_up, btn_matrix_part_mid,LV_ALIGN_TOP_MID, 52, -68);
     lv_buttonmatrix_set_map(btn_matrix_part_up, btn_matrix_part_up_map);
     lv_obj_set_style_bg_color(btn_matrix_part_up, lv_color_hex(BG_COLOR), LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_part_up, lv_color_hex(BG_COLOR_BUTTONS), LV_PART_ITEMS);

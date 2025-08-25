@@ -244,7 +244,6 @@ void btn_matrix_down_cb(lv_event_t *event)
                 if (hyp) hyp = 0;
                 lv_obj_delete(input_base);
                 create_input_base();
-                create_input_area_container();
                 create_status_bar();
                 create_input_area();
                 reset_buffer(input_buffer_main, &input_buffer_main_length);

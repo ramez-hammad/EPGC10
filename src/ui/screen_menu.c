@@ -140,7 +140,7 @@ void create_screen_menu(void)
 {
     screen_menu = lv_obj_create(lv_screen_active());
     lv_obj_set_size(screen_menu, 320, 240);
-    lv_obj_align(screen_menu, LV_ALIGN_TOP_MID, 0, 0);
+    lv_obj_align(screen_menu, LV_ALIGN_TOP_MID, 0, 40);
     lv_obj_set_style_border_width(screen_menu, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(screen_menu, 0, LV_PART_MAIN);
     lv_obj_remove_flag(screen_menu, LV_OBJ_FLAG_SCROLL_ELASTIC);

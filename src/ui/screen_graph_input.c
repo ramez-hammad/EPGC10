@@ -145,7 +145,7 @@ void create_screen_graph_input(void)
 {
     screen_graph_input = lv_obj_create(lv_screen_active());
     lv_obj_set_size(screen_graph_input, 320, 210);
-    lv_obj_align(screen_graph_input, LV_ALIGN_TOP_MID, 0, 30);
+    lv_obj_align(screen_graph_input, LV_ALIGN_TOP_MID, 0, 70);
     lv_obj_set_style_border_width(screen_graph_input, 0, LV_PART_MAIN);
     lv_obj_set_style_radius(screen_graph_input, 0, LV_PART_MAIN);
     lv_obj_remove_flag(screen_graph_input, LV_OBJ_FLAG_SCROLL_ELASTIC);

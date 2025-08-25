@@ -3,6 +3,8 @@
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
+extern lv_obj_t *input_base;
+
 void create_input_base(void);
 
 void create_input_area_container(void);

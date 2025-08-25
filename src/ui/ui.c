@@ -45,6 +45,15 @@ double prev_ans;
 char shift;
 char alpha;
 
+void create_name_label (void)
+{
+   lv_obj_t *name_label = lv_label_create(lv_screen_active());
+    lv_label_set_text(name_label, "EPGCv1.0");
+    lv_obj_set_style_text_font(name_label, &jetbrains_mono_regular_20, LV_PART_MAIN);
+    lv_obj_align(name_label, LV_ALIGN_TOP_LEFT, 24, 5);
+    lv_obj_set_style_text_color(name_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
+}
+
 int main(void)
 {
     // Initialize LVGL
@@ -71,11 +80,11 @@ int main(void)
     create_screen_graph_input();
     create_screen_settings();
     create_screen_graph();
-    create_input_base();
-    create_input_area_container();
-    create_input_area();
-    create_status_bar();
     create_button_matrix();
+    create_status_bar();
+    create_input_base();
+    create_input_area();
+    create_name_label();
 
     while (true) {
         lv_timer_handler();

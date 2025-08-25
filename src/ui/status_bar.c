@@ -88,7 +88,7 @@ void create_status_bar(void)
 {
     status_bar = lv_obj_create(lv_screen_active());
     lv_obj_set_size(status_bar, 320, 35);
-    lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, 0);
+    lv_obj_align(status_bar, LV_ALIGN_TOP_MID, 0, 35);
     lv_obj_set_scrollbar_mode(status_bar, LV_SCROLLBAR_MODE_OFF);
     lv_obj_set_style_bg_color(status_bar, lv_color_hex(BG_COLOR_STATUS_BAR), LV_ANIM_IMAGE_PART_MAIN);
     lv_obj_set_style_radius(status_bar, 0, LV_PART_MAIN);
