@@ -17,6 +17,7 @@ extern char current_screen;
 extern double x_value;
 
 extern char deg_rad;
+char original_deg_rad = -1;
 
 int graph_drawn = 0;
 
@@ -288,6 +289,7 @@ static void graph_timer_cb(lv_timer_t *t)
 
     if (s->px >= SCREEN_WIDTH_GRAPH) {
         graphing_finished = 1;
+        deg_rad = original_deg_rad;
         lv_timer_del(t);
         lv_free(s);
         return;
@@ -331,11 +333,11 @@ void draw_graph_func_canvas(const char *func, lv_color_t color)
 
     original_graph_slow = graph_slow;
 
+    original_deg_rad = deg_rad;
+
     if (graph_slow) {
         lv_timer_create(graph_timer_cb, 1, s);
     } else {
-        char original_deg_rad = deg_rad;
-
         int prev_px = -1;
         int prev_py = -1;
 
