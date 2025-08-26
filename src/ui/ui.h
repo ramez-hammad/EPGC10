@@ -13,6 +13,7 @@
 #define TEXT_COLOR 0x000000
 #define BG_COLOR_LINE TEXT_COLOR
 #define TEXT_COLOR_STATUS_BAR 0xFFFFFF
+#define TEXT_COLOR_DESCRIPTION_LABEL 0x777777
 
 #else
 
@@ -27,8 +28,8 @@
 
 #endif
 
-#define FONT &noto_sans_regular_14
-#define FONT_INPUT_AREA &noto_sans_regular_16
+#define FONT &JuliaMono_Regular_14
+#define FONT_INPUT_AREA &JuliaMono_Regular_16
 
 #define FONT_MATH &noto_sans_math_regular_comb_14
 #define FONT_MATH_INPUT_AREA &noto_sans_math_regular_comb_16
