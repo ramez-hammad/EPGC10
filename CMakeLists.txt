@@ -50,6 +50,8 @@ set(SRC_UI
         src/ui/screen_settings.h
         src/core/interpreter/error.c
         src/core/interpreter/error.h
+        src/ui/toolbox_popup.c
+        src/ui/toolbox_popup.h
 )
 
 set(SRC_TEST

@@ -9,6 +9,7 @@
 #include <screen_graph.h>
 #include <screen_settings.h>
 #include <unistd.h>
+#include <toolbox_popup.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -49,7 +50,7 @@ void create_name_label (void)
 {
    lv_obj_t *name_label = lv_label_create(lv_screen_active());
     lv_label_set_text(name_label, "EPGCv1.0");
-    lv_obj_set_style_text_font(name_label, &jetbrains_mono_regular_20, LV_PART_MAIN);
+    lv_obj_set_style_text_font(name_label, &JuliaMono_Regular_20, LV_PART_MAIN);
     lv_obj_align(name_label, LV_ALIGN_TOP_LEFT, 24, 5);
     lv_obj_set_style_text_color(name_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
 }
@@ -76,6 +77,7 @@ int main(void)
     current_screen = SCREEN_INPUT;
 
     // Create UI
+    create_toolbox_popup();
     create_screen_menu();
     create_screen_graph_input();
     create_screen_settings();
