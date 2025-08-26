@@ -47,40 +47,40 @@ void create_input_area_y_labels(void)
 {
     input_area_y_1_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_1_label, 50, 42);
-    lv_obj_align_to(input_area_y_1_label, input_area_y_1, LV_ALIGN_LEFT_MID, -35, 9);
-    lv_label_set_text(input_area_y_1_label, "Y\u2081 =");
+    lv_obj_align_to(input_area_y_1_label, input_area_y_1, LV_ALIGN_LEFT_MID, -40, 9);
+    lv_label_set_text(input_area_y_1_label, "Y\u2081=");
     lv_obj_set_style_text_color(input_area_y_1_label, lv_palette_main(LV_PALETTE_RED), LV_PART_MAIN);
     lv_obj_set_style_text_font(input_area_y_1_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_1_label, true);
 
     input_area_y_2_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_2_label, 50, 42);
-    lv_obj_align_to(input_area_y_2_label, input_area_y_2, LV_ALIGN_LEFT_MID, -35, 9);
-    lv_label_set_text(input_area_y_2_label, "Y\u2082 =");
+    lv_obj_align_to(input_area_y_2_label, input_area_y_2, LV_ALIGN_LEFT_MID, -40, 9);
+    lv_label_set_text(input_area_y_2_label, "Y\u2082=");
     lv_obj_set_style_text_color(input_area_y_2_label, lv_palette_main(LV_PALETTE_GREEN), LV_PART_MAIN);
     lv_obj_set_style_text_font(input_area_y_2_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_2_label, true);
 
     input_area_y_3_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_3_label, 50, 42);
-    lv_obj_align_to(input_area_y_3_label, input_area_y_3, LV_ALIGN_LEFT_MID, -35, 9);
-    lv_label_set_text(input_area_y_3_label, "Y\u2083 =");
+    lv_obj_align_to(input_area_y_3_label, input_area_y_3, LV_ALIGN_LEFT_MID, -40, 9);
+    lv_label_set_text(input_area_y_3_label, "Y\u2083=");
     lv_obj_set_style_text_color(input_area_y_3_label, lv_palette_main(LV_PALETTE_BLUE), LV_PART_MAIN);
     lv_obj_set_style_text_font(input_area_y_3_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_3_label, true);
 
     input_area_y_4_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_4_label, 50, 42);
-    lv_obj_align_to(input_area_y_4_label, input_area_y_4, LV_ALIGN_LEFT_MID, -35, 9);
-    lv_label_set_text(input_area_y_4_label, "Y\u2084 =");
+    lv_obj_align_to(input_area_y_4_label, input_area_y_4, LV_ALIGN_LEFT_MID, -40, 9);
+    lv_label_set_text(input_area_y_4_label, "Y\u2084=");
     lv_obj_set_style_text_color(input_area_y_4_label, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_MAIN);
     lv_obj_set_style_text_font(input_area_y_4_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_4_label, true);
 
     input_area_y_5_label = lv_label_create(screen_graph_input);
     lv_obj_set_size(input_area_y_5_label, 50, 42);
-    lv_obj_align_to(input_area_y_5_label, input_area_y_5, LV_ALIGN_LEFT_MID, -35, 9);
-    lv_label_set_text(input_area_y_5_label, "Y\u2085 =");
+    lv_obj_align_to(input_area_y_5_label, input_area_y_5, LV_ALIGN_LEFT_MID, -40, 9);
+    lv_label_set_text(input_area_y_5_label, "Y\u2085=");
     lv_obj_set_style_text_color(input_area_y_5_label, lv_palette_main(LV_PALETTE_PURPLE), LV_PART_MAIN);
     lv_obj_set_style_text_font(input_area_y_5_label, FONT_INPUT_AREA, LV_PART_MAIN);
     lv_label_set_recolor(input_area_y_5_label, true);
