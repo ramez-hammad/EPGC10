@@ -1,4 +1,6 @@
 #include <lexer.h>
+#include <error.h>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -112,7 +114,9 @@ TOKEN *tokenize(const char *expr, int *array_size)
                 } else if (expr[y] == '.') {
                     if (dp_pres == 1) {
                         // Syntax Error
+                        error(0);
                     } else {
+                        if (is_num(expr[y + 1]) == 0) error(0);
                         num_width++;
                         num[num_width] = expr[y];
                         dp_pres = 1;
