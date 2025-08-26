@@ -8,6 +8,7 @@
 #include <screen_menu.h>
 #include <screen_settings.h>
 #include <string.h>
+#include <toolbox_popup.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area;
@@ -459,10 +460,33 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
 
             if (current_screen == SCREEN_GRAPH_INPUT) {
+                if (toolbox_open) {
+                    switch (toolbox_1_index) {
+                        case 0:
+                            add_to_input_area("abs(");
+                            display_screen_graph_input();
+                            lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                            toolbox_open = false;
+                            break;
+                    }
+                    break;
+                }
                 display_screen_graph();
             }
 
             if (current_screen == SCREEN_INPUT) {
+                if (toolbox_open) {
+                    switch (toolbox_1_index) {
+                        case 0:
+                            add_to_input_area("abs(");
+                            display_screen_input();
+                            lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                            toolbox_open = false;
+                            break;
+                    }
+                    break;
+                }
+
                 char *expr = get_text(input_buffer_main, input_buffer_main_length);
                 if (strcmp(expr, "") != 0) {
                     create_ans_label(interpret(expr));

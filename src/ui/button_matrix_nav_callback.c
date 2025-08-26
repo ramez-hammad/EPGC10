@@ -7,6 +7,7 @@
 #include <screen_menu.h>
 #include <screen_settings.h>
 #include <screen_graph.h>
+#include <toolbox_popup.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -163,6 +164,16 @@ void nav_cb(lv_event_t *event)
     // Up
     if (ang >= 45 && ang <= 135) {
         if (current_screen == SCREEN_INPUT) {
+            if (toolbox_open) {
+                if (toolbox_1_index == 0) return;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
+                toolbox_1_index--;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, false);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, true);
+                return;
+            }
+
             if (lv_obj_get_scroll_top(input_base) >= 20)
                 lv_obj_scroll_by(input_base, 0, 20, LV_ANIM_OFF);
             if (lv_obj_get_scroll_top(input_base) < 20)
@@ -192,6 +203,16 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH_INPUT) {
+            if (toolbox_open) {
+                if (toolbox_1_index == 0) return;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
+                toolbox_1_index--;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, false);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, true);
+                return;
+            }
+
             if (array_graph_input_screen_index == 0) return;
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);
@@ -251,6 +272,16 @@ void nav_cb(lv_event_t *event)
     // Down
     if (ang >= 225 && ang <= 315) {
         if (current_screen == SCREEN_INPUT) {
+            if (toolbox_open) {
+                if (toolbox_1_index == 5) return;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
+                toolbox_1_index++;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, false);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, true);
+                return;
+            }
+
             if (lv_obj_get_scroll_bottom(input_base) >= 20)
                 lv_obj_scroll_by(input_base, 0, -20, LV_ANIM_OFF);
             if (lv_obj_get_scroll_bottom(input_base) < 20) lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
@@ -274,6 +305,16 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH_INPUT) {
+            if (toolbox_open) {
+                if (toolbox_1_index == 5) return;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
+                toolbox_1_index++;
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, false);
+                lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, true);
+                return;
+            }
+
             if (array_graph_input_screen_index == 4) return;
             lv_obj_clear_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_FOCUSED);
             lv_obj_add_state(array_graph_input_screen[array_graph_input_screen_index], LV_STATE_DEFAULT);

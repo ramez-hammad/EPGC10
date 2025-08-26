@@ -61,7 +61,7 @@ void create_button_matrix_part_down(void)
     lv_obj_add_flag(btn_matrix_part_down, LV_OBJ_FLAG_SEND_DRAW_TASK_EVENTS);
     lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_cb, LV_EVENT_VALUE_CHANGED, &index);
     lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_down, LV_BUTTONMATRIX_CTRL_RECOLOR);
-    lv_obj_set_style_text_font(btn_matrix_part_down, FONT, LV_PART_ITEMS);
+    lv_obj_set_style_text_font(btn_matrix_part_down, FONT_MATH, LV_PART_ITEMS);
 }
 
 void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
@@ -93,7 +93,7 @@ void create_button_matrix_part_mid(void)
     lv_obj_set_style_border_width(btn_matrix_part_mid_container, 0, LV_PART_MAIN);
 
     static const char *btn_matrix_part_mid_map[] = {
-        "#c4a747 SHIFT#", "OPTN", "\U0001D465", "MENU", "\n",
+        "#c4a747 SHIFT#", "TLBX", "\U0001D465", "MENU", "\n",
         "#dc143c ALPHA#", "#c4a747 \u221A        #\n    \U0001D465\u00B2", "^", "EXIT", NULL,
     };
 

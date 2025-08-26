@@ -6,6 +6,7 @@
 #include <screen_graph.h>
 #include <screen_graph_input.h>
 #include <status_bar.h>
+#include <toolbox_popup.h>
 
 extern char alpha;
 extern char shift;
@@ -35,6 +36,22 @@ void btn_matrix_mid_cb(lv_event_t *event)
             refresh_status_bar();
             break;
         case 1:
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (toolbox_open) {
+                if (current_screen == SCREEN_GRAPH_INPUT) {
+                    display_screen_graph_input();
+                    lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                    toolbox_open = false;
+                    break;
+                }
+                display_screen_input();
+                lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                toolbox_open = false;
+                break;
+            } else {
+                display_toolbox_popup();
+                toolbox_open = true;
+            }
             break;
         case 2:
             add_to_input_area("x\0");
@@ -73,7 +90,17 @@ void btn_matrix_mid_cb(lv_event_t *event)
                     break;
 
                 case SCREEN_SETTINGS:
+                    display_screen_menu();
+                    break;
+
                 case SCREEN_GRAPH_INPUT:
+                    if (toolbox_open) {
+                        display_screen_graph_input();
+                        lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                        toolbox_open = false;
+                        break;
+                    }
+
                     display_screen_menu();
                     break;
 
@@ -84,6 +111,14 @@ void btn_matrix_mid_cb(lv_event_t *event)
                 case SCREEN_MENU:
                     display_screen_input();
                     break;
+
+                case SCREEN_INPUT:
+                    if (toolbox_open) {
+                        display_screen_input();
+                        lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                        toolbox_open = false;
+                        break;
+                    }
             }
             break;
     }
