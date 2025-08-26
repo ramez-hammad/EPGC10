@@ -2,7 +2,7 @@
 
 char error_present = 0;
 
-char error_message[16];
+char error_message[17];
 
 void error(char error)
 {
@@ -15,6 +15,9 @@ void error(char error)
             break;
         case 1:
             strcpy(error_message, "Division by zero");
+            break;
+        case 2:
+            strcpy(error_message, "Argument error");
             break;
     }
 }
