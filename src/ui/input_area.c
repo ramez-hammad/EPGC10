@@ -139,6 +139,9 @@ void add_to_input_area(char *text)
     if (strcmp(text, "p") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u03c0\0", get_length(1));
+    } else if (strcmp(text, "x") == 0) {
+        append_text(get_buffer(0), text, get_length(0));
+        append_text(get_buffer(1), "\U0001D465", get_length(1));
     } else if (strcmp(text, "*") == 0) {
         append_text(get_buffer(0), text, get_length(0));
         append_text(get_buffer(1), "\u00D7\0", get_length(1));
