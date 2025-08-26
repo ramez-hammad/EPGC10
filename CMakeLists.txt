@@ -29,6 +29,9 @@ set(SRC_UI
         fonts/noto_sans_math_regular_comb_14.c
         fonts/noto_sans_math_regular_comb_16.c
         fonts/jetbrains_mono_regular_20.c
+        fonts/JuliaMono_Regular_14.c
+        fonts/JuliaMono_Regular_16.c
+        fonts/JuliaMono_Regular_20.c
         src/ui/screen_graph_input.c
         src/ui/screen_graph_input.h
         src/ui/screen_graph.c
