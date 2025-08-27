@@ -33,6 +33,8 @@ extern char screen_settings_result_format_index;
 
 char original_graph_slow_nav;
 
+uint8_t toolbox_1_scroll_offset = 0;
+
 void nav_cb(lv_event_t *event)
 {
     lv_obj_t *btn = lv_event_get_target(event);
@@ -166,6 +168,12 @@ void nav_cb(lv_event_t *event)
         if (current_screen == SCREEN_INPUT) {
             if (toolbox_open) {
                 if (toolbox_1_index == 0) return;
+
+                if (toolbox_1_index - 1 < toolbox_1_scroll_offset) {
+                    toolbox_1_scroll_offset--;
+                    lv_obj_scroll_by_bounded(toolbox_popup_buttons_container, 0, 30, LV_ANIM_OFF);
+                }
+
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
                 toolbox_1_index--;
@@ -273,7 +281,13 @@ void nav_cb(lv_event_t *event)
     if (ang >= 225 && ang <= 315) {
         if (current_screen == SCREEN_INPUT) {
             if (toolbox_open) {
-                if (toolbox_1_index == 5) return;
+                if (toolbox_1_index == TOOLBOX_1_INDEX_MAX) return;
+
+                if (toolbox_1_index + 1 >= toolbox_1_scroll_offset + TOOLBOX_MAX_VISIBLE) {
+                    toolbox_1_scroll_offset++;
+                    lv_obj_scroll_by_bounded(toolbox_popup_buttons_container, 0, -30, LV_ANIM_OFF);
+                }
+
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
                 toolbox_1_index++;
@@ -306,7 +320,13 @@ void nav_cb(lv_event_t *event)
 
         if (current_screen == SCREEN_GRAPH_INPUT) {
             if (toolbox_open) {
-                if (toolbox_1_index == 5) return;
+                if (toolbox_1_index == TOOLBOX_1_INDEX_MAX) return;
+
+                if (toolbox_1_index + 1 >= toolbox_1_scroll_offset + TOOLBOX_MAX_VISIBLE) {
+                    toolbox_1_scroll_offset++;
+                    lv_obj_scroll_by_bounded(toolbox_popup_buttons_container, 0, -30, LV_ANIM_OFF);
+                }
+
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_DEFAULT, true);
                 lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, false);
                 toolbox_1_index++;
