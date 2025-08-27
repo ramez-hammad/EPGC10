@@ -35,7 +35,7 @@ void create_alpha_label(void)
 {
     alpha_label = lv_label_create(status_bar);
     lv_label_set_text(alpha_label, "ALPHA");
-    lv_obj_align(alpha_label, LV_ALIGN_TOP_LEFT, 28, -15);
+    lv_obj_align_to(alpha_label, shift_label, LV_ALIGN_CENTER, 46, -1);
     lv_obj_set_style_radius(alpha_label, 0, LV_PART_MAIN);
     lv_obj_set_style_text_color(alpha_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
     lv_obj_set_style_text_font(alpha_label, FONT, LV_PART_MAIN);
@@ -50,7 +50,7 @@ void create_alpha_label(void)
 void create_hyp_label(void)
 {
     hyp_label = lv_label_create(status_bar);
-    lv_obj_align(hyp_label, LV_ALIGN_TOP_LEFT, 72, -15);
+    lv_obj_align_to(hyp_label, alpha_label, LV_ALIGN_CENTER, 38, -1);
     lv_label_set_text(hyp_label, "HYP");
     lv_obj_set_style_radius(hyp_label, 0, LV_PART_MAIN);
     lv_obj_set_style_text_font(hyp_label, FONT, LV_PART_MAIN);
@@ -65,7 +65,7 @@ void create_hyp_label(void)
 void create_display_format_label(void)
 {
     display_format_label = lv_label_create(status_bar);
-    lv_obj_align(display_format_label, LV_ALIGN_TOP_LEFT, 100, -15);
+    lv_obj_align_to(display_format_label, hyp_label, LV_ALIGN_CENTER, 30, -1);
     lv_label_set_text(display_format_label, display_format);
     lv_obj_set_style_radius(display_format_label, 0, LV_PART_MAIN);
     lv_obj_set_style_text_color(display_format_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
@@ -75,7 +75,7 @@ void create_display_format_label(void)
 void create_deg_rad_label(void)
 {
     deg_rad_label = lv_label_create(status_bar);
-    lv_obj_align(deg_rad_label, LV_ALIGN_TOP_LEFT, 152, -15);
+    lv_obj_align_to(deg_rad_label, display_format_label, LV_ALIGN_RIGHT_MID, 33, -1);
     if (deg_rad == 0) lv_label_set_text(deg_rad_label, "DEGREE");
     if (deg_rad == 1) lv_label_set_text(deg_rad_label, "RADIAN");
     if (deg_rad == 2) lv_label_set_text(deg_rad_label, "GRADIAN");
