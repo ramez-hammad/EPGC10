@@ -30,7 +30,7 @@ lv_obj_t *label;
 
 bool toolbox_open = false;
 
-lv_obj_t *array_toolbox_1[6];
+lv_obj_t *array_toolbox_1[7];
 
 char toolbox_1_index = 0;
 
@@ -44,7 +44,6 @@ void create_toolbox_popup(void)
     lv_obj_set_size(toolbox_popup_container, ceil(0.85 * 320), ceil(0.80 * 240));
     lv_obj_align(toolbox_popup_container, LV_ALIGN_TOP_MID, 0, 88);
     lv_obj_set_scrollbar_mode(toolbox_popup_container, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_remove_flag(toolbox_popup_container, LV_OBJ_FLAG_SCROLLABLE);
 
     // Create buttons container
     toolbox_popup_buttons_container = lv_obj_create(toolbox_popup_container);
@@ -53,7 +52,6 @@ void create_toolbox_popup(void)
     lv_obj_set_size(toolbox_popup_buttons_container, ceil(0.85 * 320), 220);
     lv_obj_align(toolbox_popup_buttons_container, LV_ALIGN_BOTTOM_MID, 0, 20);
     lv_obj_set_scrollbar_mode(toolbox_popup_buttons_container, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_remove_flag(toolbox_popup_buttons_container, LV_OBJ_FLAG_SCROLLABLE);
 
     // Create title
     toolbox_popup_title = lv_label_create(toolbox_popup_container);
@@ -176,9 +174,36 @@ void create_toolbox_popup(void)
     lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -10);
     lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
 
+    // Round button
+    toolbox_popup_round_button = lv_obj_create(toolbox_popup_buttons_container);
+    lv_obj_align_to(toolbox_popup_round_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 68);
+    lv_obj_set_scrollbar_mode(toolbox_popup_round_button, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_remove_flag(toolbox_popup_round_button, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_style(toolbox_popup_round_button, &toolbox_button_style_default, LV_STATE_DEFAULT);
+    lv_obj_add_style(toolbox_popup_round_button, &toolbox_button_style_focused, LV_STATE_FOCUSED);
+
+    // Create name and description labels
+    label = lv_label_create(toolbox_popup_round_button);
+    lv_label_set_text(label, " round(x,n)");
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    lv_obj_set_style_text_color(label, lv_color_hex(TEXT_COLOR), LV_PART_MAIN);
+    lv_obj_set_style_text_font(label, FONT_INPUT_AREA, LV_PART_MAIN);
+    lv_obj_set_size(label, ceil(0.85 * 320), 30);
+    lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -12);
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
+
+    label = lv_label_create(toolbox_popup_round_button);
+    lv_label_set_text(label, "Round to n digits ");
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
+    lv_obj_set_style_text_color(label, lv_color_hex(TEXT_COLOR_DESCRIPTION_LABEL), LV_PART_MAIN);
+    lv_obj_set_style_text_font(label, FONT, LV_PART_MAIN);
+    lv_obj_set_size(label, ceil(0.85 * 320), 30);
+    lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -10);
+    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
+
     // Calculus button
     toolbox_popup_calculus_button = lv_obj_create(toolbox_popup_buttons_container);
-    lv_obj_align_to(toolbox_popup_calculus_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 68);
+    lv_obj_align_to(toolbox_popup_calculus_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 97);
     lv_obj_set_scrollbar_mode(toolbox_popup_calculus_button, LV_SCROLLBAR_MODE_OFF);
     lv_obj_remove_flag(toolbox_popup_calculus_button, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_style(toolbox_popup_calculus_button, &toolbox_button_style_default, LV_STATE_DEFAULT);
@@ -205,7 +230,7 @@ void create_toolbox_popup(void)
 
     // Trigonometry button
     toolbox_popup_trigonometry_button = lv_obj_create(toolbox_popup_buttons_container);
-    lv_obj_align_to(toolbox_popup_trigonometry_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 97);
+    lv_obj_align_to(toolbox_popup_trigonometry_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 126);
     lv_obj_set_scrollbar_mode(toolbox_popup_trigonometry_button, LV_SCROLLBAR_MODE_OFF);
     lv_obj_remove_flag(toolbox_popup_trigonometry_button, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_style(toolbox_popup_trigonometry_button, &toolbox_button_style_default, LV_STATE_DEFAULT);
@@ -232,7 +257,7 @@ void create_toolbox_popup(void)
 
     // Constants button
     toolbox_popup_constants_button = lv_obj_create(toolbox_popup_buttons_container);
-    lv_obj_align_to(toolbox_popup_constants_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 126);
+    lv_obj_align_to(toolbox_popup_constants_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 155);
     lv_obj_set_scrollbar_mode(toolbox_popup_constants_button, LV_SCROLLBAR_MODE_OFF);
     lv_obj_remove_flag(toolbox_popup_constants_button, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_style(toolbox_popup_constants_button, &toolbox_button_style_default, LV_STATE_DEFAULT);
@@ -256,33 +281,6 @@ void create_toolbox_popup(void)
     lv_obj_set_size(label, ceil(0.85 * 320), 30);
     lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -10);
     lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
-
-    //// Log button (Placeholder)
-    //toolbox_popup_log_button = lv_obj_create(toolbox_popup_buttons_container);
-    //lv_obj_align_to(toolbox_popup_log_button, toolbox_popup_abs_button, LV_ALIGN_TOP_LEFT, -17, 155);
-    //lv_obj_set_scrollbar_mode(toolbox_popup_log_button, LV_SCROLLBAR_MODE_OFF);
-    //lv_obj_remove_flag(toolbox_popup_log_button, LV_OBJ_FLAG_SCROLLABLE);
-    //lv_obj_add_style(toolbox_popup_log_button, &toolbox_button_style_default, LV_STATE_DEFAULT);
-    //lv_obj_add_style(toolbox_popup_log_button, &toolbox_button_style_focused, LV_STATE_FOCUSED);
-
-    //// Create name and description labels
-    //label = lv_label_create(toolbox_popup_log_button);
-    //lv_label_set_text(label, " log(x,a)");
-    //lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-    //lv_obj_set_style_text_color(label, lv_color_hex(TEXT_COLOR), LV_PART_MAIN);
-    //lv_obj_set_style_text_font(label, FONT_INPUT_AREA, LV_PART_MAIN);
-    //lv_obj_set_size(label, ceil(0.85 * 320), 30);
-    //lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -12);
-    //lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN);
-
-    //label = lv_label_create(toolbox_popup_log_button);
-    //lv_label_set_text(label, "Logarithm base a ");
-    //lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
-    //lv_obj_set_style_text_color(label, lv_color_hex(TEXT_COLOR_DESCRIPTION_LABEL), LV_PART_MAIN);
-    //lv_obj_set_style_text_font(label, FONT, LV_PART_MAIN);
-    //lv_obj_set_size(label, ceil(0.85 * 320), 30);
-    //lv_obj_align(label, LV_ALIGN_TOP_MID, 0, -10);
-    //lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
 
     //// Log button (Placeholder)
     //toolbox_popup_log_button = lv_obj_create(toolbox_popup_buttons_container);
@@ -369,9 +367,10 @@ void create_toolbox_popup(void)
     array_toolbox_1[0] = toolbox_popup_abs_button;
     array_toolbox_1[1] = toolbox_popup_root_button;
     array_toolbox_1[2] = toolbox_popup_log_button;
-    array_toolbox_1[3] = toolbox_popup_calculus_button;
-    array_toolbox_1[4] = toolbox_popup_trigonometry_button;
-    array_toolbox_1[5] = toolbox_popup_constants_button;
+    array_toolbox_1[3] = toolbox_popup_round_button;
+    array_toolbox_1[4] = toolbox_popup_calculus_button;
+    array_toolbox_1[5] = toolbox_popup_trigonometry_button;
+    array_toolbox_1[6] = toolbox_popup_constants_button;
 
     lv_obj_set_state(array_toolbox_1[toolbox_1_index], LV_STATE_FOCUSED, true);
 }
