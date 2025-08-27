@@ -54,6 +54,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
             }
             break;
         case 2:
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+
             add_to_input_area("x\0");
             break;
         case 3:
@@ -72,6 +74,9 @@ void btn_matrix_mid_cb(lv_event_t *event)
             break;
         case 5:
             if (alpha) alpha = 0;
+
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+
             if (shift) {
                 add_to_input_area("sqrt(\0");
             } else {
@@ -79,6 +84,8 @@ void btn_matrix_mid_cb(lv_event_t *event)
             }
             break;
         case 6:
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+
             add_to_input_area("^\0");
             break;
         case 7:
