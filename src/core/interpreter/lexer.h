@@ -29,6 +29,7 @@ typedef enum TOKEN_TYPE
     TOKEN_VAR,
     TOKEN_SQRT,
     TOKEN_ABS,
+    TOKEN_FACTORIAL,
     TOKEN_NULL
 } TOKEN_TYPE;
 
