@@ -162,6 +162,8 @@ NODE *parse_factor(TOKEN *current_token)
 
                 current_factor = create_node_lit(val);
                 *current_token = next_token(0);
+
+                if (next_token(1).type == TOKEN_NUM) error(0);
             } else {
                 current_factor = create_node_lit(current_token->val);
             }
