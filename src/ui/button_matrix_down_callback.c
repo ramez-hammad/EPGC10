@@ -398,9 +398,16 @@ void btn_matrix_down_cb(lv_event_t *event)
             break;
         case 28:
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
-            if (alpha) alpha = 0;
-            if (shift) shift = 0;
-            add_to_input_area(".\0");
+
+            if (alpha) {
+                alpha = 0;
+                add_to_input_area("!\0");
+            } else if (shift) {
+                shift = 0;
+            } else {
+                add_to_input_area(".\0");
+            }
+
             break;
         case 29:
             if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
