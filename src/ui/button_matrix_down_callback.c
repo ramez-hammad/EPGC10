@@ -48,7 +48,7 @@ void btn_matrix_down_cb(lv_event_t *event)
     lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
     switch (*index) {
         case 0:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
 
             if (hyp) {
                 hyp = 0;
@@ -63,7 +63,7 @@ void btn_matrix_down_cb(lv_event_t *event)
 
             break;
         case 1:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("B\0");
@@ -72,7 +72,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 2:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("C\0");
@@ -81,7 +81,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 3:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("D\0");
@@ -104,7 +104,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 4:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("E\0");
@@ -127,7 +127,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 5:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("F\0");
@@ -150,21 +150,21 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 6:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("G\0");
             }
             break;
         case 7:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("H\0");
             }
             break;
         case 8:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("I\0");
@@ -173,7 +173,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 9:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("J\0");
@@ -182,21 +182,21 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 10:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("K\0");
             }
             break;
         case 11:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("L\0");
             }
             break;
         case 12:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("M\0");
@@ -205,7 +205,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 13:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("N\0");
@@ -214,7 +214,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 14:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("O\0");
@@ -223,7 +223,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 15:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("P\0");
@@ -234,7 +234,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 16:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("Q\0");
@@ -253,7 +253,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 17:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("R\0");
@@ -262,7 +262,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 18:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("S\0");
@@ -271,7 +271,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 19:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("T\0");
@@ -280,7 +280,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 20:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("U\0");
@@ -289,7 +289,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 21:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("V\0");
@@ -298,7 +298,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 22:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("W\0");
@@ -307,7 +307,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 23:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("X\0");
@@ -316,7 +316,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 24:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("Y\0");
@@ -325,7 +325,7 @@ void btn_matrix_down_cb(lv_event_t *event)
             }
             break;
         case 25:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH || toolbox_open) break;
 
             if (current_screen == SCREEN_GRAPH) {
                 // Zoom in
@@ -359,7 +359,7 @@ void btn_matrix_down_cb(lv_event_t *event)
 
             break;
         case 26:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT && current_screen != SCREEN_GRAPH || toolbox_open) break;
 
             if (current_screen == SCREEN_GRAPH) {
                 // Zoom in
@@ -391,19 +391,19 @@ void btn_matrix_down_cb(lv_event_t *event)
             add_to_input_area("-\0");
             break;
         case 27:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
             add_to_input_area("0\0");
             break;
         case 28:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
             add_to_input_area(".\0");
             break;
         case 29:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
 
@@ -411,7 +411,7 @@ void btn_matrix_down_cb(lv_event_t *event)
 
             break;
         case 30:
-            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT) break;
+            if (current_screen != SCREEN_INPUT && current_screen != SCREEN_GRAPH_INPUT || toolbox_open) break;
             if (alpha) alpha = 0;
             if (shift) shift = 0;
 
