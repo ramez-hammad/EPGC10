@@ -167,6 +167,10 @@ TOKEN *tokenize(const char *expr, int *array_size)
                     num_tokens++;
                     arr_tok[num_tokens - 1] = create_token_op(TOKEN_EQ);
                     break;
+                case '!':
+                    num_tokens++;
+                    arr_tok[num_tokens - 1] = create_token_op(TOKEN_FACTORIAL);
+                    break;
 
                 case 'a':
                     if (expr[x + 2] == 's') // Absolute value function
