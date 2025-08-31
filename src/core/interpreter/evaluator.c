@@ -5,11 +5,39 @@
 #include <parser.h>
 #include <error.h>
 
+// Variables
+double A = 0;
+double B = 0;
+double C = 0;
+double D = 0;
+double E = 0;
+double F = 0;
+double G = 0;
+double H = 0;
+double I = 0;
+double J = 0;
+double K = 0;
+double L = 0;
+double M = 0;
+double N = 0;
+double O = 0;
+double P = 0;
+double Q = 0;
+double R = 0;
+double S = 0;
+double T = 0;
+double U = 0;
+double V = 0;
+double W = 0;
+double X = 0;
+double Y = 0;
+double Z = 0;
+
+// Special variables
 double x_value = 0;
+extern double prev_ans;
 
 extern char deg_rad;
-
-extern double prev_ans;
 
 double deg_to_rad(double deg)
 {
@@ -138,16 +166,46 @@ double evaluate(NODE *root)
                 return fabs(evaluate(parse_expression_str(root->arg)));
             case TOKEN_VAR:
                 switch (root->name) {
+                    // Special variables
+                    case 'e':
+                        return M_E;
                     case 'p':
                         return M_PI;
                     case 'x':
                         return x_value;
-                    case 'A':
+                    case 'n':
                         return prev_ans;
+
+                    // Normal variables
+                    case 'A': return A;
+                    case 'B': return B;
+                    case 'C': return C;
+                    case 'D': return D;
+                    case 'E': return E;
+                    case 'F': return F;
+                    case 'G': return G;
+                    case 'H': return H;
+                    case 'I': return I;
+                    case 'J': return J;
+                    case 'K': return K;
+                    case 'L': return L;
+                    case 'M': return M;
+                    case 'N': return N;
+                    case 'O': return O;
+                    case 'P': return P;
+                    case 'Q': return Q;
+                    case 'R': return R;
+                    case 'S': return S;
+                    case 'T': return T;
+                    case 'U': return U;
+                    case 'V': return V;
+                    case 'W': return W;
+                    case 'X': return X;
+                    case 'Y': return Y;
+                    case 'Z': return Z;
                 }
             case TOKEN_NULL:
                 return 0;
         }
     }
 }
-
