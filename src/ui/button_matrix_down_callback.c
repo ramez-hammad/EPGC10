@@ -154,6 +154,9 @@ void btn_matrix_down_cb(lv_event_t *event)
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("G\0");
+            } else {
+                add_to_input_area("e");
+                add_to_input_area("^");
             }
             break;
         case 7:
@@ -161,6 +164,10 @@ void btn_matrix_down_cb(lv_event_t *event)
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("H\0");
+            } else {
+                add_to_input_area("*");
+                add_to_input_area("10");
+                add_to_input_area("^");
             }
             break;
         case 8:

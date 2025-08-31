@@ -45,8 +45,8 @@ void create_button_matrix_part_down(void)
         "#c4a747 cos\u207B\u00B9##dc143c  E#\n   cos",
         "#c4a747 tan\u207B\u00B9##dc143c  F#\n   tan",
         "\n",
-        "#dc143c         G#\n",
-        "#dc143c         H#\n",
+        "#dc143c         G#\n     ",
+        "#dc143c          H#\n",
         "#dc143c          I#\n     (",
         "#dc143c          J#\n     )",
         "#dc143c          K#\n     ,",
@@ -92,6 +92,38 @@ void create_button_matrix_part_down(void)
     lv_obj_add_event_cb(btn_matrix_part_down, btn_matrix_down_cb, LV_EVENT_VALUE_CHANGED, &index);
     lv_buttonmatrix_set_button_ctrl_all(btn_matrix_part_down, LV_BUTTONMATRIX_CTRL_RECOLOR);
     lv_obj_set_style_text_font(btn_matrix_part_down, FONT_MATH, LV_PART_ITEMS);
+
+    // Create labels for button index 6
+
+    // Label for e
+    lv_obj_t *label = lv_label_create(btn_matrix_part_down);
+    lv_obj_set_style_translate_y(label, 62, LV_PART_MAIN);
+    lv_obj_set_style_translate_x(label, 17, LV_PART_MAIN);
+    lv_label_set_text(label, "e");
+    lv_obj_set_style_text_font(label, FONT_MATH, LV_PART_MAIN);
+
+    // Label for superscript x
+    label = lv_label_create(btn_matrix_part_down);
+    lv_obj_set_style_translate_y(label, 55, LV_PART_MAIN);
+    lv_obj_set_style_translate_x(label, 25, LV_PART_MAIN);
+    lv_label_set_text(label, "x");
+    lv_obj_set_style_text_font(label, FONT_MATH, LV_PART_MAIN);
+
+    // Create labels for button index 7
+
+    // Label for x 10
+    label = lv_label_create(btn_matrix_part_down);
+    lv_obj_set_style_translate_y(label, 62, LV_PART_MAIN);
+    lv_obj_set_style_translate_x(label, 66, LV_PART_MAIN);
+    lv_label_set_text(label, "\u00D710");
+    lv_obj_set_style_text_font(label, FONT_MATH, LV_PART_MAIN);
+
+    // Label for superscript x
+    label = lv_label_create(btn_matrix_part_down);
+    lv_obj_set_style_translate_y(label, 51, LV_PART_MAIN);
+    lv_obj_set_style_translate_x(label, 87, LV_PART_MAIN);
+    lv_label_set_text(label, "x");
+    lv_obj_set_style_text_font(label, FONT_MATH, LV_PART_MAIN);
 }
 
 void create_nav_sector(lv_obj_t **nav_sector, int ang_start, int ang_end)
@@ -174,7 +206,7 @@ void create_button_matrix_part_up(void)
     btn_matrix_part_up = lv_buttonmatrix_create(btn_matrix_base);
     lv_obj_set_size(btn_matrix_part_up, 370, 62);
     lv_obj_set_style_radius(btn_matrix_part_up, 0, LV_PART_MAIN);
-    lv_obj_align_to(btn_matrix_part_up, btn_matrix_part_mid,LV_ALIGN_TOP_MID, 52, -68);
+    lv_obj_align_to(btn_matrix_part_up, btn_matrix_part_mid, LV_ALIGN_TOP_MID, 52, -68);
     lv_buttonmatrix_set_map(btn_matrix_part_up, btn_matrix_part_up_map);
     lv_obj_set_style_bg_color(btn_matrix_part_up, lv_color_hex(BG_COLOR), LV_PART_MAIN);
     lv_obj_set_style_bg_color(btn_matrix_part_up, lv_color_hex(BG_COLOR_BUTTONS), LV_PART_ITEMS);
