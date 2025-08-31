@@ -134,6 +134,32 @@ TOKEN *tokenize(const char *expr, int *array_size)
             }
         } else {
             switch (expr[x]) {
+                case '.':
+
+                    num[0] = '0';
+                    num[1] = expr[x];
+
+                    num_width = 1;
+
+                    for (size_t y = x + 1; y < strlen(expr); y++) {
+                        if (is_num(expr[y]) == 1) {
+                            num_width++;
+                            num[num_width] = expr[y];
+                        } else if (expr[y] == '.') {
+                            error(0);
+                        } else {
+                            break;
+                        }
+                    }
+                    x = x + num_width - 1;
+                    num_width = 0;
+                    num_tokens++;
+                    arr_tok[num_tokens - 1] = create_token_num(atof(num));
+                    for (size_t z = 0; z < strlen(expr); z++) {
+                        num[z] = ' ';
+                    }
+                    break;
+
                 // Operators
                 case '+':
                     num_tokens++;
@@ -316,10 +342,15 @@ TOKEN *tokenize(const char *expr, int *array_size)
                     num_tokens++;
                     arr_tok[num_tokens - 1] = create_token_var(expr[x]);
                     break;
-                case 'A': // Ans
-                    num_tokens++;
-                    arr_tok[num_tokens - 1] = create_token_var(expr[x]);
-                    x = x + 2;
+                case 'A':
+                    // Ans
+                    if (expr[x + 1] == 'n') {
+                        num_tokens++;
+                        arr_tok[num_tokens - 1] = create_token_var('n');
+                        x = x + 2;
+                    } else {
+                        break;
+                    }
                     break;
             }
 
