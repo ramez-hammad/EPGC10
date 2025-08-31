@@ -5,6 +5,7 @@
 #include <error.h>
 #include <string.h>
 #include <tgmath.h>
+#include <evaluator.h>
 
 int next_index = 0;
 
@@ -150,7 +151,7 @@ NODE *parse_factor(TOKEN *current_token)
             return current_factor;
         case TOKEN_NUM:
             if (next_token(1).type == TOKEN_FACTORIAL) {
-                int val = 1;
+                double val = 1;
 
                 if (fmod(current_token->val, 1.0) == 0.0) {
                     for (int i = current_token->val; i > 0; i--) {
@@ -162,8 +163,6 @@ NODE *parse_factor(TOKEN *current_token)
 
                 current_factor = create_node_lit(val);
                 *current_token = next_token(0);
-
-                if (next_token(1).type == TOKEN_NUM) error(0);
             } else {
                 current_factor = create_node_lit(current_token->val);
             }
@@ -174,6 +173,8 @@ NODE *parse_factor(TOKEN *current_token)
 
             *current_token = next_token(0);
             return current_factor;
+        case TOKEN_FACTORIAL:
+            error(0);
         case TOKEN_LEFT_PAREN:
             num_paren++;
 
@@ -207,6 +208,22 @@ NODE *parse_factor(TOKEN *current_token)
             if (next_token(1).type == TOKEN_RIGHT_PAREN) goto right_paren;
             if (next_token(1).type == TOKEN_LEFT_PAREN) goto insert_mul;
             if (next_token(1).type == TOKEN_VAR) goto insert_mul;
+
+            if (next_token(1).type == TOKEN_FACTORIAL) {
+                if (fmod(evaluate(current_factor), 1.0) == 0.0) {
+                    double val = 1;
+
+                    for (int i = evaluate(current_factor); i > 0; i--) {
+                        val *= i;
+                    }
+
+                    current_factor = create_node_lit(val);
+                    *current_token = next_token(0);
+                } else {
+                    error(0);
+                }
+            }
+
             *current_token = next_token(0);
             return current_factor;
 
@@ -228,6 +245,7 @@ NODE *parse_factor(TOKEN *current_token)
         case TOKEN_ABS:
             goto func;
 
+        case TOKEN_NULL:
         case TOKEN_MUL:
         case TOKEN_DIV:
         case TOKEN_POW:
@@ -286,7 +304,13 @@ NODE *parse_exponent(TOKEN *current_token)
                 next_token(0);
                 for (int i = 0; i < num_tokens; i++) {
                     switch (next_token(1).type) {
+                        case TOKEN_RIGHT_PAREN:
+                        case TOKEN_LEFT_PAREN:
+                        case TOKEN_PLUS:
+                        case TOKEN_MINUS:
                         case TOKEN_POW:
+                        case TOKEN_MUL:
+                        case TOKEN_DIV:
                         case TOKEN_NUM:
                             next_token(0);
                             continue;
