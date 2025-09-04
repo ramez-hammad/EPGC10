@@ -14,7 +14,7 @@ double E = 0;
 double F = 0;
 double G = 0;
 double H = 0;
-double I = 0;
+double I_VAL = 0; // I is a macro
 double J = 0;
 double K = 0;
 double L = 0;
@@ -185,7 +185,7 @@ double evaluate(NODE *root)
                     case 'F': return F;
                     case 'G': return G;
                     case 'H': return H;
-                    case 'I': return I;
+                    case 'I': return I_VAL;
                     case 'J': return J;
                     case 'K': return K;
                     case 'L': return L;
