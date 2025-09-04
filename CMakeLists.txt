@@ -52,6 +52,10 @@ set(SRC_UI
         src/core/interpreter/error.h
         src/ui/toolbox_popup.c
         src/ui/toolbox_popup.h
+        src/ui/var_popup.c
+        src/ui/var_popup.h
+        src/ui/error_popup.c
+        src/ui/error_popup.h
 )
 
 set(SRC_TEST

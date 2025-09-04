@@ -8,6 +8,7 @@
 #include <screen_settings.h>
 #include <screen_graph.h>
 #include <toolbox_popup.h>
+#include <var_popup.h>
 
 extern lv_obj_t *screen_menu_container;
 extern lv_obj_t *input_area;
@@ -60,7 +61,16 @@ void nav_cb(lv_event_t *event)
     // Left
     if (ang >= 135 && ang <= 225) {
         if (current_screen == SCREEN_INPUT || current_screen == SCREEN_GRAPH_INPUT) {
-            input_area_nav_left();
+            if (!var_popup_open) {
+                input_area_nav_left();
+            } else {
+                if (var_popup_index != 0) {
+                    lv_obj_set_state(array_var_popup[var_popup_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_var_popup[var_popup_index], LV_STATE_FOCUSED);
+                    var_popup_index--;
+                    lv_obj_set_state(array_var_popup[var_popup_index], LV_STATE_FOCUSED, true);
+                }
+            }
         }
 
         if (current_screen == SCREEN_MENU) {
@@ -115,7 +125,16 @@ void nav_cb(lv_event_t *event)
     // Right
     if ((ang >= 315 && ang <= 360) || (ang <= 45 && ang >= 0)) {
         if (current_screen == SCREEN_INPUT || current_screen == SCREEN_GRAPH_INPUT) {
-            input_area_nav_right();
+            if (!var_popup_open) {
+                input_area_nav_right();
+            } else {
+                if (var_popup_index != 1) {
+                    lv_obj_set_state(array_var_popup[var_popup_index], LV_STATE_DEFAULT, true);
+                    lv_obj_remove_state(array_var_popup[var_popup_index], LV_STATE_FOCUSED);
+                    var_popup_index++;
+                    lv_obj_set_state(array_var_popup[var_popup_index], LV_STATE_FOCUSED, true);
+                }
+            }
         }
 
         if (current_screen == SCREEN_MENU) {

@@ -7,6 +7,7 @@
 #include <screen_graph_input.h>
 #include <status_bar.h>
 #include <toolbox_popup.h>
+#include <var_popup.h>
 
 extern char alpha;
 extern char shift;
@@ -108,6 +109,22 @@ void btn_matrix_mid_cb(lv_event_t *event)
                         break;
                     }
 
+                    if (var_popup_open) {
+                        lv_obj_set_state(input_area_var_2, LV_STATE_DEFAULT, true);
+                        lv_obj_remove_state(input_area_var_2, LV_STATE_FOCUSED);
+
+                        var_popup_open = false;
+
+                        var_popup_index = 0;
+
+                        lv_obj_add_state(input_area_var_1, LV_STATE_FOCUSED);
+
+                        display_screen_input();
+
+                        lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
+                        break;
+                    }
+
                     display_screen_menu();
                     break;
 
@@ -124,6 +141,22 @@ void btn_matrix_mid_cb(lv_event_t *event)
                         display_screen_input();
                         lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
                         toolbox_open = false;
+                        break;
+                    }
+
+                    if (var_popup_open) {
+                        lv_obj_set_state(input_area_var_2, LV_STATE_DEFAULT, true);
+                        lv_obj_remove_state(input_area_var_2, LV_STATE_FOCUSED);
+
+                        var_popup_open = false;
+
+                        var_popup_index = 0;
+
+                        lv_obj_add_state(input_area_var_1, LV_STATE_FOCUSED);
+
+                        display_screen_input();
+
+                        lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
                         break;
                     }
             }

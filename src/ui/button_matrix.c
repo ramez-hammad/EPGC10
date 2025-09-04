@@ -50,7 +50,7 @@ void create_button_matrix_part_down(void)
         "#dc143c          I#\n     (",
         "#dc143c          J#\n     )",
         "#dc143c          K#\n     ,",
-        "#dc143c          L#\n",
+        "#dc143c          L#\n  VAR",
         "\n",
         "#dc143c            M#\n      7",
         "#dc143c            N#\n      8",

@@ -10,6 +10,8 @@
 #include <screen_settings.h>
 #include <unistd.h>
 #include <toolbox_popup.h>
+#include <var_popup.h>
+#include <error_popup.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -77,6 +79,8 @@ int main(void)
     current_screen = SCREEN_INPUT;
 
     // Create UI
+    create_error_popup();
+    create_var_popup();
     create_toolbox_popup();
     create_screen_menu();
     create_screen_graph_input();

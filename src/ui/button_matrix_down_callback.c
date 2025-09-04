@@ -9,6 +9,12 @@
 #include <screen_settings.h>
 #include <string.h>
 #include <toolbox_popup.h>
+#include <var_popup.h>
+#include <error_popup.h>
+#include <error.h>
+#include <lexer.h>
+#include <parser.h>
+#include <evaluator.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area;
@@ -200,6 +206,8 @@ void btn_matrix_down_cb(lv_event_t *event)
             if (alpha) {
                 alpha = 0;
                 add_to_input_area("L\0");
+            } else {
+                display_var_popup();
             }
             break;
         case 12:
@@ -485,6 +493,117 @@ void btn_matrix_down_cb(lv_event_t *event)
                     }
                     break;
                 }
+
+                     if (var_popup_open) {
+                    char var = *get_text(input_buffer_var_1, input_buffer_var_1_length);
+
+                    double val = interpret(get_text(input_buffer_var_2, input_buffer_var_2_length));
+
+                    if (error_present) {
+                        display_error_popup();
+                        error_present = 0;
+                    } else if (!(var >= 65 && var <= 90)) {
+                        // If var is not A-Z
+                        display_error_popup();
+                    } else {
+                        switch (var) {
+                            case 'A':
+                                A = val;
+                                break;
+                            case 'B':
+                                B = val;
+                                break;
+                            case 'C':
+                                C = val;
+                                break;
+                            case 'D':
+                                D = val;
+                                break;
+                            case 'E':
+                                E = val;
+                                break;
+                            case 'F':
+                                F = val;
+                                break;
+                            case 'G':
+                                G = val;
+                                break;
+                            case 'H':
+                                H = val;
+                                break;
+                            case 'I':
+                                I_VAL = val;
+                                break;
+                            case 'J':
+                                J = val;
+                                break;
+                            case 'K':
+                                K = val;
+                                break;
+                            case 'L':
+                                L = val;
+                                break;
+                            case 'M':
+                                M = val;
+                                break;
+                            case 'N':
+                                N = val;
+                                break;
+                            case 'O':
+                                O = val;
+                                break;
+                            case 'P':
+                                P = val;
+                                break;
+                            case 'Q':
+                                Q = val;
+                                break;
+                            case 'R':
+                                R = val;
+                                break;
+                            case 'S':
+                                S = val;
+                                break;
+                            case 'T':
+                                T = val;
+                                break;
+                            case 'U':
+                                U = val;
+                                break;
+                            case 'V':
+                                V = val;
+                                break;
+                            case 'W':
+                                W = val;
+                                break;
+                            case 'X':
+                                X = val;
+                                break;
+                            case 'Y':
+                                Y = val;
+                                break;
+                            case 'Z':
+                                Z = val;
+                                break;
+                        }
+
+                        lv_obj_set_state(input_area_var_2, LV_STATE_DEFAULT, true);
+                        lv_obj_remove_state(input_area_var_2, LV_STATE_FOCUSED);
+
+                        lv_obj_add_state(input_area_var_1, LV_STATE_FOCUSED);
+
+                        lv_obj_move_background(var_popup_container);
+
+                        var_popup_open = false;
+
+                        var_popup_index = 0;
+
+                        lv_obj_set_state(get_input_area(), LV_STATE_FOCUSED, true);
+                    }
+
+                    break;
+                }
+
                 display_screen_graph();
             }
 
@@ -498,6 +617,116 @@ void btn_matrix_down_cb(lv_event_t *event)
                             toolbox_open = false;
                             break;
                     }
+                    break;
+                }
+
+                if (var_popup_open) {
+                    char var = *get_text(input_buffer_var_1, input_buffer_var_1_length);
+
+                    double val = interpret(get_text(input_buffer_var_2, input_buffer_var_2_length));
+
+                    if (error_present) {
+                        display_error_popup();
+                        error_present = 0;
+                    } else if (!(var >= 65 && var <= 90)) {
+                        // If var is not A-Z
+                        display_error_popup();
+                    } else {
+                        switch (var) {
+                            case 'A':
+                                A = val;
+                                break;
+                            case 'B':
+                                B = val;
+                                break;
+                            case 'C':
+                                C = val;
+                                break;
+                            case 'D':
+                                D = val;
+                                break;
+                            case 'E':
+                                E = val;
+                                break;
+                            case 'F':
+                                F = val;
+                                break;
+                            case 'G':
+                                G = val;
+                                break;
+                            case 'H':
+                                H = val;
+                                break;
+                            case 'I':
+                                I_VAL = val;
+                                break;
+                            case 'J':
+                                J = val;
+                                break;
+                            case 'K':
+                                K = val;
+                                break;
+                            case 'L':
+                                L = val;
+                                break;
+                            case 'M':
+                                M = val;
+                                break;
+                            case 'N':
+                                N = val;
+                                break;
+                            case 'O':
+                                O = val;
+                                break;
+                            case 'P':
+                                P = val;
+                                break;
+                            case 'Q':
+                                Q = val;
+                                break;
+                            case 'R':
+                                R = val;
+                                break;
+                            case 'S':
+                                S = val;
+                                break;
+                            case 'T':
+                                T = val;
+                                break;
+                            case 'U':
+                                U = val;
+                                break;
+                            case 'V':
+                                V = val;
+                                break;
+                            case 'W':
+                                W = val;
+                                break;
+                            case 'X':
+                                X = val;
+                                break;
+                            case 'Y':
+                                Y = val;
+                                break;
+                            case 'Z':
+                                Z = val;
+                                break;
+                        }
+
+                        lv_obj_set_state(input_area_var_2, LV_STATE_DEFAULT, true);
+                        lv_obj_remove_state(input_area_var_2, LV_STATE_FOCUSED);
+
+                        lv_obj_add_state(input_area_var_1, LV_STATE_FOCUSED);
+
+                        lv_obj_move_background(var_popup_container);
+
+                        var_popup_open = false;
+
+                        var_popup_index = 0;
+
+                        lv_obj_set_state(get_input_area(), LV_STATE_FOCUSED, true);
+                    }
+
                     break;
                 }
 
