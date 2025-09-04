@@ -6,6 +6,7 @@
 #include <ui.h>
 #include <math.h>
 #include <error.h>
+#include <var_popup.h>
 
 extern lv_obj_t *input_base;
 extern lv_obj_t *input_area_container;
@@ -176,7 +177,16 @@ void add_to_input_area(char *text)
         append_text(get_buffer(1), text, get_length(1));
     }
 
-    (*current_pos)++;
+    if (var_popup_open) {
+        if (get_input_area() == input_area_var_1) {
+            if (*current_pos != 1) (*current_pos)++;
+        }
+
+        if (get_input_area() == input_area_var_2) if (*current_pos != MAXLEN_INPUT) (*current_pos)++;
+
+    } else {
+        if (*current_pos != MAXLEN_INPUT) (*current_pos)++;
+    }
 
     render_input_area();
 }

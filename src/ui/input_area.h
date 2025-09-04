@@ -24,3 +24,5 @@ void delete_from_input_area(void);
 void input_area_nav_left(void);
 
 void input_area_nav_right(void);
+
+void render_input_area(void);
