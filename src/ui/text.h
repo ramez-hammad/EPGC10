@@ -1,4 +1,5 @@
 #include "src/misc/lv_types.h"
+
 #define MAXLEN_INPUT 150
 
 uint32_t *get_current_pos(void);
