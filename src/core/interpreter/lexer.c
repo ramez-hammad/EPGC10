@@ -135,6 +135,7 @@ TOKEN *tokenize(const char *expr, int *array_size)
         } else {
             switch (expr[x]) {
                 case '.':
+                    if (is_num(expr[x + 1]) != 1) error(0);
 
                     num[0] = '0';
                     num[1] = expr[x];
