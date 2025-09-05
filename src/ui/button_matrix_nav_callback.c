@@ -102,23 +102,13 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
-            if (!graphing_finished) return;
-
-            graphing_finished = 0;
-
             const double dx = 0.1 * (x_max - x_min);
 
             x_max -= dx;
             x_min -= dx;
 
-            original_graph_slow_nav = graph_slow;
-
-            graph_slow = 0;
-
             create_screen_graph();
             draw_graph();
-
-            graph_slow = original_graph_slow_nav;
         }
     }
 
@@ -162,23 +152,13 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
-            if (!graphing_finished) return;
-
-            graphing_finished = 0;
-
             const double dx = 0.1 * (x_max - x_min);
 
             x_max += dx;
             x_min += dx;
 
-            original_graph_slow_nav = graph_slow;
-
-            graph_slow = 0;
-
             create_screen_graph();
             draw_graph();
-
-            graph_slow = original_graph_slow_nav;
         }
     }
 
@@ -276,23 +256,13 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
-            if (!graphing_finished) return;
-
-            graphing_finished = 0;
-
             const double dy = 0.1 * (y_max - y_min);
 
             y_max += dy;
             y_min += dy;
 
-            original_graph_slow_nav = graph_slow;
-
-            graph_slow = 0;
-
             create_screen_graph();
             draw_graph();
-
-            graph_slow = original_graph_slow_nav;
         }
     }
 
@@ -390,23 +360,13 @@ void nav_cb(lv_event_t *event)
         }
 
         if (current_screen == SCREEN_GRAPH) {
-            if (!graphing_finished) return;
-
-            graphing_finished = 0;
-
             const double dy = 0.1 * (y_max - y_min);
 
             y_max -= dy;
             y_min -= dy;
 
-            original_graph_slow_nav = graph_slow;
-
-            graph_slow = 0;
-
             create_screen_graph();
             draw_graph();
-
-            graph_slow = original_graph_slow_nav;
         }
     }
 }

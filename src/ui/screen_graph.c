@@ -38,13 +38,6 @@ extern int input_buffer_y_3_length;
 extern int input_buffer_y_4_length;
 extern int input_buffer_y_5_length;
 
-char graph_slow = 1;
-char original_graph_slow;
-
-char graphing_finished = 0;
-
-static void draw_line_aa(draw_line_aa_data_t *data);
-
 void create_screen_graph_container(void)
 {
     screen_graph_container = lv_obj_create(lv_screen_active());
@@ -93,15 +86,6 @@ void create_screen_graph_grid(void)
 
     lv_obj_center(grid);
 
-    draw_line_aa_data_t data = {
-        grid,
-        0,
-        0,
-        0,
-        0,
-        0,
-    };
-
     // Draw vertical gridlines every 1 unit on x-axis
     for (double x = floor(x_min); x <= ceil(x_max); x += 1.0) {
         int px = x_to_px(x);
@@ -115,13 +99,9 @@ void create_screen_graph_grid(void)
         }
 
         if (x == 0) {
-            data.x0 = px;
-            data.y0 = 0;
-            data.x1 = px;
-            data.y1 = SCREEN_HEIGHT_GRAPH;
-            data.color = lv_color_hex(0x000000);
-
-            draw_line_aa(&data);
+            for (int y = 0; y < SCREEN_HEIGHT_GRAPH; y++) {
+                safe_set_px(px, y, lv_color_hex(0x000000), LV_OPA_MAX);
+            }
         }
 
         // Draw ticks on x-axis
@@ -161,16 +141,9 @@ void create_screen_graph_grid(void)
         }
 
         if (y == 0) {
-            draw_line_aa_data_t data = {
-                grid,
-                0,
-                py,
-                SCREEN_WIDTH_GRAPH,
-                py,
-                lv_color_hex(0x000000),
-            };
-
-            draw_line_aa(&data);
+            for (int x = 0; x < SCREEN_WIDTH_GRAPH; x++) {
+                safe_set_px(x, py, lv_color_hex(0x000000), LV_OPA_MAX);
+            }
         }
 
         // Draw ticks on y-axis
@@ -201,15 +174,8 @@ static void plot_blend(lv_obj_t *grid, int x, int y, lv_color_t color, uint8_t o
     }
 }
 
-static void draw_line_aa(draw_line_aa_data_t *data)
+static void draw_line_aa(lv_obj_t *grid, int x0, int y0, int x1, int y1, lv_color_t color)
 {
-    lv_obj_t *grid = data->grid;
-    int x0 = data->x0;
-    int y0 = data->y0;
-    int x1 = data->x1;
-    int y1 = data->y1;
-    lv_color_t color = data->color;
-
     // Xiaolin Wu's line algorithm
     int steep = abs(y1 - y0) > abs(x1 - x0);
     if (steep) {
@@ -282,101 +248,33 @@ static void draw_line_aa(draw_line_aa_data_t *data)
     }
 }
 
-
-static void graph_timer_cb(lv_timer_t *t)
-{
-    graph_state_t *s = lv_timer_get_user_data(t);
-
-    if (s->px >= SCREEN_WIDTH_GRAPH) {
-        graphing_finished = 1;
-        deg_rad = original_deg_rad;
-        lv_timer_del(t);
-        lv_free(s);
-        return;
-    }
-
-    double x = x_min + (x_max - x_min) * s->px / (SCREEN_WIDTH_GRAPH - 1);
-    deg_rad = 1;
-    x_value = x;
-    double y = interpret(s->func);
-
-    if (y >= y_min && y <= y_max) {
-        int py = y_to_py(y);
-        if (s->prev_px != -1) {
-            draw_line_aa_data_t data = {
-                grid,
-                s->prev_px, s->prev_py,
-                s->px, py,
-                s->color
-            };
-            draw_line_aa(&data);
-        }
-        s->prev_px = s->px;
-        s->prev_py = py;
-    } else {
-        s->prev_px = -1;
-    }
-
-    s->px++;
-}
-
 void draw_graph_func_canvas(const char *func, lv_color_t color)
 {
-    graph_state_t *s = lv_malloc(sizeof(graph_state_t));
-    s->func = func;
-    s->color = color;
-    s->prev_px = -1;
-    s->prev_py = -1;
-    s->px = 0;
+    int prev_px = -1;
+    int prev_py = -1;
 
-    graphing_finished = 0;
+    for (int px = 0; px < SCREEN_WIDTH_GRAPH; px++) {
+        double x = x_min + (x_max - x_min) * px / (SCREEN_WIDTH_GRAPH - 1);
+        deg_rad = 1;
+        x_value = x;
+        double y = interpret(func);
 
-    original_graph_slow = graph_slow;
-
-    original_deg_rad = deg_rad;
-
-    if (graph_slow) {
-        lv_timer_create(graph_timer_cb, 1, s);
-    } else {
-        int prev_px = -1;
-        int prev_py = -1;
-
-        for (int px = 0; px < SCREEN_WIDTH_GRAPH; px++) {
-            double x = x_min + (x_max - x_min) * px / (SCREEN_WIDTH_GRAPH - 1);
-            deg_rad = 1;
-            x_value = x;
-            double y = interpret(func);
-
-            if (y > y_max || y < y_min) {
-                prev_px = -1;
-                continue;
-            }
-
-            int py = y_to_py(y);
-
-            if (prev_px != -1) {
-                draw_line_aa_data_t data = {
-                    grid,
-                    prev_px,
-                    prev_py,
-                    px,
-                    py,
-                    color
-                };
-
-                draw_line_aa(&data);
-            }
-
-            prev_px = px;
-            prev_py = py;
+        if (y > y_max || y < y_min) {
+            prev_px = -1;
+            continue;
         }
 
-        deg_rad = original_deg_rad;
+        int py = y_to_py(y);
 
-        graphing_finished = 1;
+        if (prev_px != -1) {
+            draw_line_aa(grid, prev_px, prev_py, px, py, color);
+        }
+
+        prev_px = px;
+        prev_py = py;
     }
 
-    graph_slow = original_graph_slow;
+    deg_rad = original_deg_rad;
 }
 
 void create_screen_graph(void)
