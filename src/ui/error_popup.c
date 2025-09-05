@@ -6,6 +6,8 @@
 
 lv_obj_t *error_popup_container;
 
+lv_obj_t *error_label;
+
 void create_error_popup(void)
 {
     // Create container
@@ -31,11 +33,10 @@ void create_error_popup(void)
     lv_obj_set_style_text_align(error_popup_title, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN);
 
     // Create label
-    lv_obj_t *label = lv_label_create(error_popup_container);
-    lv_obj_set_style_text_font(label, FONT, LV_PART_MAIN);
-    lv_obj_set_style_text_color(label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
-    lv_label_set_text(label, "Your input is not valid");
-    lv_obj_center(label);
+    error_label = lv_label_create(error_popup_container);
+    lv_obj_set_style_text_font(error_label, FONT, LV_PART_MAIN);
+    lv_obj_set_style_text_color(error_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
+    lv_obj_center(error_label);
 }
 
 void error_popup_timer(lv_timer_t * timer)

@@ -5,7 +5,6 @@
 #include <input_area.h>
 #include <ui.h>
 #include <math.h>
-#include <error.h>
 #include <var_popup.h>
 
 extern lv_obj_t *input_base;
@@ -87,41 +86,51 @@ void create_line_ans(void)
 
 void create_ans_label(double ans)
 {
+    ans_label = lv_label_create(input_base);
+    lv_obj_set_style_text_font(ans_label, FONT_INPUT_AREA, LV_PART_MAIN);
+
     char text[500];
 
-    if (error_present) {
-        strcpy(text, error_message);
-        error_present = 0;
-    } else {
-        if (strcmp(display_format, "NORMAL") == 0) {
-            sprintf(text, "%.2f", ans);
-        }
-
-        if (strcmp(display_format, "SCI") == 0) {
-            sprintf(text, "%.2e", ans);
-        }
-
-        if (strcmp(display_format, "ENG") == 0) {
-            int exponent = (int) floor(log10(fabs(ans)) / 3.0) * 3;
-            double mantissa = ans / pow(10, exponent);
-            sprintf(text, "%.2fe%d", mantissa, exponent);
-
-            if (ans == 0.0) sprintf(text, "%.2f", ans);
-        }
-
-        if (strlen(text) >= 14) sprintf(text, "%e", ans);
-        if (strcmp(text, "inf") == 0) strcpy(text, "Error");
-        if (strcmp(text, "-inf") == 0) strcpy(text, "Error");
-        if (strcmp(text, "nan") == 0) strcpy(text, "Error");
+    if (strcmp(display_format, "NORMAL") == 0) {
+        sprintf(text, "%.10g", ans);
     }
 
-    ans_label = lv_label_create(input_base);
+    if (strcmp(display_format, "SCI") == 0) {
+        sprintf(text, "%e", ans);
+    }
+
+    if (strcmp(display_format, "ENG") == 0) {
+        int exponent = (int) floor(log10(fabs(ans)) / 3.0) * 3;
+        double mantissa = ans / pow(10, exponent);
+        sprintf(text, "%fe%d", mantissa, exponent);
+
+        if (ans == 0.0) sprintf(text, "%f", ans);
+    }
+
+    if (strlen(text) >= 14) sprintf(text, "%e", ans);
+
+    if (strcmp(text, "inf") == 0) {
+        lv_obj_set_style_text_font(ans_label, &JuliaMono_Regular_20, LV_PART_MAIN);
+        strcpy(text, "\u221E");
+    }
+
+    if (strcmp(text, "-inf") == 0) {
+        lv_obj_set_style_text_font(ans_label, &JuliaMono_Regular_20, LV_PART_MAIN);
+        strcpy(text, "-\u221E");
+    }
+
+    if (strcmp(text, "nan") == 0) strcpy(text, "Error");
 
     lv_label_set_text(ans_label, text);
     lv_obj_set_style_bg_color(ans_label, lv_color_hex(BG_COLOR_INPUT_AREA), LV_PART_MAIN);
-    lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_RIGHT, -25, 15);
-    lv_obj_set_style_text_font(ans_label, FONT_INPUT_AREA, LV_PART_MAIN);
+    lv_obj_align_to(ans_label, input_area, LV_ALIGN_BOTTOM_MID, -156, 15);
+    int x_offset = lv_obj_get_x_aligned(ans_label) + 16;
+    lv_obj_set_style_translate_x(ans_label, fabs(x_offset), LV_PART_MAIN);
     lv_obj_set_style_text_color(ans_label, lv_color_hex(TEXT_COLOR), LV_PART_MAIN);
+    lv_label_set_long_mode(ans_label, LV_LABEL_LONG_CLIP);
+    lv_obj_set_width(ans_label, 320);
+    lv_obj_set_style_border_width(ans_label, 0, LV_PART_MAIN);
+    lv_obj_set_style_text_align(ans_label, LV_TEXT_ALIGN_RIGHT, LV_PART_MAIN);
 
     prev_ans = ans;
 }
@@ -183,7 +192,6 @@ void add_to_input_area(char *text)
         }
 
         if (get_input_area() == input_area_var_2) if (*current_pos != MAXLEN_INPUT) (*current_pos)++;
-
     } else {
         if (*current_pos != MAXLEN_INPUT) (*current_pos)++;
     }

@@ -475,7 +475,7 @@ void btn_matrix_down_cb(lv_event_t *event)
                     break;
                 }
 
-                     if (var_popup_open) {
+                if (var_popup_open) {
                     char var = *get_text(input_buffer_var_1, input_buffer_var_1_length);
 
                     double val = interpret(get_text(input_buffer_var_2, input_buffer_var_2_length));
@@ -607,11 +607,14 @@ void btn_matrix_down_cb(lv_event_t *event)
                     double val = interpret(get_text(input_buffer_var_2, input_buffer_var_2_length));
 
                     if (error_present) {
+                        lv_label_set_text(error_label, "Your input is not valid");
                         display_error_popup();
                         error_present = 0;
                     } else if (!(var >= 65 && var <= 90)) {
                         // If var is not A-Z
+                        lv_label_set_text(error_label, "Your input is not valid");
                         display_error_popup();
+                        error_present = 0;
                     } else {
                         switch (var) {
                             case 'A':
@@ -713,26 +716,38 @@ void btn_matrix_down_cb(lv_event_t *event)
 
                 char *expr = get_text(input_buffer_main, input_buffer_main_length);
                 if (strcmp(expr, "") != 0) {
-                    create_ans_label(interpret(expr));
-                    create_line_ans();
-                    lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
-                    create_input_area();
-                    lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
-                    lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
-                    reset_buffer(input_buffer_main, &input_buffer_main_length);
-                    reset_buffer(output_buffer_main, &output_buffer_main_length);
+                    double ans = interpret(expr);
+                    if (!error_present) {
+                        create_ans_label(ans);
+                        create_line_ans();
+                        lv_obj_clear_state(input_area, LV_STATE_FOCUSED);
+                        create_input_area();
+                        lv_obj_align_to(input_area, line, LV_ALIGN_BOTTOM_MID, 0, 45);
+                        lv_obj_scroll_to_view(input_area, LV_ANIM_OFF);
+                        reset_buffer(input_buffer_main, &input_buffer_main_length);
+                        reset_buffer(output_buffer_main, &output_buffer_main_length);
+                    } else {
+                        lv_label_set_text(error_label, error_message);
+                        display_error_popup();
+                        error_present = 0;
+                    }
                 }
             }
 
             if (current_screen == SCREEN_MENU) {
+                if (toolbox_open) toolbox_open = false;
+                if (var_popup_open) var_popup_open = false;
+
                 // Back button pressed
                 if (row_index == 0 && col_index == 0) {
                     display_screen_input();
+                    lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
                 }
 
                 // Graph button pressed
                 if (row_index == 0 && col_index == 1) {
                     display_screen_graph_input();
+                    lv_obj_add_state(get_input_area(), LV_STATE_FOCUSED);
                 }
 
                 // Settings button pressed
