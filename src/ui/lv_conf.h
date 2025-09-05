@@ -630,10 +630,10 @@
  *  #define LV_FONT_CUSTOM_DECLARE   LV_FONT_DECLARE(my_font_1) LV_FONT_DECLARE(my_font_2)
  *  @endcode
  */
-#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(noto_sans_regular_14) \
-                               LV_FONT_DECLARE(noto_sans_regular_16) \
-                               LV_FONT_DECLARE(noto_sans_math_regular_comb_14) \
-                               LV_FONT_DECLARE(noto_sans_math_regular_comb_16) \
+#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(noto_sans_regular_14)\
+                               LV_FONT_DECLARE(noto_sans_regular_16)\
+                               LV_FONT_DECLARE(noto_sans_math_regular_comb_14)\
+                               LV_FONT_DECLARE(noto_sans_math_regular_comb_16)\
                                LV_FONT_DECLARE(jetbrains_mono_regular_20)\
                                LV_FONT_DECLARE(JuliaMono_Regular_14)\
                                LV_FONT_DECLARE(JuliaMono_Regular_16)\
