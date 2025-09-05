@@ -23,7 +23,7 @@ cd EPGC10
 mkdir build && cd build
 cmake ..
 make
-./EPGC10
+./ui
 ```
 
 ## Unit Testing
