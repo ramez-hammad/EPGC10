@@ -13,6 +13,8 @@ An open-source, expandable, not yet programmable graphing calculator, built from
 Currently, only the PC simulator has been implemented. In the future, an ESP32 version is planned for a physical calculator
 
 ## Install instructions
+Dependencies: SDL for the PC simulator
+
 Linux
 
 ```
