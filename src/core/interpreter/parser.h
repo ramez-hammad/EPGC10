@@ -13,3 +13,5 @@ void init(const char *expr);
 NODE *parse_expression(void);
 
 NODE *parse_expression_str(const char *expr);
+
+extern int num_paren;
