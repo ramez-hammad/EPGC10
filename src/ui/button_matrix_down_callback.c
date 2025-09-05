@@ -345,12 +345,6 @@ void btn_matrix_down_cb(lv_event_t *event)
             if (current_screen == SCREEN_GRAPH) {
                 // Zoom in
 
-                if (!graphing_finished) break;
-
-                char graph_slow_original = graph_slow;
-
-                graph_slow = 0;
-
                 y_min = 0.7 * y_min;
                 y_max = 0.7 * y_max;
 
@@ -359,8 +353,6 @@ void btn_matrix_down_cb(lv_event_t *event)
 
                 create_screen_graph();
                 draw_graph();
-
-                graph_slow = graph_slow_original;
 
                 break;
             }
@@ -378,15 +370,6 @@ void btn_matrix_down_cb(lv_event_t *event)
 
             if (current_screen == SCREEN_GRAPH) {
                 // Zoom in
-
-                if (!graphing_finished) break;
-
-                graphing_finished = 0;
-
-                char graph_slow_original = graph_slow;
-
-                graph_slow = 0;
-
                 y_min = 1.428571 * y_min;
                 y_max = 1.428571 * y_max;
 
@@ -395,8 +378,6 @@ void btn_matrix_down_cb(lv_event_t *event)
 
                 create_screen_graph();
                 draw_graph();
-
-                graph_slow = graph_slow_original;
 
                 break;
             }
