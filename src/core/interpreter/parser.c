@@ -382,12 +382,6 @@ NODE *parse_expression(void)
     }
 
 ret:
-    if (num_paren != 0) {
-        // Syntax error (Mismatched parentheses)
-        error(0);
-        num_paren = 0;
-    }
-
     return current_node;
 }
 
@@ -419,11 +413,5 @@ NODE *parse_expression_str(const char *expr)
     }
 
 ret:
-    if (num_paren != 0) {
-        // Syntax error (Mismatched parentheses)
-        error(0);
-        num_paren = 0;
-    }
-
     return current_node;
 }
