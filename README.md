@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="docs/gallery/banner.png" width="100%">
+</p>
+
 <h1 align="center">EPGCv1.0</h1>
+
+[![C](https://img.shields.io/badge/C-00599C?logo=c&logoColor=white)](#)
+![](https://img.shields.io/badge/platform-ESP32-blue)
+![](https://img.shields.io/badge/status-active-success)
 
 ## Expandable Programmable Graphing Calculator
 ### Introduction
@@ -6,32 +14,32 @@ An open-source, expandable, graphing calculator, built from the ground up,
 based on the ESP32 microcontroller. The source code and the schematics have been released under the 
 GPLv3 license.
 
-## It aims to offer:
+## 🚀 It aims to offer:
 - A custom, lightning fast modular mathematical expression interpreter with many built-in
   functions 
 - A modern and responsive UI built using LVGL
 - 2D graphing
 - An experience that is designed to be fully expandable and customizable
 
-## Hardware
+## 🛠 Hardware
 <img src="hardware/schematic.png" align="top">
 
 The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 Display and 54  buttons dedicated to various functions.
 The calculator is power by 4AAA batteries.
 
-## Repository Overview
+## 📦 Repository Overview
 [main/](main) => Source code that includes the interpreter and the UI\
 [components/](components) => Contains LVGL and drivers\
 [fonts/](fonts) => Contains fonts used in the UI\
 [hardware/](hardware) => Contains schematics and designs\
 [docs/](docs) => Documentation and pictures
 
-## Emulator
+## 🎥 Emulator
 There exists also an emulator to allow users to have a look at the calculator before building it.
 
 Instructions to install the PC Emulator can be found in the pc-simulator branch, otherwise a web simulator is available [here](https://ramez-hammad.github.io) 
 
-## Gallery
+## 📸 Gallery
 Some screenshots from the calculator.
 <figure>
   <img src="docs/gallery/1.png">
