@@ -11,7 +11,7 @@
 ## Expandable Programmable Graphing Calculator
 ### Introduction
 An open-source, expandable, graphing calculator, built from the ground up, 
-based on the ESP32 microcontroller. The source code and the schematics have been released under the 
+based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the 
 GPLv3 license.
 
 ## 🚀 It aims to offer:
