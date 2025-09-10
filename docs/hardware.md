@@ -10,7 +10,7 @@ This file contains an overview of the hardware and instructions for assembly and
 | Item | Description               | Quantity | Notes                                                         |
 |------|---------------------------|----------|---------------------------------------------------------------|
 | 1    | **NodeMCU-32S (ESP32)**   | 1        | Main microcontroller running the calculator firmware          |
-| 2    | **Micro switches**        | 54       | Used for calculator input                                     |
+| 2    | **Push button switches**  | 54       | Used for calculator input                                     |
 | 3    | **ILI9341 TFT LCD (SPI)** | 1        | 2.8″ SPI display module                                       |
 | 4    | **4×AAA Battery Holder**  | 1        | Provides ~6V before ESP32 onboard regulator                   |
 | 5    | **AAA Batteries**         | 4        | Power source for portable operation                           |
