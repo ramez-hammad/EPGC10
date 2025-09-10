@@ -11,9 +11,14 @@
 ## Expandable Programmable Graphing Calculator
 ### Introduction & Motivation
 An open-source, expandable graphing calculator, built from the ground up. It is based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the
-GPLv3 license. My motivation for creating this calculator is to offer a competitive
+GPLv3 license. My motivation for creating this calculator is for the goal of creating accessible, 
+reliable education tools. Building a complete calculator; hardware, firmware, UI, and 
+interpreter, allowed me to apply everything I learned over the years into a single project. I focused on clarity, 
+openness, and extensibility so that the device can evolve based on the user's desire.
 
 ## 🚀 It aims to offer:
+- An alternative to commercial calculators that is less expensive and is truly yours in every way; your ability only limits customizability.
+- An accessible platform to learn electronics, programming and mathematics 
 - A custom, lightning fast modular mathematical expression interpreter with many built-in
   functions 
 - A modern and responsive UI built using LVGL

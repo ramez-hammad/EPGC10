@@ -7,9 +7,9 @@ along with documentation of the modules and their submodules, how they are desig
 It also contains installation instructions for the ESP32, as well as assembly instructions.
 
 ## Structure
-├── overview.md # Overview of the system architecture and design decisions\
-├── interpreter.md # An overview of the 3 stage interpreter architecture\
-├── hardware.md # Installation and assembly instructins\
-└── lexer.md # Lexer design documentation
+├── [overview.md](overview.md) # Overview of the system architecture and design decisions\
+├── [interpreter.md](interpreter.md) # An overview of the 3 stage interpreter architecture\
+├── [hardware.md](hardware.md) # Installation and assembly instructins\
+└── [lexer.md](lexer.md) # Lexer design documentation
 
 >Code documentation is a work in progress, however install instructions are complete and available
