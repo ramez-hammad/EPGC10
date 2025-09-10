@@ -9,10 +9,9 @@
 ![](https://img.shields.io/badge/status-active-success)
 
 ## Expandable Programmable Graphing Calculator
-### Introduction
-An open-source, expandable, graphing calculator, built from the ground up, 
-based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the 
-GPLv3 license.
+### Introduction & Motivation
+An open-source, expandable graphing calculator, built from the ground up. It is based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the
+GPLv3 license. My motivation for creating this calculator is to offer a competitive
 
 ## 🚀 It aims to offer:
 - A custom, lightning fast modular mathematical expression interpreter with many built-in
@@ -33,6 +32,9 @@ The calculator is power by 4AAA batteries.
 [fonts/](fonts) => Contains fonts used in the UI\
 [hardware/](hardware) => Contains schematics and designs\
 [docs/](docs) => Documentation and pictures
+
+## 📜 Instructions
+Assembly and firmware installation instructions can be found [here](docs/hardware.md).
 
 ## 🎥 Emulator
 There exists also an emulator to allow users to have a look at the calculator before building it.
