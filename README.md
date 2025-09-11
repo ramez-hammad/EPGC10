@@ -12,7 +12,7 @@
 ### Introduction & Motivation
 An open-source, expandable graphing calculator, built from the ground up. It is based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the
 GPLv3 license. My motivation for creating this calculator is for the goal of creating accessible, 
-reliable education tools. Building a complete calculator; hardware, firmware, UI, and 
+reliable education tools. Building a complete calculator -- hardware, firmware, UI, and 
 interpreter, allowed me to apply everything I learned over the years into a single project. I focused on clarity, 
 openness, and extensibility so that the device can evolve based on the user's desire.
 
@@ -29,7 +29,7 @@ openness, and extensibility so that the device can evolve based on the user's de
 <img src="hardware/schematic.png" align="top">
 
 The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 Display and 54  buttons dedicated to various functions.
-The calculator is power by 4AAA batteries.
+4AAA batteries power all electronics.
 
 ## 📦 Repository Overview
 [main/](main) => Source code that includes the interpreter and the UI\
