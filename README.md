@@ -8,8 +8,8 @@
 ![](https://img.shields.io/badge/platform-ESP32-blue)
 ![](https://img.shields.io/badge/status-active-success)
 
-## Expandable Programmable Graphing Calculator
-### Introduction & Motivation
+# Expandable Programmable Graphing Calculator
+## Introduction & Motivation
 An open-source, expandable graphing calculator, built from the ground up. It is based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the
 GPLv3 license. My motivation for creating this calculator is for the goal of creating accessible, 
 reliable education tools. Building a complete calculator -- hardware, firmware, UI, and 
@@ -27,7 +27,7 @@ interpreter, allowed me to apply everything I learned over the years into a sing
 ## 🛠 Hardware
 <img src="hardware/schematic.png" align="top">
 
-The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 Display and 54  buttons dedicated to various functions.
+The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 Display and 54 buttons dedicated to various functions.
 4AAA batteries power all electronics.
 
 ## 📦 Repository Overview
