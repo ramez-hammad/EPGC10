@@ -2,8 +2,6 @@
   <img src="docs/gallery/banner.png" width="100%">
 </p>
 
-<h1 align="center">EPGCv1.0</h1>
-
 [![C](https://img.shields.io/badge/C-00599C?logo=c&logoColor=white)](#)
 ![](https://img.shields.io/badge/platform-ESP32-blue)
 ![](https://img.shields.io/badge/status-active-success)
