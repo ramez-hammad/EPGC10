@@ -2,11 +2,12 @@
   <img src="docs/gallery/banner.png" width="100%">
 </p>
 
+# Expandable Programmable Graphing Calculator v1.0
+
 [![C](https://img.shields.io/badge/C-00599C?logo=c&logoColor=white)](#)
 ![](https://img.shields.io/badge/platform-ESP32-blue)
 ![](https://img.shields.io/badge/status-active-success)
 
-# Expandable Programmable Graphing Calculator v1.0
 ## Introduction & Motivation
 An open-source, expandable graphing calculator, built from the ground up. It is based on the ESP32 microcontroller. The source code is free software, it and the schematics have been released under the
 GPLv3 license. My motivation for creating this calculator is for the goal of creating accessible, 
