@@ -20,7 +20,7 @@ int input_buffer_var_2_length, output_buffer_var_2_length = 0;
 uint32_t input_buffer_var_1_current_pos, output_buffer_var_1_current_pos = 0;
 uint32_t input_buffer_var_2_current_pos, output_buffer_var_2_current_pos = 0;
 
-char var_popup_index = 0;
+int8_t var_popup_index = 0;
 
 lv_obj_t *array_var_popup[2];
 
@@ -117,4 +117,6 @@ lv_obj_t *get_focused_input_area_var(void)
 {
     if (var_popup_index == 0) return input_area_var_1;
     if (var_popup_index == 1) return input_area_var_2;
+
+    return NULL;
 }

@@ -176,4 +176,6 @@ lv_obj_t *get_focused_input_y(void)
         case 3: return input_area_y_4;
         case 4: return input_area_y_5;
     }
+
+    return NULL;
 }

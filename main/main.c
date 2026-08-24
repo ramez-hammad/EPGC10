@@ -9,9 +9,11 @@
 #include <screen_graph.h>
 #include <screen_settings.h>
 #include <unistd.h>
+#include <esp_timer.h>
 #include <toolbox_popup.h>
 #include <var_popup.h>
 #include <error_popup.h>
+#include <ui.h>
 
 lv_obj_t *input_area;
 lv_obj_t *input_area_container;
@@ -57,24 +59,23 @@ void create_name_label (void)
     lv_obj_set_style_text_color(name_label, lv_color_hex(TEXT_COLOR_STATUS_BAR), LV_PART_MAIN);
 }
 
-int app_main(void)
+static uint32_t tick_cb (void)
+{
+    return (uint32_t) (esp_timer_get_time() / 1000);
+}
+
+void app_main(void)
 {
     // Initialize LVGL
     lv_init();
+    lv_tick_set_cb(tick_cb);
 
     ili9341_init();
 
-    static lv_disp_draw_buf_t draw_buf;
     static lv_color_t buf1[240 * 40];
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, 240 * 40);
-
-    static lv_disp_drv_t disp_drv;
-    lv_disp_drv_init(&disp_drv);
-    disp_drv.hor_res = 240;
-    disp_drv.ver_res = 320;
-    disp_drv.flush_cb = ili9341_flush;
-    disp_drv.draw_buf = &draw_buf;
-    lv_disp_drv_register(&disp_drv);
+    lv_display_t *display = lv_display_create(240, 320);
+    lv_display_set_buffers(display, buf1, NULL, sizeof(buf1), LV_DISPLAY_RENDER_MODE_PARTIAL);
+    lv_display_set_flush_cb(display, ili9341_flush);
 
     // Change the background color of the active screen
     lv_obj_set_style_bg_color(lv_screen_active(), lv_color_hex(BG_COLOR), LV_PART_MAIN);
