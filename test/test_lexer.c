@@ -102,6 +102,15 @@ void test_num_values(void)
     TEST_ASSERT_FLOAT_WITHIN(0.000001f, 24.0f, (float) array[0].val);
     TEST_ASSERT_FLOAT_WITHIN(0.000001f, 3.14f, (float) array[2].val);
     TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[4].val);
+
+    array = tokenize(".5", num_tokens);
+    TEST_ASSERT_EQUAL(1, *num_tokens);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[0].val);
+
+    array = tokenize(".5+1", num_tokens);
+    TEST_ASSERT_EQUAL(3, *num_tokens);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[0].val);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 1.0f, (float) array[2].val);
 }
 
 void test_token_type(void)
