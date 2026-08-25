@@ -63,6 +63,8 @@ uint32_t *get_current_pos(void)
         if (input_area_current == input_area_y_4) return &input_buffer_y_4_current_pos;
         if (input_area_current == input_area_y_5) return &input_buffer_y_5_current_pos;
     }
+
+    return NULL;
 }
 
 void append_text(char *buffer[], char *text, int *length)
@@ -168,6 +170,8 @@ char **get_buffer(char io)
             if (input_area_current == input_area_y_5) return output_buffer_y_5;
         }
     }
+
+    return NULL;
 }
 
 int *get_length(char io)
@@ -205,6 +209,8 @@ int *get_length(char io)
             if (input_area_current == input_area_y_5) return &output_buffer_y_5_length;
         }
     }
+
+    return NULL;
 }
 
 lv_obj_t *get_input_area(void)
@@ -212,4 +218,6 @@ lv_obj_t *get_input_area(void)
     if (var_popup_open) return get_focused_input_area_var();
     if (current_screen == SCREEN_INPUT) return input_area;
     if (current_screen == SCREEN_GRAPH_INPUT) return get_focused_input_y();
+
+    return NULL;
 }

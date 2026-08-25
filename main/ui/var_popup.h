@@ -17,7 +17,7 @@ extern int input_buffer_var_2_length, output_buffer_var_2_length;
 extern uint32_t input_buffer_var_1_current_pos, output_buffer_var_1_current_pos;
 extern uint32_t input_buffer_var_2_current_pos, output_buffer_var_2_current_pos;
 
-extern char var_popup_index;
+extern int8_t var_popup_index;
 
 extern lv_obj_t *array_var_popup[2];
 

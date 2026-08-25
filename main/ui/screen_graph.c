@@ -76,11 +76,12 @@ void create_screen_graph_grid(void)
 {
     lv_obj_clean(screen_graph_container);
 
-    LV_DRAW_BUF_DEFINE_STATIC(draw_buf, 320, 210, LV_COLOR_FORMAT_ARGB8888);
-    LV_DRAW_BUF_INIT_STATIC(draw_buf);
+    /* Allocated from the heap: a static ARGB8888 buffer does not fit in ESP32 DRAM */
+    static lv_draw_buf_t *draw_buf;
+    if (draw_buf == NULL) draw_buf = lv_draw_buf_create(320, 210, LV_COLOR_FORMAT_RGB565, 0);
 
     grid = lv_canvas_create(screen_graph_container);
-    lv_canvas_set_draw_buf(grid, &draw_buf);
+    lv_canvas_set_draw_buf(grid, draw_buf);
 
     lv_canvas_fill_bg(grid, lv_color_hex(0xffffff), LV_OPA_COVER);
 

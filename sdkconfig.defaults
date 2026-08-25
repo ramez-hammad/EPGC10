@@ -1,0 +1,2 @@
+# Use the repository's lv_conf.h (components/lv_conf.h) instead of LVGL's Kconfig defaults
+CONFIG_LV_CONF_SKIP=n
