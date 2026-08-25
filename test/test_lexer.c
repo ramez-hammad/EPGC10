@@ -69,6 +69,11 @@ void test_func_arg(void)
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
     TEST_ASSERT_EQUAL_STRING("23", array[1].arg);
 
+    array = tokenize("sin(30)+cos(0)", num_tokens);
+    TEST_ASSERT_EQUAL_STRING("30", array[0].arg);
+    TEST_ASSERT_EQUAL_STRING("0", array[2].arg);
+    TEST_ASSERT_TRUE(array[0].arg != array[2].arg);
+
     array = tokenize("arcsin(23)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("23", array[0].arg);
 
@@ -86,6 +91,26 @@ void test_func_arg(void)
 
     array = tokenize("sin(30)(-9--9)", num_tokens);
     TEST_ASSERT_EQUAL_STRING("30", array[0].arg);
+}
+
+void test_num_values(void)
+{
+    int *num_tokens = (int *) malloc(sizeof(int));
+    TOKEN *array = tokenize("24+3.14+.5", num_tokens);
+
+    TEST_ASSERT_EQUAL(5, *num_tokens);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 24.0f, (float) array[0].val);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 3.14f, (float) array[2].val);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[4].val);
+
+    array = tokenize(".5", num_tokens);
+    TEST_ASSERT_EQUAL(1, *num_tokens);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[0].val);
+
+    array = tokenize(".5+1", num_tokens);
+    TEST_ASSERT_EQUAL(3, *num_tokens);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 0.5f, (float) array[0].val);
+    TEST_ASSERT_FLOAT_WITHIN(0.000001f, 1.0f, (float) array[2].val);
 }
 
 void test_token_type(void)
@@ -121,6 +146,7 @@ int main(void)
 
     RUN_TEST(test_num_tokens);
     RUN_TEST(test_func_arg);
+    RUN_TEST(test_num_values);
     RUN_TEST(test_token_type);
 
     return (UNITY_END());
