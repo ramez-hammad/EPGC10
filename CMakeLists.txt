@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 # lvgl_esp32_drivers targets LVGL v8 and is not built; the display driver
-# lives in main/ili9341.c on top of esp_lcd.
+# lives in src/port/esp32/ili9341.c on top of esp_lcd.
 set(COMPONENTS main)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
