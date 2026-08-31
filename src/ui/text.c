@@ -6,42 +6,7 @@
 #include <screen_graph_input.h>
 #include <input_area.h>
 #include <var_popup.h>
-
-extern char current_screen;
-
-extern char *input_buffer_main[];
-extern char *output_buffer_main[];
-
-extern int input_buffer_main_length;
-extern int output_buffer_main_length;
-
-extern char *input_buffer_y_1[], *output_buffer_y_1[];
-extern char *input_buffer_y_2[], *output_buffer_y_2[];
-extern char *input_buffer_y_3[], *output_buffer_y_3[];
-extern char *input_buffer_y_4[], *output_buffer_y_4[];
-extern char *input_buffer_y_5[], *output_buffer_y_5[];
-
-extern int input_buffer_y_1_length, output_buffer_y_1_length;
-extern int input_buffer_y_2_length, output_buffer_y_2_length;
-extern int input_buffer_y_3_length, output_buffer_y_3_length;
-extern int input_buffer_y_4_length, output_buffer_y_4_length;
-extern int input_buffer_y_5_length, output_buffer_y_5_length;
-
-extern lv_group_t *group_y;
-
-extern lv_obj_t *input_area_y_1;
-extern lv_obj_t *input_area_y_2;
-extern lv_obj_t *input_area_y_3;
-extern lv_obj_t *input_area_y_4;
-extern lv_obj_t *input_area_y_5;
-extern lv_obj_t *input_area;
-
-extern uint32_t input_buffer_main_current_pos;
-extern uint32_t input_buffer_y_1_current_pos;
-extern uint32_t input_buffer_y_2_current_pos;
-extern uint32_t input_buffer_y_3_current_pos;
-extern uint32_t input_buffer_y_4_current_pos;
-extern uint32_t input_buffer_y_5_current_pos;
+#include <app.h>
 
 lv_obj_t *input_area_current;
 

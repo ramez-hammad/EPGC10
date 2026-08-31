@@ -9,28 +9,10 @@
 #include <screen_graph.h>
 #include <toolbox_popup.h>
 #include <var_popup.h>
-
-extern lv_obj_t *screen_menu_container;
-extern lv_obj_t *input_area;
-extern lv_obj_t *input_base;
-
-extern char current_screen;
+#include <app.h>
 
 uint32_t col_index = 0;
 uint32_t row_index = 0;
-
-extern lv_obj_t *array_menu_screen[3][3];
-
-extern lv_obj_t *array_graph_input_screen[];
-extern int array_graph_input_screen_index;
-
-extern lv_obj_t *array_settings_section[];
-extern lv_obj_t *array_settings_angle_section[];
-extern lv_obj_t *array_settings_result_format_section[];
-
-extern char screen_settings_index;
-extern char screen_settings_angle_index;
-extern char screen_settings_result_format_index;
 
 char original_graph_slow_nav;
 

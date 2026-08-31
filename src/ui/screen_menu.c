@@ -1,36 +1,11 @@
 #include <lvgl.h>
 #include <screen_menu.h>
 #include <ui.h>
-
-extern lv_obj_t *screen_menu;
-extern lv_obj_t *screen_menu_container;
-
-extern lv_obj_t *back_button_menu;
-extern lv_obj_t *back_button_menu_label;
-
-extern lv_obj_t *graph_button_menu;
-extern lv_obj_t *graph_button_menu_label;
-
-extern lv_obj_t *settings_button_menu;
-extern lv_obj_t *settings_button_menu_label;
-
-extern lv_obj_t *menu_button_4;
-extern lv_obj_t *menu_button_5;
-extern lv_obj_t *menu_button_6;
-extern lv_obj_t *menu_button_7;
-extern lv_obj_t *menu_button_8;
-extern lv_obj_t *menu_button_9;
-
-extern lv_obj_t *array_menu_screen[3][3];
-
-extern uint32_t col_index;
-extern uint32_t row_index;
-
-extern lv_obj_t *status_bar;
+#include <app.h>
+#include <status_bar.h>
+#include <button_matrix_nav_callback.h>
 
 uint32_t num_menu_buttons;
-
-extern char current_screen;
 
 void create_screen_menu_container(void)
 {
@@ -91,7 +66,6 @@ void create_screen_menu_widgets(void)
     lv_obj_set_scrollbar_mode(settings_button_menu, LV_SCROLLBAR_MODE_OFF);
     lv_obj_add_style(settings_button_menu, &menu_button_style_default, LV_STATE_DEFAULT);
     lv_obj_add_style(settings_button_menu, &menu_button_style_focused, LV_STATE_FOCUSED);
-
 
     settings_button_menu_label = lv_label_create(settings_button_menu);
     lv_obj_align(settings_button_menu_label, LV_ALIGN_CENTER, 0, 0);

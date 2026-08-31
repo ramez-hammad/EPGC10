@@ -1,5 +1,7 @@
 double evaluate(NODE *root);
 
+extern double x_value;
+
 extern double A;
 extern double B;
 extern double C;

@@ -6,15 +6,8 @@
 #include <ui.h>
 #include <math.h>
 #include <var_popup.h>
-
-extern lv_obj_t *input_base;
-extern lv_obj_t *input_area_container;
-extern lv_obj_t *input_area;
-extern lv_obj_t *line;
-extern lv_obj_t *ans_label;
-extern lv_obj_t *status_bar;
-
-extern double prev_ans;
+#include <app.h>
+#include <status_bar.h>
 
 char *input_buffer_main[MAXLEN_INPUT + 1];
 char *output_buffer_main[MAXLEN_INPUT + 1];
@@ -25,10 +18,6 @@ int output_buffer_main_length = 0;
 uint32_t input_buffer_main_current_pos = 0;
 
 uint32_t buffer_pos_nav = 0;
-
-extern char current_screen;
-
-extern char *display_format;
 
 void render_input_area(void)
 {

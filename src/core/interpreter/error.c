@@ -1,4 +1,5 @@
 #include <string.h>
+#include <error.h>
 
 char error_present = 0;
 

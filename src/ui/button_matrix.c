@@ -7,10 +7,8 @@
 #include <ui.h>
 #include <input_area.h>
 #include <button_matrix_down_draw_callback.h>
-
-extern lv_obj_t *input_area;
-extern lv_obj_t *input_base;
-extern lv_obj_t *line;
+#include <app.h>
+#include <button_matrix.h>
 
 lv_obj_t *btn_matrix_base;
 lv_obj_t *btn_matrix_part_down;
@@ -158,7 +156,6 @@ void create_button_matrix_part_mid(void)
         "#c4a747 SHIFT#", "TLBX", "\U0001D465", "MENU", "\n",
         "#dc143c ALPHA#", "#c4a747 \u221A        #\n    \U0001D465\u00B2", "^", "EXIT", NULL,
     };
-
 
     btn_matrix_part_mid = lv_buttonmatrix_create(btn_matrix_part_mid_container);
     lv_obj_set_size(btn_matrix_part_mid, 255, 144);

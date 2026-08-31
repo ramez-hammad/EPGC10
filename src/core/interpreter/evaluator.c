@@ -4,6 +4,9 @@
 #include <lexer.h>
 #include <parser.h>
 #include <error.h>
+#include <evaluator.h>
+#include <app.h>
+#include <status_bar.h>
 
 // Variables
 double A = 0;
@@ -35,9 +38,6 @@ double Z = 0;
 
 // Special variables
 double x_value = 0;
-extern double prev_ans;
-
-extern char deg_rad;
 
 double deg_to_rad(double deg)
 {

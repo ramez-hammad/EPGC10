@@ -7,17 +7,15 @@
 #include <string.h>
 #include <text.h>
 #include <port.h>
+#include <app.h>
+#include <status_bar.h>
+#include <screen_graph_input.h>
+#include <lexer.h>
+#include <parser.h>
+#include <evaluator.h>
 
 lv_obj_t *screen_graph_container;
 lv_obj_t *grid;
-
-extern lv_obj_t *status_bar;
-
-extern char current_screen;
-
-extern double x_value;
-
-extern char deg_rad;
 
 int graph_drawn = 0;
 
@@ -25,18 +23,6 @@ double x_min = -2 * M_PI;
 double x_max = 2 * M_PI;
 double y_min = -2.0;
 double y_max = 2.0;
-
-extern char *input_buffer_y_1[MAXLEN_INPUT + 1];
-extern char *input_buffer_y_2[MAXLEN_INPUT + 1];
-extern char *input_buffer_y_3[MAXLEN_INPUT + 1];
-extern char *input_buffer_y_4[MAXLEN_INPUT + 1];
-extern char *input_buffer_y_5[MAXLEN_INPUT + 1];
-
-extern int input_buffer_y_1_length;
-extern int input_buffer_y_2_length;
-extern int input_buffer_y_3_length;
-extern int input_buffer_y_4_length;
-extern int input_buffer_y_5_length;
 
 void create_screen_graph_container(void)
 {

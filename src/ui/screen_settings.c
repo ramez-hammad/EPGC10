@@ -6,6 +6,7 @@
 #include <ui.h>
 
 #include "src/widgets/menu/lv_menu_private.h"
+#include <app.h>
 
 lv_obj_t *screen_settings;
 
@@ -32,8 +33,6 @@ lv_obj_t *array_settings_result_format_section[3];
 char screen_settings_index = 0;
 char screen_settings_angle_index = 0;
 char screen_settings_result_format_index = 0;
-
-extern char current_screen;
 
 void create_screen_settings(void)
 {
