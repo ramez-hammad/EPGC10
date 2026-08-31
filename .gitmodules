@@ -4,3 +4,6 @@
 [submodule "components/lvgl_esp32_drivers"]
 	path = components/lvgl_esp32_drivers
 	url = https://github.com/lvgl/lvgl_esp32_drivers.git
+[submodule "third_party/Unity"]
+	path = third_party/Unity
+	url = https://github.com/ThrowTheSwitch/Unity.git

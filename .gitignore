@@ -54,5 +54,6 @@ dkms.conf
 # Build directory
 /build/
 build/
+build-sim/
 sdkconfig
 managed_components/

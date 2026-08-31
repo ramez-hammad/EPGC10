@@ -1182,7 +1182,11 @@
  *==================*/
 
 /** Use SDL to open window on PC and handle mouse and keyboard. */
-#define LV_USE_SDL              0
+#ifdef EPGC10_SDL
+    #define LV_USE_SDL 1
+#else
+    #define LV_USE_SDL 0
+#endif
 #if LV_USE_SDL
     #define LV_SDL_INCLUDE_PATH     <SDL2/SDL.h>
     #define LV_SDL_RENDER_MODE      LV_DISPLAY_RENDER_MODE_DIRECT   /**< LV_DISPLAY_RENDER_MODE_DIRECT is recommended for best performance */
@@ -1216,7 +1220,11 @@
 #endif
 
 /** Driver for /dev/fb */
-#define LV_USE_LINUX_FBDEV      0
+#ifdef EPGC10_SDL
+    #define LV_USE_LINUX_FBDEV 1
+#else
+    #define LV_USE_LINUX_FBDEV 0
+#endif
 #if LV_USE_LINUX_FBDEV
     #define LV_LINUX_FBDEV_BSD           0
     #define LV_LINUX_FBDEV_RENDER_MODE   LV_DISPLAY_RENDER_MODE_PARTIAL
@@ -1269,7 +1277,11 @@
 #define LV_USE_TFT_ESPI         0
 
 /** Driver for evdev input devices */
-#define LV_USE_EVDEV    0
+#ifdef EPGC10_SDL
+    #define LV_USE_EVDEV 1
+#else
+    #define LV_USE_EVDEV 0
+#endif
 
 /** Driver for libinput input devices */
 #define LV_USE_LIBINPUT    0

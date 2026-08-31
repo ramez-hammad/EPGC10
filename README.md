@@ -24,7 +24,9 @@ The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 
 4AAA batteries power all electronics.
 
 ## Repository Overview
-[main/](main) => Source code that includes the interpreter and the UI\
+[src/](src) => Shared source code that includes the interpreter and the UI\
+[src/port/](src/port) => Platform ports: the ESP32 firmware and the SDL simulator\
+[sim/](sim) => CMake build for the PC simulator\
 [components/](components) => Contains LVGL and drivers\
 [fonts/](fonts) => Contains fonts used in the UI\
 [hardware/](hardware) => Contains schematics and designs\
@@ -34,7 +36,12 @@ The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 
 Assembly and firmware installation instructions can be found [here](docs/hardware.md).
 
 ## Emulator
-Instructions to install the PC Emulator can be found in the pc-simulator branch, otherwise a web simulator is available [here](https://ramez-hammad.github.io) 
+The PC Emulator builds from this branch:
+```
+cmake -S sim -B build-sim && cmake --build build-sim
+./build-sim/ui
+```
+Otherwise a web simulator is available [here](https://ramez-hammad.github.io) 
 
 ## Gallery
 <figure>
