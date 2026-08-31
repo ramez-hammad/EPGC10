@@ -17,7 +17,6 @@ extern char current_screen;
 extern double x_value;
 
 extern char deg_rad;
-char original_deg_rad = -1;
 
 int graph_drawn = 0;
 
@@ -253,6 +252,7 @@ void draw_graph_func_canvas(const char *func, lv_color_t color)
 {
     int prev_px = -1;
     int prev_py = -1;
+    char original_deg_rad = deg_rad;
 
     for (int px = 0; px < SCREEN_WIDTH_GRAPH; px++) {
         double x = x_min + (x_max - x_min) * px / (SCREEN_WIDTH_GRAPH - 1);
