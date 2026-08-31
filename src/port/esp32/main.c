@@ -11,7 +11,8 @@ static uint32_t tick_cb (void)
 
 void port_create_input(void)
 {
-    /* The firmware reads a physical keypad, there is no on-screen keypad */
+    /* The hardware has a physical 9x6 keypad, so there is no on-screen keypad.
+       Scanning it is not implemented yet, so the keys reach nothing. */
 }
 
 lv_draw_buf_t *port_create_graph_draw_buf(void)
