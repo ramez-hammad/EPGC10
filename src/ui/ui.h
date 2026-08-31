@@ -1,5 +1,4 @@
-#define WINDOW_WIDTH 240
-#define WINDOW_HEIGHT 320
+#include <port_config.h>
 
 #define DARK_MODE 1
 
