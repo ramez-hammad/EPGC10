@@ -69,10 +69,13 @@ double evaluate(NODE *root)
                 return evaluate(root->left) - evaluate(root->right);
             case TOKEN_MUL:
                 return evaluate(root->left) * evaluate(root->right);
-            case TOKEN_DIV:
-                if (evaluate(root->right) != 0) return evaluate(root->left) / evaluate(root->right);
+            case TOKEN_DIV: {
+                double divisor = evaluate(root->right);
+                if (divisor != 0) return evaluate(root->left) / divisor;
                 // Divide by zero error
                 if (!error_present) error(1);
+                return 0;
+            }
             case TOKEN_POW:
                 return pow(evaluate(root->left), evaluate(root->right));
             case TOKEN_NUM:
