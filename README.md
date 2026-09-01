@@ -1,5 +1,7 @@
 <h1 align="center">EPGC10</h1>
 
+> **This branch is frozen.** Development moved to `main`, where the ESP32 firmware and the PC simulator now build from a single source tree. See the [README on `main`](https://github.com/ramez-hammad/EPGC10/blob/main/README.md) for current build instructions.
+
 ## Expandable Programmable Graphing Calculator
 An open-source, expandable, not yet programmable graphing calculator, built from the ground up
 
