@@ -32,8 +32,8 @@ src/port/esp32   src/port/sdl      platform: entry point, display, window size
 either one reaches the firmware and the simulator at once. That is the whole point of
 the layout: before it existed the two lived on separate branches and drifted.
 
-## The port contract
-A platform has to supply an entry point plus the two hooks declared in
+## What each platform has to provide
+A platform supplies an entry point plus the two hooks declared in
 [../src/port/port.h](../src/port/port.h):
 
 | Hook | ESP32 | SDL |
