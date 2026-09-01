@@ -24,8 +24,8 @@ jobs:
       - name: Build simulator
         run: cmake --build build-sim -j$(nproc)
 
-      - name: Run lexer tests
-        run: ./build-sim/test_lexer
+      - name: Run unit tests
+        run: ./build-sim/test_lexer && ./build-sim/test_evaluator
 
   firmware:
     runs-on: ubuntu-latest
