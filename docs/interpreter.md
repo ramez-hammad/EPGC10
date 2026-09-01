@@ -63,11 +63,10 @@ Each level is a function — `parse_expression()`, `parse_term()`, `parse_expone
 
 Three things happen here rather than in the evaluator:
 
-*   **Implicit multiplication.** In the cases handled by `parse_factor`, when a numeric or
-    function factor is followed by `(`, a variable, or a function—or a variable factor is
-    followed by `(` or another variable—the parser *inserts* a `TOKEN_MUL` into the token
-    array (`insert_token()`) and carries on. `2(3+4)`, `2x` and `2sin(30)` all become
-    explicit multiplications.
+*   **Implicit multiplication.** `parse_factor()` inserts a `TOKEN_MUL` into the token array
+    (`insert_token()`) and carries on when a number or a function is followed by `(`, a
+    variable or a function, and when a variable is followed by `(` or another variable. So
+    `2(3+4)`, `2x` and `2sin(30)` all become explicit multiplications.
 *   **Unary plus/minus.** The lexer only ever emits binary `TOKEN_PLUS`/`TOKEN_MINUS`;
     `parse_factor()` is what turns a leading sign into `TOKEN_UNARY_PLUS`/`TOKEN_UNARY_MINUS`.
 *   **Factorial.** Computed at parse time by a loop, and folded into a literal node. A
@@ -79,8 +78,9 @@ continue and produce a tree. The result is meaningless, but the caller has alrea
 told via `error_present`, and the UI discards the value and shows a popup.
 
 The parser keeps its state in file-scope globals (`arr_tok`, `num_tokens`, `next_index`,
-`num_paren`), so it handles exactly one expression at a time. Nested parses (see below)
-work only because they run to completion before the outer parse resumes.
+`num_paren`), so it handles exactly one expression at a time. Function arguments are parsed
+during evaluation, once the outer parse has finished, which is why they can reuse the same
+globals (see below).
 
 ## Stage 3 — evaluator
 `evaluate(NODE *)` walks the tree recursively and returns a `double`. Operators evaluate
