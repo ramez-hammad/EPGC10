@@ -23,29 +23,14 @@ running either on an ESP32 with a 240x320 ILI9341 display or as a desktop
 program on your PC. Both are built from the same source tree, so the calculator
 you run in a window is the calculator that runs on the device.
 
-It exists because a graphing calculator is a satisfyingly complete little
-system — parsing, numerics, UI, and embedded hardware in one project — and
-because every part of it is meant to be read and modified. If you want to see
-how `sin(2x+1)` gets from a keypress to a plotted curve, the whole interpreter
-is about 1200 lines of C.
-
-**What works today**
+**Features**
 
 * The interpreter: `+ - * / ^ !`, implicit multiplication, parentheses,
   `sin cos tan`, their inverse and hyperbolic forms, `ln log sqrt abs`, `pi`,
   variables `A`–`Z`, `Ans`, and degree/radian/gradian modes.
-* Graphing up to five functions with panning.
+* Graphing up to five functions at once, panned with the direction pad and
+  zoomed with `+` and `-`.
 * The PC simulator, which is fully usable with a mouse.
-
-**What does not, yet**
-
-* The ESP32 firmware **compiles and links, but has never been run on hardware**
-  by the maintainers of this tree, and there is **no keypad scanning code** —
-  the 9x6 matrix described in [docs/hardware.md](docs/hardware.md) is wired to
-  GPIOs that no firmware reads. Build the hardware knowing that the input
-  driver is the missing piece.
-* Degree-mode trigonometry shows floating-point artefacts
-  (`cos(90)` → `6.123234e-17`).
 
 ## Quick start (PC simulator)
 
@@ -121,44 +106,16 @@ cover the expression engine.
 <p align="center"><i>Multiple plots · the function toolbox · the variable menu</i></p>
 
 <details>
-<summary>More screenshots</summary>
+<summary><b>More screenshots</b></summary>
 
-<figure>
-  <img src="docs/gallery/1.png">
-  <figcaption><b>Figure 1:</b> The menu in the simulator </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/2.png">
-  <figcaption><b>Figure 2:</b> Default screen in the simulator </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/4.png">
-  <figcaption><b>Figure 4:</b> Graph of sin(x) </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/7.png">
-  <figcaption><b>Figure 7:</b> Sample expression with evaluation </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/8.png">
-  <figcaption><b>Figure 8:</b> Demonstrating implicit multiplication </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/9.png">
-  <figcaption><b>Figure 9:</b> Angle measure menu </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/10.png">
-  <figcaption><b>Figure 10:</b> Ans variable showcase </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/11.png">
-  <figcaption><b>Figure 11:</b> Syntax error pop-up </figcaption>
-</figure>
-<figure>
-  <img src="docs/gallery/12.png">
-  <figcaption><b>Figure 12:</b> Invalid input pop-up </figcaption>
-</figure>
+| | | |
+|:--:|:--:|:--:|
+| <img src="docs/gallery/1.png"> | <img src="docs/gallery/2.png"> | <img src="docs/gallery/4.png"> |
+| The menu | Default screen | Graph of sin(x) |
+| <img src="docs/gallery/7.png"> | <img src="docs/gallery/8.png"> | <img src="docs/gallery/9.png"> |
+| An expression and its result | Implicit multiplication | Angle measure menu |
+| <img src="docs/gallery/10.png"> | <img src="docs/gallery/11.png"> | <img src="docs/gallery/12.png"> |
+| The Ans variable | Syntax error pop-up | Invalid input pop-up |
 
 </details>
 
