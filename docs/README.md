@@ -12,4 +12,4 @@ It also contains installation instructions for the ESP32, as well as assembly in
 ├── [hardware.md](hardware.md) # Installation and assembly instructins\
 └── [lexer.md](lexer.md) # Lexer design documentation
 
->Code documentation is a work in progress, however install instructions are complete and available
+>Code documentation covers the architecture and the interpreter; the UI modules are still undocumented.
