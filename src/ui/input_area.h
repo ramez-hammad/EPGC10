@@ -5,6 +5,13 @@
 
 extern lv_obj_t *input_base;
 
+extern char *input_buffer_main[], *output_buffer_main[];
+
+extern int input_buffer_main_length;
+extern int output_buffer_main_length;
+
+extern uint32_t input_buffer_main_current_pos;
+
 void create_input_base(void);
 
 void create_input_area_container(void);

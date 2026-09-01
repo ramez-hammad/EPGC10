@@ -15,36 +15,9 @@
 #include <lexer.h>
 #include <parser.h>
 #include <evaluator.h>
-
-extern lv_obj_t *input_base;
-extern lv_obj_t *input_area;
-extern lv_obj_t *line;
-
-extern char *input_buffer_main[];
-extern char *output_buffer_main[];
-extern int input_buffer_main_length;
-extern int output_buffer_main_length;
-
-extern char alpha;
-extern char shift;
-
-extern char current_screen;
-
-extern uint32_t col_index;
-extern uint32_t row_index;
-
-extern uint32_t input_buffer_main_current_pos;
-
-extern lv_obj_t *array_settings_section[];
-extern lv_obj_t *array_settings_angle_section[];
-extern lv_obj_t *array_settings_result_format_section[];
-
-extern char screen_settings_index;
-extern char screen_settings_angle_index;
-extern char screen_settings_result_format_index;
-
-extern char deg_rad;
-extern char *display_format;
+#include <app.h>
+#include <button_matrix_down_callback.h>
+#include <button_matrix_nav_callback.h>
 
 char hyp;
 

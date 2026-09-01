@@ -1,5 +1,8 @@
 #include <lvgl.h>
 #include <ui.h>
+#include <app.h>
+#include <status_bar.h>
+#include <button_matrix_down_callback.h>
 
 lv_obj_t *status_bar;
 
@@ -8,10 +11,6 @@ lv_obj_t *alpha_label;
 lv_obj_t *hyp_label;
 lv_obj_t *display_format_label;
 lv_obj_t *deg_rad_label;
-
-extern char shift;
-extern char alpha;
-extern char hyp;
 
 char deg_rad = 0;
 char *display_format;

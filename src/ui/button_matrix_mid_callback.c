@@ -8,18 +8,10 @@
 #include <status_bar.h>
 #include <toolbox_popup.h>
 #include <var_popup.h>
-
-extern char alpha;
-extern char shift;
-extern char hyp;
-
-extern char current_screen;
-
-extern uint32_t col_index;
-extern uint32_t row_index;
-extern uint32_t num_menu_buttons;
-
-extern lv_obj_t *screen_settings;
+#include <app.h>
+#include <button_matrix_mid_callback.h>
+#include <button_matrix_down_callback.h>
+#include <button_matrix_nav_callback.h>
 
 void btn_matrix_mid_cb(lv_event_t *event)
 {

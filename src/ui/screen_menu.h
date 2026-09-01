@@ -6,3 +6,5 @@
 void create_screen_menu(void);
 
 void display_screen_menu(void);
+
+extern uint32_t num_menu_buttons;

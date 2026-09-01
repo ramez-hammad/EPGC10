@@ -2,8 +2,8 @@
 #include <ui.h>
 #include <text.h>
 #include <screen_graph_input.h>
-
-extern lv_obj_t *status_bar;
+#include <app.h>
+#include <status_bar.h>
 
 lv_obj_t *screen_graph_input;
 
@@ -40,8 +40,6 @@ uint32_t input_buffer_y_5_current_pos = 0;
 lv_obj_t *array_graph_input_screen[5];
 
 int array_graph_input_screen_index = 0;
-
-extern char current_screen;
 
 void create_input_area_y_labels(void)
 {

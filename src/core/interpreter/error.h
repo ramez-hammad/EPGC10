@@ -1,5 +1,5 @@
 extern char error_present;
 
-extern char error_message[16];
+extern char error_message[17];
 
 void error(char error);

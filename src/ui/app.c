@@ -42,8 +42,6 @@ lv_obj_t *array_menu_screen[3][3];
 
 char current_screen;
 
-extern char *display_format;
-
 double prev_ans;
 char shift;
 char alpha;
