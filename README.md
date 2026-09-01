@@ -41,6 +41,7 @@ The PC Emulator builds from this branch:
 cmake -S sim -B build-sim && cmake --build build-sim
 ./build-sim/ui
 ```
+For a terminal interpreter REPL, run `./build-sim/repl`.
 Otherwise a web simulator is available [here](https://ramez-hammad.github.io) 
 
 ## Gallery
