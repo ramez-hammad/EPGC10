@@ -30,6 +30,12 @@ set(SRC_TEST
         ${REPO_ROOT}/third_party/Unity/src/unity.c
 )
 
+set(SRC_EVALUATOR_TEST
+        ${REPO_ROOT}/test/test_evaluator.c
+        ${SRC_INTERPRETER}
+        ${REPO_ROOT}/third_party/Unity/src/unity.c
+)
+
 # SDL2
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SDL2 REQUIRED sdl2)
@@ -38,10 +44,13 @@ include_directories(${SDL2_INCLUDE_DIRS})
 # Build targets
 add_executable(ui ${SRC_UI} ${SRC_INTERPRETER} ${SRC_FONTS} ${SRC_PORT} ${SRC_LVGL})
 add_executable(test_lexer ${SRC_TEST})
+add_executable(test_evaluator ${SRC_EVALUATOR_TEST})
 add_executable(repl ${REPO_ROOT}/src/core/interpreter/repl.c ${SRC_INTERPRETER})
 
 target_include_directories(test_lexer PRIVATE ${REPO_ROOT}/third_party/Unity/src)
+target_include_directories(test_evaluator PRIVATE ${REPO_ROOT}/third_party/Unity/src)
 
 # Link SDL2
 target_link_libraries(ui ${SDL2_LIBRARIES} m)
+target_link_libraries(test_evaluator m)
 target_link_libraries(repl m)
