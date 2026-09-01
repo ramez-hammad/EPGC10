@@ -80,9 +80,9 @@ The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 
 
 Start with the overview; the rest goes deeper on one layer each.
 
-* **[Architecture overview](docs/overview.md)** — the layers, the contract
-  between the shared code and the two platforms, how a keypress reaches the
-  display, and the known gaps.
+* **[Architecture overview](docs/overview.md)** — how the code is layered, what
+  is shared and what each platform provides, how a keypress reaches the display,
+  and the known gaps.
 * **[Interpreter](docs/interpreter.md)** — grammar, precedence, implicit
   multiplication, and how expressions are evaluated.
 * **[Lexer](docs/lexer.md)** — the token model, number scanning, and function
