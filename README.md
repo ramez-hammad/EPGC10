@@ -67,7 +67,7 @@ idf.py build
 idf.py -p /dev/ttyUSB0 flash monitor
 ```
 
-Assembly and wiring instructions are in [docs/hardware.md](docs/hardware.md).
+Parts, wiring and assembly are documented in [docs/hardware.md](docs/hardware.md).
 
 ## Hardware
 
@@ -78,11 +78,16 @@ The calculator is based on the ESP32 microcontroller, it features a TFT ILI9341 
 
 ## Documentation
 
-[docs/overview.md](docs/overview.md) is the place to start: the layering, the
-port contract between the shared code and the two platforms, how a keypress
-reaches the display, and the known gaps.
-[docs/interpreter.md](docs/interpreter.md) and [docs/lexer.md](docs/lexer.md)
-cover the expression engine.
+Start with the overview; the rest goes deeper on one layer each.
+
+* **[Architecture overview](docs/overview.md)** — the layers, the contract
+  between the shared code and the two platforms, how a keypress reaches the
+  display, and the known gaps.
+* **[Interpreter](docs/interpreter.md)** — grammar, precedence, implicit
+  multiplication, and how expressions are evaluated.
+* **[Lexer](docs/lexer.md)** — the token model, number scanning, and function
+  arguments.
+* **[Hardware](docs/hardware.md)** — parts, wiring and assembly.
 
 ## Repository overview
 
@@ -94,7 +99,7 @@ cover the expression engine.
 [components/](components) => Contains LVGL and drivers\
 [fonts/](fonts) => Contains fonts used in the UI\
 [hardware/](hardware) => Contains schematics and designs\
-[docs/](docs) => Documentation and pictures
+[docs/](docs) => The documentation linked above, plus screenshots
 
 ## Gallery
 
